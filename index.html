@@ -666,39 +666,28 @@ const CONFIG = {
     photo: "foto-wanita.jpg",
   },
 
-  // --- Foto cover / background (boleh URL atau path lokal mis. "img/cover.jpg") ---
-  coverImage: "cover.jpg",
-  countdownImage: "galeri3.jpg",
-
-  // --- Latar foto samar di balik beberapa bagian (kosongkan "" jika tidak mau). ---
-  backgrounds: {
-    opening: "galeri2.jpg",
-    events:  "galeri4.jpg",
-    story:   "galeri1.jpg",
-    gift:    "galeri5.jpg",
-  },
-
   // --- Ayat / kutipan pembuka ---
   ayat: "“Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu mendapat ketenangan hati...”",
   ayatRef: "QS. Ar-Rum: 21",
 
-  // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM ---
-  mainDate: "2026-07-16T10:00",
+  // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM+08:00
+  //     (+08:00 = WITA, supaya jam tetap benar untuk tamu di zona waktu mana pun). ---
+  mainDate: "2026-07-16T10:00+08:00",
 
   // --- Acara ---
   akad: {
     dateText: "Kamis, 16 Juli 2026",
     timeText: "10.00 WITA - Selesai",
     venue: "Gedung Dewakkang",
-    address: "Jl. Poros Pangkep-Barru",
-    maps: "",   // tempel link Google Maps; kosongkan jika belum ada
+    address: "Samalewa, Kec. Bungoro, Kab. Pangkep, Sulawesi Selatan 90617",
+    maps: "https://www.google.com/maps/search/?api=1&query=5GRV%2B79X%20Samalewa%20Bungoro%20Pangkep",
   },
   resepsi: {
     dateText: "Kamis, 16 Juli 2026",
     timeText: "12.00 WITA - Selesai",
     venue: "Gedung Dewakkang",
-    address: "Jl. Poros Pangkep-Barru",
-    maps: "",
+    address: "Samalewa, Kec. Bungoro, Kab. Pangkep, Sulawesi Selatan 90617",
+    maps: "https://www.google.com/maps/search/?api=1&query=5GRV%2B79X%20Samalewa%20Bungoro%20Pangkep",
   },
 
   // --- Love story (boleh tambah/kurangi) ---
@@ -708,7 +697,7 @@ const CONFIG = {
     { year: "2026", text: "Dengan restu kedua orang tua, melangkah ke jenjang pernikahan." },
   ],
 
-  // --- Galeri (URL foto). Gambar pertama & keempat dibuat memanjang. ---
+  // --- Galeri (URL foto). Semua foto tampil rasio 4:5 dengan slideshow zoom pelan. ---
   gallery: [
     "cover.jpg",
     "foto-wanita.jpg",
