@@ -18,6 +18,8 @@ const SITE = 'https://hennyfarid.balanglompo.com/';  // alamat undangan
    ============================================================ */
 function setupDaftarTamu() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
+  // Pakai locale US agar pemisah argumen rumus = koma (sesuai rumus di bawah).
+  ss.setSpreadsheetLocale('en_US');
   let sh = ss.getSheetByName('DaftarTamu');
   if (!sh) sh = ss.insertSheet('DaftarTamu');
   sh.clear();
