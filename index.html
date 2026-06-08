@@ -263,9 +263,13 @@
   /* ---------- RSVP ---------- */
   #rsvp { background: linear-gradient(160deg, var(--deep2), var(--deep)); color: #fff; }
   #rsvp .eyebrow { color: rgba(255,255,255,.85); }
+  .rsvp-title {
+    font-family: var(--serif); font-weight: 500; font-size: 27px; line-height: 1.3;
+    color: #fff; max-width: 360px; margin: 0 auto;
+  }
   .rsvp-sub {
     font-family: var(--serif); font-size: 16px; font-style: italic;
-    color: rgba(255,255,255,.88); max-width: 340px; margin: 0 auto;
+    color: rgba(255,255,255,.85); max-width: 340px; margin: 0 auto;
   }
   .form { margin-top: 24px; text-align: left; }
   .form label { font-size: 12px; letter-spacing: 1px; opacity: .85; display:block; margin: 14px 0 6px; }
@@ -515,8 +519,9 @@
 
     <!-- ================= RSVP ================= -->
     <section id="rsvp">
+      <h2 class="rsvp-title reveal">Merupakan kebahagiaan bagi kami atas kehadiran Bapak/Ibu/Saudara/i</h2>
       <div class="divider reveal"></div>
-      <p class="rsvp-sub reveal">Merupakan kebahagiaan bagi kami atas kehadiran Bapak/Ibu/Saudara/i. Mohon berkenan mengonfirmasi kehadiran, serta menyampaikan untaian ucapan dan doa restu terbaik bagi kedua mempelai.</p>
+      <p class="rsvp-sub reveal">Mohon berkenan mengonfirmasi kehadiran, serta menyampaikan untaian ucapan dan doa restu terbaik bagi kedua mempelai.</p>
       <form class="form reveal" id="rsvp-form">
         <label>Nama</label>
         <input type="text" id="r-name" required placeholder="Nama kamu" />
