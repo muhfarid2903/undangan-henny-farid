@@ -17,21 +17,23 @@
 
 <style>
   :root {
-    --bg: #faf6f0;
-    --bg-deep: #f3ece2;
-    --ink: #4a4039;
-    --muted: #8a7d70;
-    --gold: #b89b6e;
-    --gold-soft: #d8c4a0;
-    --green: #6f7b5e;
-    --line: #e4d9c8;
+    --bg: #f5eff7;
+    --bg-deep: #ece1f2;
+    --ink: #463a52;
+    --muted: #897d96;
+    --gold: #b08d57;
+    --gold-soft: #d6bf95;
+    --green: #7c6597;       /* aksen ungu (tombol, map, ig) */
+    --line: #e7dcf0;
+    --deep: #3a2c46;        /* ungu gelap untuk bagian gelap */
+    --deep2: #5b4570;
     --serif: 'Cormorant Garamond', serif;
     --script: 'Great Vibes', cursive;
     --sans: 'Poppins', sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
   body {
     font-family: var(--sans);
     color: var(--ink);
@@ -45,19 +47,38 @@
   .app {
     max-width: 480px;
     margin: 0 auto;
-    background: var(--bg);
+    background:
+      radial-gradient(120% 60% at 50% 0%, #efe4f6 0%, var(--bg) 55%),
+      var(--bg);
     position: relative;
     min-height: 100vh;
-    box-shadow: 0 0 60px rgba(0,0,0,.08);
-    overflow: hidden;
+    box-shadow: 0 0 60px rgba(74,58,82,.12);
+    overflow: visible;
   }
 
+  /* Tiap bagian = satu "frame" layar penuh */
   section {
     position: relative;
-    padding: 80px 28px;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 96px 28px;
     text-align: center;
     overflow: hidden;
+    scroll-snap-align: start;
   }
+  section > * { position: relative; z-index: 2; width: 100%; }
+
+  /* hiasan bunga di sudut bawah tiap frame */
+  section::before, section::after {
+    content: ''; position: absolute; bottom: -8px; width: 210px; height: 160px;
+    background: url('bloom.svg') no-repeat bottom center; background-size: contain;
+    pointer-events: none; z-index: 1; opacity: .92;
+  }
+  section::before { left: -34px; }
+  section::after  { right: -34px; transform: scaleX(-1); }
+  /* di bagian gelap, bunga sedikit diredam */
+  #cover::before, #cover::after, #countdown::before, #countdown::after,
+  #rsvp::before, #rsvp::after, #closing::before, #closing::after { opacity: .7; }
 
   .script { font-family: var(--script); color: var(--gold); line-height: 1.1; }
   .serif  { font-family: var(--serif); }
@@ -66,13 +87,12 @@
     color: var(--gold); font-weight: 500; margin-bottom: 14px;
   }
   .divider {
-    width: 60px; height: 1px; background: var(--gold-soft);
+    width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
     margin: 22px auto; position: relative;
   }
   .divider::before {
-    content: '❦'; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%); background: var(--bg);
-    color: var(--gold); font-size: 16px; padding: 0 10px;
+    content: '✦'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%); color: var(--gold); font-size: 14px;
   }
 
   /* Reveal-on-scroll */
@@ -83,7 +103,7 @@
   .loader {
     position: fixed; inset: 0; z-index: 200;
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(rgba(40,32,26,.6), rgba(40,32,26,.75)), var(--cover-img, #2a241e) center/cover no-repeat;
+    background: radial-gradient(circle at 50% 38%, var(--deep2), var(--deep));
     transition: opacity .9s ease, visibility .9s ease;
   }
   .loader.hide { opacity: 0; visibility: hidden; }
@@ -106,11 +126,20 @@
 
   /* ---------- COVER ---------- */
   #cover {
-    height: 100vh; min-height: 600px;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    min-height: 100vh;
     color: #fff;
-    background: linear-gradient(rgba(40,32,26,.45), rgba(40,32,26,.65)), var(--cover-img, #2a241e) center/cover no-repeat;
+    background: radial-gradient(circle at 50% 32%, var(--deep2), var(--deep));
   }
+  /* bingkai ornamen di cover */
+  #cover .frame {
+    position: absolute; inset: 22px; border: 1px solid rgba(214,191,149,.5);
+    border-radius: 8px; pointer-events: none; z-index: 1;
+  }
+  #cover .frame::before, #cover .frame::after {
+    content: '❦'; position: absolute; left: 50%; transform: translateX(-50%);
+    color: var(--gold-soft); font-size: 18px;
+  }
+  #cover .frame::before { top: -11px; } #cover .frame::after { bottom: -11px; }
   #cover .eyebrow { color: rgba(255,255,255,.85); }
   #cover .names {
     font-family: var(--script); font-size: 64px; line-height: 1.05;
@@ -130,8 +159,8 @@
     box-shadow: 0 8px 24px rgba(0,0,0,.25); transition: transform .2s;
   }
   .btn-open:active { transform: scale(.96); }
-  .scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); animation: bob 1.8s infinite; opacity: .8; font-size: 22px; }
-  @keyframes bob { 0%,100%{ transform: translateX(-50%) translateY(0);} 50%{ transform: translateX(-50%) translateY(8px);} }
+  .scroll-cue { position: absolute; bottom: 26px; left: 0; width: 100%; text-align: center; animation: bob 1.8s infinite; opacity: .8; font-size: 22px; z-index: 3; }
+  @keyframes bob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(8px);} }
 
   /* The whole page below cover is hidden until "Buka Undangan" */
   .content { display: none; }
@@ -157,7 +186,7 @@
   .amp { font-family: var(--script); font-size: 46px; color: var(--gold-soft); }
 
   /* ---------- COUNTDOWN ---------- */
-  #countdown { background: linear-gradient(rgba(74,64,57,.78), rgba(74,64,57,.85)), var(--cd-img, var(--green)) center/cover; color: #fff; }
+  #countdown { background: linear-gradient(160deg, var(--deep2), var(--deep)); color: #fff; }
   #countdown .eyebrow { color: rgba(255,255,255,.85); }
   .cd-grid { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
   .cd-box {
@@ -207,7 +236,7 @@
   .grid img.tall { grid-row: span 2; aspect-ratio: 1/2; }
 
   /* ---------- RSVP ---------- */
-  #rsvp { background: linear-gradient(rgba(74,64,57,.82), rgba(74,64,57,.9)), var(--cd-img, var(--green)) center/cover; color: #fff; }
+  #rsvp { background: linear-gradient(160deg, var(--deep2), var(--deep)); color: #fff; }
   #rsvp .eyebrow { color: rgba(255,255,255,.85); }
   .form { margin-top: 24px; text-align: left; }
   .form label { font-size: 12px; letter-spacing: 1px; opacity: .85; display:block; margin: 14px 0 6px; }
@@ -236,7 +265,7 @@
   #gift { background: var(--bg); }
   #gift p.sub { color: var(--muted); font-size: 14px; max-width: 340px; margin: 0 auto; }
   .gift-card {
-    background: linear-gradient(135deg, #4a4039, #6b5d4f); color: #fff;
+    background: linear-gradient(135deg, var(--deep), var(--deep2)); color: #fff;
     border-radius: 16px; padding: 24px; margin: 18px 0; text-align: left;
     box-shadow: 0 12px 30px rgba(0,0,0,.15);
   }
@@ -249,7 +278,7 @@
   }
 
   /* ---------- CLOSING ---------- */
-  #closing { background: linear-gradient(rgba(40,32,26,.5), rgba(40,32,26,.7)), var(--cover-img, #2a241e) center/cover; color:#fff; }
+  #closing { background: radial-gradient(circle at 50% 35%, var(--deep2), var(--deep)); color:#fff; }
   #closing .names { font-family: var(--script); font-size: 50px; color: #fff; margin: 14px 0; }
   #closing p { opacity: .9; font-size: 14px; max-width: 320px; margin: 0 auto; }
   .credit { margin-top: 40px; font-size: 11px; opacity: .6; letter-spacing: 1px; }
@@ -291,10 +320,17 @@
   }
   .petal { position: absolute; top: -10%; animation: fall linear infinite; }
   .petal i {
-    display: block; border-radius: 50% 0 50% 0; opacity: .65;
-    box-shadow: 0 0 4px rgba(184,155,110,.25);
+    display: block; border-radius: 50% 0 50% 0; opacity: .7;
+    box-shadow: 0 0 5px rgba(155,127,176,.35);
     animation: sway ease-in-out infinite alternate;
   }
+
+  /* ---------- ANIMASI KETIK ---------- */
+  .typing::after {
+    content: '|'; margin-left: 2px; font-weight: 300;
+    animation: caret .7s step-end infinite; color: var(--gold);
+  }
+  @keyframes caret { 50% { opacity: 0; } }
   @keyframes fall { to { transform: translateY(112vh); } }
   @keyframes sway {
     from { transform: translateX(-12px) rotate(0deg); }
@@ -338,6 +374,7 @@
 
   <!-- ================= COVER ================= -->
   <section id="cover">
+    <div class="frame"></div>
     <div class="eyebrow">The Wedding Of</div>
     <div class="names" id="cover-names">Rangga & Cinta</div>
     <div class="date-pill" id="cover-date">00 . 00 . 0000</div>
@@ -618,23 +655,8 @@ $("#closing-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
 document.title = "The Wedding of " + CONFIG.groom.nick + " & " + CONFIG.bride.nick;
 const mainDate = new Date(CONFIG.mainDate);
 $("#cover-date").textContent = mainDate.toLocaleDateString("id-ID", { day:"2-digit", month:"long", year:"numeric" });
-document.documentElement.style.setProperty("--cover-img", `url('${CONFIG.coverImage}')`);
-document.documentElement.style.setProperty("--cd-img", `url('${CONFIG.countdownImage}')`);
 $("#loader-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
-
-// ---- Latar foto samar di balik beberapa bagian ----
-(function(){
-  const ov = "rgba(250,246,240,.90)";
-  Object.entries(CONFIG.backgrounds || {}).forEach(([id, img]) => {
-    const el = document.getElementById(id);
-    if (el && img) {
-      el.style.backgroundImage = `linear-gradient(${ov}, ${ov}), url('${img}')`;
-      el.style.backgroundSize = "cover";
-      el.style.backgroundPosition = "center";
-      el.style.backgroundAttachment = "fixed";
-    }
-  });
-})();
+// Catatan: tema ungu pakai latar gradien (CSS). Foto kalian tampil di Galeri.
 
 // ---- Loading screen ----
 window.addEventListener("load", () => {
@@ -774,21 +796,22 @@ $("#btn-open").addEventListener("click", () => {
   if (CONFIG.autoScroll !== false) setTimeout(startAutoScroll, 1600);
 });
 
-// ---- Auto-scroll pelan (berhenti saat tamu berinteraksi) ----
+// ---- Auto-maju antar-frame (berhenti saat tamu berinteraksi) ----
 function startAutoScroll(){
-  let active = true, acc = 0;
-  const speed = 0.55; // px per frame (makin besar makin cepat)
-  function step(){
-    if (!active) return;
-    acc += speed;
-    if (acc >= 1) { window.scrollBy(0, Math.floor(acc)); acc -= Math.floor(acc); }
-    if (window.innerHeight + Math.ceil(window.scrollY) >= document.body.scrollHeight - 2) return;
-    requestAnimationFrame(step);
-  }
+  const secs = Array.from(document.querySelectorAll("section"));
+  let active = true;
+  let idx = 1; // mulai dari frame 'opening' (cover = 0)
   const stop = () => { active = false; };
   ["wheel","touchstart","mousedown","keydown"].forEach(ev =>
     window.addEventListener(ev, stop, { once: true, passive: true }));
-  requestAnimationFrame(step);
+  function next(){
+    if (!active) return;
+    idx++;
+    if (idx >= secs.length) return;            // berhenti di frame terakhir
+    secs[idx].scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(next, 7000);                     // jeda antar-frame
+  }
+  setTimeout(next, 6000);
 }
 
 // ---- Music (mendukung 1 lagu atau playlist) ----
@@ -853,7 +876,7 @@ mbtn.addEventListener("click", () => {
 // ---- Animasi kelopak bunga jatuh ----
 (function(){
   if (CONFIG.petals === false) return;
-  const colors = ["#e7d4ad", "#f3e3c9", "#dcc79a", "#efd9c2", "#cdb98c"];
+  const colors = ["#c9b3d6", "#d9c7e6", "#b59ccb", "#e6d9ef", "#caa9d8"];
   const wrap = document.createElement("div"); wrap.className = "petals";
   for (let i = 0; i < 16; i++) {
     const p = document.createElement("div"); p.className = "petal";
@@ -875,6 +898,31 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("show"); io.unobserve(en.target); } });
 }, { threshold: 0.15 });
 $$(".reveal").forEach(el => io.observe(el));
+
+// ---- Animasi ketik + aktivasi tiap frame ----
+function typeText(el, speed) {
+  if (!el || el.dataset.typed) return;
+  el.dataset.typed = "1";
+  const full = el.textContent;
+  el.textContent = "";
+  el.classList.add("typing");
+  let i = 0;
+  (function step(){
+    if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(step, speed); }
+    else { el.classList.remove("typing"); }
+  })();
+}
+const frameIo = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const sec = en.target;
+    const eb = sec.querySelector(".eyebrow");
+    // ketik judul (lewati teks Arab agar harakat tidak rusak)
+    if (eb && !/[؀-ۿ]/.test(eb.textContent)) typeText(eb, 55);
+    if (sec.id === "opening") { const a = sec.querySelector(".ayat"); if (a) typeText(a, 16); }
+  });
+}, { threshold: 0.3 });
+$$("section").forEach(s => frameIo.observe(s));
 </script>
 </body>
 </html>
