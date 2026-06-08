@@ -123,8 +123,8 @@
   /* animasi masuk elemen cover setelah loader hilang */
   body.loaded #cover .eyebrow   { animation: fadeUp .9s .05s both; }
   /* nama cover dianimasikan via ketik (JS), bukan fadeUp */
-  body.loaded #cover .date-pill { animation: fadeUp 1s .9s both; }
-  body.loaded #cover .guest-box { animation: fadeUp 1s 1.1s both; }
+  body.loaded #cover .date-pill { animation: fadeUp 1s 1.9s both; }
+  body.loaded #cover .guest-box { animation: fadeUp 1s 2.2s both; }
 
   /* ---------- COVER ---------- */
   #cover {
@@ -183,8 +183,14 @@
     width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
     margin: 0 auto 18px; border: 4px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,.12);
   }
-  .person .name { font-family: var(--script); font-size: 40px; color: var(--gold); }
-  .person .full { font-family: var(--serif); font-size: 22px; margin-top: 4px; }
+  .person .name {
+    font-family: var(--script); font-size: 52px; color: var(--gold); line-height: 1.1;
+    min-height: 58px; text-shadow: 0 2px 16px rgba(176,141,87,.28);
+  }
+  .person .full {
+    font-family: var(--serif); font-size: 21px; font-weight: 600; color: var(--ink);
+    letter-spacing: .3px; margin-top: 6px;
+  }
   .person .parents { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
   .person .ig { display: inline-block; margin-top: 10px; color: var(--green); font-size: 13px; text-decoration: none; }
   .amp { font-family: var(--script); font-size: 46px; color: var(--gold-soft); }
@@ -654,8 +660,10 @@ const guest = params.get("to") || params.get("kepada");
 if (guest) $("#guest-name").textContent = decodeURIComponent(guest);
 
 // ---- Fill cover ----
-$("#cover-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
-$("#closing-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
+const coupleNames = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
+$("#cover-names").dataset.full = coupleNames;   // diketik nanti via JS
+$("#cover-names").textContent = "";
+$("#closing-names").textContent = coupleNames;
 document.title = "The Wedding of " + CONFIG.groom.nick + " & " + CONFIG.bride.nick;
 const mainDate = new Date(CONFIG.mainDate);
 $("#cover-date").textContent = mainDate.toLocaleDateString("id-ID", { day:"2-digit", month:"long", year:"numeric" });
@@ -665,8 +673,9 @@ $("#loader-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
 // ---- Loading screen + ketik nama cover ----
 function revealCover(){
   document.body.classList.add("loaded");
-  setTimeout(() => typeText($("#cover-names"), 150), 500);  // ketik nama per huruf
-  setTimeout(() => $("#loader").classList.add("hide"), 900);
+  setTimeout(() => $("#loader").classList.add("hide"), 500);   // loader mulai memudar
+  // ketik nama cover SETELAH loader benar-benar hilang (hindari berbayang)
+  setTimeout(() => { const n = $("#cover-names"); typeText(n, 150, n.dataset.full); }, 1550);
 }
 window.addEventListener("load", revealCover);
 setTimeout(revealCover, 4000); // fallback bila event load lambat
@@ -905,10 +914,10 @@ const io = new IntersectionObserver((entries) => {
 $$(".reveal").forEach(el => io.observe(el));
 
 // ---- Animasi ketik + aktivasi tiap frame ----
-function typeText(el, speed) {
+function typeText(el, speed, text) {
   if (!el || el.dataset.typed) return;
   el.dataset.typed = "1";
-  const full = el.textContent;
+  const full = (text != null) ? text : el.textContent;
   el.textContent = "";
   el.classList.add("typing");
   let i = 0;
@@ -925,6 +934,10 @@ const frameIo = new IntersectionObserver((entries) => {
     // ketik judul (lewati teks Arab agar harakat tidak rusak)
     if (eb && !/[؀-ۿ]/.test(eb.textContent)) typeText(eb, 55);
     if (sec.id === "opening") { const a = sec.querySelector(".ayat"); if (a) typeText(a, 16); }
+    if (sec.id === "couple") {
+      typeText($("#groom-name"), 130);
+      setTimeout(() => typeText($("#bride-name"), 130), 1000);
+    }
   });
 }, { threshold: 0.3 });
 $$("section").forEach(s => frameIo.observe(s));
