@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kelola Daftar Tamu — Generator Link Undangan</title>
+<!--
+  ALAT BANTU PRIBADI (tidak untuk disebar).
+  Buka file ini di browser untuk membuat link undangan personal tiap tamu
+  sekaligus pesan WhatsApp siap kirim.
+-->
+<style>
+  :root { --gold:#b89b6e; --ink:#3f3933; --line:#e4d9c8; --green:#25D366; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; color: var(--ink);
+         max-width: 920px; margin: 0 auto; padding: 24px; background:#faf6f0; line-height:1.5; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color:#8a7d70; font-size:14px; margin-bottom:20px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:18px; }
+  label { font-size:13px; font-weight:600; display:block; margin-bottom:6px; }
+  input, textarea { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px;
+                    font-family:inherit; font-size:14px; }
+  textarea { min-height:160px; resize:vertical; }
+  .hint { font-size:12px; color:#8a7d70; margin-top:6px; }
+  button { cursor:pointer; border:none; border-radius:8px; font-family:inherit; font-size:14px; }
+  .btn-main { background:var(--gold); color:#fff; padding:12px 22px; font-weight:600; }
+  .btn-sm { padding:7px 12px; font-size:13px; }
+  .btn-copy { background:#efe7d8; color:var(--ink); }
+  .btn-wa { background:var(--green); color:#fff; text-decoration:none; display:inline-block; }
+  .btn-link { background:#eee; color:var(--ink); }
+  table { width:100%; border-collapse:collapse; margin-top:6px; font-size:13px; }
+  th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; color:#8a7d70; text-transform:uppercase; letter-spacing:.5px; }
+  .name { font-weight:600; }
+  .actions { white-space:nowrap; display:flex; gap:6px; flex-wrap:wrap; }
+  .count { font-size:13px; color:#8a7d70; }
+  .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+  code { background:#f3ece2; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+  <h1>Kelola Daftar Tamu</h1>
+  <div class="sub">Buat link undangan personal + pesan WhatsApp siap kirim. File ini hanya untuk kamu — jangan disebar.</div>
+
+  <div class="card">
+    <label>1. Alamat undangan (base URL)</label>
+    <input id="base" value="https://hennyfarid.balanglompo.com/" />
+    <div class="hint">Biarkan apa adanya. (Selama domain belum aktif, bisa pakai <code>https://muhfarid2903.github.io/undangan-henny-farid/</code>)</div>
+  </div>
+
+  <div class="card">
+    <label>2. Daftar nama tamu — satu nama per baris</label>
+    <textarea id="names" placeholder="Contoh:
+Bapak Budi Santoso
+Ibu Siti &amp; Keluarga
+Bapak Andi | 081234567890
+Keluarga Besar Pak RT | 62811222333"></textarea>
+    <div class="hint">Opsional: tambahkan nomor WA setelah tanda <code>|</code> agar tombol "Kirim WA" langsung tertuju ke nomor itu. Boleh format <code>0812...</code> atau <code>62812...</code>.</div>
+  </div>
+
+  <div class="card">
+    <label>3. Template pesan WhatsApp</label>
+    <textarea id="tpl" style="min-height:120px">Assalamu'alaikum Wr. Wb.
+
+Kepada Yth. {nama}
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.
+
+Berikut link undangan kami, mohon dibuka untuk informasi lengkap:
+{link}
+
+Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir & memberikan doa restu.
+
+Terima kasih.
+Wassalamu'alaikum Wr. Wb.
+Farid &amp; Henny</textarea>
+    <div class="hint"><code>{nama}</code> &amp; <code>{link}</code> otomatis diganti per tamu.</div>
+    <div class="toolbar">
+      <button class="btn-main" onclick="generate()">Buat Link &amp; Pesan</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <div class="card" id="result-card" style="display:none">
+    <div class="toolbar" style="margin-top:0;margin-bottom:10px">
+      <button class="btn-sm btn-copy" onclick="copyAll()">Salin semua link</button>
+      <button class="btn-sm btn-copy" onclick="exportCsv()">Unduh CSV (Excel)</button>
+    </div>
+    <table id="tbl">
+      <thead><tr><th>#</th><th>Nama</th><th>Aksi</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+<script>
+const $ = s => document.querySelector(s);
+let rows = [];
+
+function parseLines() {
+  return $("#names").value.split("\n").map(l => l.trim()).filter(Boolean).map(line => {
+    const [namePart, phonePart] = line.split("|").map(s => (s||"").trim());
+    let phone = (phonePart||"").replace(/[^0-9]/g, "");
+    if (phone.startsWith("0")) phone = "62" + phone.slice(1);
+    else if (phone.startsWith("8")) phone = "62" + phone;
+    return { name: namePart, phone };
+  });
+}
+
+function linkFor(name) {
+  let base = $("#base").value.trim();
+  if (!base.endsWith("/")) base += "/";
+  return base + "?to=" + encodeURIComponent(name);
+}
+
+function waFor(r) {
+  const link = linkFor(r.name);
+  const msg = $("#tpl").value.replace(/{nama}/g, r.name).replace(/{link}/g, link);
+  const text = encodeURIComponent(msg);
+  return r.phone ? `https://wa.me/${r.phone}?text=${text}` : `https://wa.me/?text=${text}`;
+}
+
+function generate() {
+  rows = parseLines();
+  const tb = $("#tbl tbody");
+  tb.innerHTML = "";
+  rows.forEach((r, i) => {
+    const link = linkFor(r.name);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td class="name">${escapeHtml(r.name)}${r.phone ? `<br><small style="color:#8a7d70">${r.phone}</small>` : ""}</td>
+      <td><div class="actions">
+        <a class="btn-sm btn-wa" href="${waFor(r)}" target="_blank" rel="noopener">Kirim WA</a>
+        <button class="btn-sm btn-copy" onclick="copyText('${escapeAttr(link)}', this)">Salin link</button>
+        <a class="btn-sm btn-link" href="${link}" target="_blank" rel="noopener">Pratinjau</a>
+      </div></td>`;
+    tb.appendChild(tr);
+  });
+  $("#count").textContent = rows.length + " tamu";
+  $("#result-card").style.display = rows.length ? "block" : "none";
+}
+
+function copyText(t, btn) {
+  navigator.clipboard.writeText(t).then(() => {
+    if (btn) { const o = btn.textContent; btn.textContent = "Tersalin ✓"; setTimeout(()=>btn.textContent=o, 1200); }
+  });
+}
+function copyAll() {
+  const txt = rows.map(r => r.name + "\t" + linkFor(r.name)).join("\n");
+  copyText(txt); alert("Semua link disalin (format: Nama [tab] Link). Bisa langsung tempel ke Excel/Sheets.");
+}
+function exportCsv() {
+  let csv = "Nama,Link,WhatsApp\n";
+  rows.forEach(r => { csv += `"${r.name.replace(/"/g,'""')}","${linkFor(r.name)}","${r.phone||''}"\n`; });
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "daftar-tamu.csv"; a.click();
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function escapeAttr(s){ return String(s).replace(/'/g,"\\'").replace(/"/g,"&quot;"); }
+</script>
+</body>
+</html>
