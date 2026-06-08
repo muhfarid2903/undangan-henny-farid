@@ -74,8 +74,8 @@
     content: ''; position: absolute; top: 0; bottom: 0; width: 250px;
     pointer-events: none; z-index: 1; opacity: .95;
     background:
-      url('bloom.svg') no-repeat left bottom / 250px auto,
-      url('bloom-top.svg') no-repeat left top / 188px auto;
+      url('bloom.svg?v=2') no-repeat left bottom / 250px auto,
+      url('bloom-top.svg?v=2') no-repeat left top / 188px auto;
   }
   section::before { left: -40px; }
   section::after  { right: -40px; transform: scaleX(-1); }
@@ -133,16 +133,16 @@
     min-height: 100vh;
     color: #fff;
     background:
-      url('bloom.svg') no-repeat 50% bottom / 320px auto,
-      url('bloom-top.svg') no-repeat 50% top / 280px auto,
+      url('bloom.svg?v=2') no-repeat 50% bottom / 320px auto,
+      url('bloom-top.svg?v=2') no-repeat 50% top / 280px auto,
       radial-gradient(circle at 50% 32%, var(--deep2), var(--deep));
   }
   /* cover: bunga sudut lebih besar & lebat */
   #cover::before, #cover::after {
     width: 320px; opacity: .92;
     background:
-      url('bloom.svg') no-repeat left bottom / 320px auto,
-      url('bloom-top.svg') no-repeat left top / 250px auto;
+      url('bloom.svg?v=2') no-repeat left bottom / 320px auto,
+      url('bloom-top.svg?v=2') no-repeat left top / 250px auto;
   }
   /* bingkai ornamen di cover */
   #cover .frame {
@@ -169,7 +169,7 @@
   /* band motif tenun Bugis di tepi atas & bawah cover */
   .tenun {
     position: absolute; left: 0; width: 100%; height: 20px; z-index: 2;
-    background: url('tenun.svg') repeat-x center / auto 20px; opacity: .9;
+    background: url('tenun.svg?v=2') repeat-x center / auto 20px; opacity: .9;
   }
   .tenun-top { top: 0; } .tenun-bottom { bottom: 0; }
   #cover .eyebrow { color: rgba(255,255,255,.85); }
@@ -429,7 +429,7 @@
   /* tekstur botani vintage samar (hanya bagian terang; ditaruh setelah
      definisi section agar warna dasar tetap, hanya menambah gambar tekstur) */
   #opening, #couple, #events, #story, #gallery, #gift, #checkin {
-    background-image: url('texture.svg');
+    background-image: url('texture.svg?v=2');
     background-repeat: repeat;
     background-size: 240px;
   }
