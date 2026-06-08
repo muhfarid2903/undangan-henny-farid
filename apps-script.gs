@@ -72,6 +72,21 @@ function doPost(e) {
       return json({ ok: true, name: name, already: already });
     }
 
+    // --- Tambah tamu ke DaftarTamu (dari kelola-tamu.html) ---
+    if (data.type === 'tamu') {
+      const sheet = getDaftarSheet();
+      if (!sheet) return json({ ok: false, error: 'Tab DaftarTamu belum ada. Jalankan setupDaftarTamu dulu.' });
+      const name = String(data.name || '').trim().slice(0, 100);
+      if (!name) return json({ ok: false, error: 'nama kosong' });
+      sheet.appendRow([
+        name,
+        String(data.phone || '').slice(0, 30),
+        String(data.pic || '').slice(0, 50),
+        String(data.note || '').slice(0, 200)
+      ]);
+      return json({ ok: true });
+    }
+
     // --- RSVP & ucapan ---
     const sheet = getRsvpSheet();
     sheet.appendRow([
@@ -99,6 +114,17 @@ function doGet(e) {
     const list = rows.map(function (r) { return { t: r[0], name: r[1] }; }).reverse();
     return json({ count: list.length, list: list });
   }
+  if (type === 'tamu') {
+    const sheet = getDaftarSheet();
+    if (!sheet || sheet.getLastRow() < 2) return json({ list: [] });
+    const rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 6).getValues();
+    const list = rows
+      .filter(function (r) { return String(r[0]).trim() !== ''; })
+      .map(function (r) {
+        return { name: r[0], phone: r[1], pic: r[2], note: r[3], link: r[4], wa: r[5] };
+      });
+    return json({ list: list });
+  }
   const sheet = getRsvpSheet();
   const rows = sheet.getDataRange().getValues();
   rows.shift();
@@ -117,6 +143,10 @@ function getRsvpSheet() {
     sheet.appendRow(['Waktu', 'Nama', 'Kehadiran', 'Ucapan']);
   }
   return sheet;
+}
+
+function getDaftarSheet() {
+  return SpreadsheetApp.getActiveSpreadsheet().getSheetByName('DaftarTamu');
 }
 
 function getCheckinSheet() {

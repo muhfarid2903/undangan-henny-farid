@@ -3,161 +3,165 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kelola Daftar Tamu — Generator Link Undangan</title>
-<!--
-  ALAT BANTU PRIBADI (tidak untuk disebar).
-  Buka file ini di browser untuk membuat link undangan personal tiap tamu
-  sekaligus pesan WhatsApp siap kirim.
--->
+<title>Kelola Daftar Tamu — Farid &amp; Henny</title>
 <style>
   :root { --gold:#b89b6e; --ink:#3f3933; --line:#e4d9c8; --green:#25D366; }
   * { box-sizing: border-box; }
   body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; color: var(--ink);
-         max-width: 920px; margin: 0 auto; padding: 24px; background:#faf6f0; line-height:1.5; }
-  h1 { font-size: 22px; margin: 0 0 4px; }
-  .sub { color:#8a7d70; font-size:14px; margin-bottom:20px; }
-  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:18px; }
-  label { font-size:13px; font-weight:600; display:block; margin-bottom:6px; }
-  input, textarea { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px;
-                    font-family:inherit; font-size:14px; }
-  textarea { min-height:160px; resize:vertical; }
-  .hint { font-size:12px; color:#8a7d70; margin-top:6px; }
+         max-width: 960px; margin: 0 auto; padding: 20px; background:#faf6f0; line-height:1.5; }
+  h1 { font-size: 22px; margin: 0 0 2px; }
+  .sub { color:#8a7d70; font-size:14px; margin-bottom:18px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:16px; }
+  label { font-size:12px; font-weight:600; display:block; margin-bottom:4px; }
+  input { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px;
+          font-family:inherit; font-size:14px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; }
+  .row > div { flex:1; min-width:140px; }
   button { cursor:pointer; border:none; border-radius:8px; font-family:inherit; font-size:14px; }
-  .btn-main { background:var(--gold); color:#fff; padding:12px 22px; font-weight:600; }
-  .btn-sm { padding:7px 12px; font-size:13px; }
-  .btn-copy { background:#efe7d8; color:var(--ink); }
+  .btn-main { background:var(--gold); color:#fff; padding:11px 22px; font-weight:600; }
+  .btn-sm { padding:6px 11px; font-size:13px; }
   .btn-wa { background:var(--green); color:#fff; text-decoration:none; display:inline-block; }
-  .btn-link { background:#eee; color:var(--ink); }
+  .btn-copy { background:#efe7d8; color:var(--ink); }
+  .btn-link { background:#eee; color:var(--ink); text-decoration:none; display:inline-block; }
   table { width:100%; border-collapse:collapse; margin-top:6px; font-size:13px; }
-  th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:middle; }
   th { font-size:12px; color:#8a7d70; text-transform:uppercase; letter-spacing:.5px; }
   .name { font-weight:600; }
   .actions { white-space:nowrap; display:flex; gap:6px; flex-wrap:wrap; }
+  .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
   .count { font-size:13px; color:#8a7d70; }
-  .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px; }
-  code { background:#f3ece2; padding:1px 5px; border-radius:4px; }
+  .badge { font-size:11px; padding:2px 9px; border-radius:20px; font-weight:600; }
+  .b-hadir { background:#e8f5e9; color:#2e7d32; }
+  .b-tidak { background:#fdecea; color:#c0392b; }
+  .b-ragu  { background:#fff8e1; color:#b8860b; }
+  .b-none  { background:#eee; color:#999; }
+  .search { max-width:280px; }
+  .muted { color:#8a7d70; font-size:12px; }
+  #msg { font-size:13px; margin-left:6px; }
 </style>
 </head>
 <body>
   <h1>Kelola Daftar Tamu</h1>
-  <div class="sub">Buat link undangan personal + pesan WhatsApp siap kirim. File ini hanya untuk kamu — jangan disebar.</div>
+  <div class="sub">Terhubung ke Google Sheet <b>DaftarTamu</b> — semua perubahan tersimpan & terlihat oleh semua petugas.</div>
 
   <div class="card">
-    <label>1. Alamat undangan (base URL)</label>
-    <input id="base" value="https://hennyfarid.balanglompo.com/" />
-    <div class="hint">Biarkan apa adanya. (Selama domain belum aktif, bisa pakai <code>https://muhfarid2903.github.io/undangan-henny-farid/</code>)</div>
-  </div>
-
-  <div class="card">
-    <label>2. Daftar nama tamu — satu nama per baris</label>
-    <textarea id="names" placeholder="Contoh:
-Bapak Budi Santoso
-Ibu Siti &amp; Keluarga
-Bapak Andi | 081234567890
-Keluarga Besar Pak RT | 62811222333"></textarea>
-    <div class="hint">Opsional: tambahkan nomor WA setelah tanda <code>|</code> agar tombol "Kirim WA" langsung tertuju ke nomor itu. Boleh format <code>0812...</code> atau <code>62812...</code>.</div>
-  </div>
-
-  <div class="card">
-    <label>3. Template pesan WhatsApp</label>
-    <textarea id="tpl" style="min-height:120px">Assalamu'alaikum Wr. Wb.
-
-Kepada Yth. {nama}
-
-Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.
-
-Berikut link undangan kami, mohon dibuka untuk informasi lengkap:
-{link}
-
-Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir & memberikan doa restu.
-
-Terima kasih.
-Wassalamu'alaikum Wr. Wb.
-Farid &amp; Henny</textarea>
-    <div class="hint"><code>{nama}</code> &amp; <code>{link}</code> otomatis diganti per tamu.</div>
-    <div class="toolbar">
-      <button class="btn-main" onclick="generate()">Buat Link &amp; Pesan</button>
-      <span class="count" id="count"></span>
+    <label>Tambah tamu</label>
+    <div class="row">
+      <div><input id="i-name" placeholder="Nama tamu *" /></div>
+      <div><input id="i-phone" placeholder="No. WA (mis. 0812..)" /></div>
+      <div><input id="i-pic" placeholder="Petugas (opsional)" /></div>
     </div>
+    <div class="toolbar" style="margin-top:10px">
+      <button class="btn-main" id="btn-add">+ Tambah ke daftar</button>
+      <span id="msg"></span>
+    </div>
+    <div class="muted" style="margin-top:8px">Tips: isi No. WA agar tombol "Kirim WA" langsung menuju chat tamu itu.</div>
   </div>
 
-  <div class="card" id="result-card" style="display:none">
-    <div class="toolbar" style="margin-top:0;margin-bottom:10px">
-      <button class="btn-sm btn-copy" onclick="copyAll()">Salin semua link</button>
-      <button class="btn-sm btn-copy" onclick="exportCsv()">Unduh CSV (Excel)</button>
+  <div class="card">
+    <div class="toolbar" style="margin-bottom:10px">
+      <input class="search" id="search" placeholder="Cari nama / petugas…" />
+      <span class="count" id="count"></span>
+      <button class="btn-sm btn-copy" id="btn-refresh">↻ Muat ulang</button>
+      <button class="btn-sm btn-copy" id="btn-csv">Unduh CSV</button>
     </div>
     <table id="tbl">
-      <thead><tr><th>#</th><th>Nama</th><th>Aksi</th></tr></thead>
-      <tbody></tbody>
+      <thead><tr><th>#</th><th>Nama</th><th>Petugas</th><th>RSVP</th><th>Aksi</th></tr></thead>
+      <tbody><tr><td colspan="5" class="muted">Memuat…</td></tr></tbody>
     </table>
   </div>
 
 <script>
-const $ = s => document.querySelector(s);
-let rows = [];
+  // URL Web App Apps Script (sama dengan undangan & scanner)
+  const SHEET_URL = "https://script.google.com/macros/s/AKfycbxN537VT3lkzinCZ3JYXP-KjdgN3st29G_qkax7SrvSH7EDknS5f5l-wh6eCY9YZ5zdwQ/exec";
 
-function parseLines() {
-  return $("#names").value.split("\n").map(l => l.trim()).filter(Boolean).map(line => {
-    const [namePart, phonePart] = line.split("|").map(s => (s||"").trim());
-    let phone = (phonePart||"").replace(/[^0-9]/g, "");
-    if (phone.startsWith("0")) phone = "62" + phone.slice(1);
-    else if (phone.startsWith("8")) phone = "62" + phone;
-    return { name: namePart, phone };
+  const $ = s => document.querySelector(s);
+  let guests = [];
+  let rsvpMap = {};
+
+  function esc(s){ return String(s||"").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  function badge(status){
+    const s = (status||"").toLowerCase();
+    if (s.indexOf("hadir") === 0) return '<span class="badge b-hadir">Hadir</span>';
+    if (s.indexOf("tidak") === 0) return '<span class="badge b-tidak">Tdk Hadir</span>';
+    if (s.indexOf("ragu") === 0)  return '<span class="badge b-ragu">Ragu</span>';
+    return '<span class="badge b-none">—</span>';
+  }
+
+  function render() {
+    const q = $("#search").value.trim().toLowerCase();
+    const rows = guests.filter(g =>
+      !q || (g.name||"").toLowerCase().includes(q) || (g.pic||"").toLowerCase().includes(q));
+    $("#count").textContent = rows.length + " / " + guests.length + " tamu";
+    const tb = $("#tbl tbody");
+    if (!guests.length) { tb.innerHTML = '<tr><td colspan="5" class="muted">Belum ada tamu. Tambahkan di atas.</td></tr>'; return; }
+    tb.innerHTML = rows.map((g, i) => {
+      const status = rsvpMap[(g.name||"").trim().toLowerCase()] || "";
+      const wa = g.wa || ("https://wa.me/?text=" + encodeURIComponent("Undangan: " + (g.link||"")));
+      return `<tr>
+        <td>${i+1}</td>
+        <td class="name">${esc(g.name)}${g.phone ? `<br><small class="muted">${esc(g.phone)}</small>` : ""}</td>
+        <td>${esc(g.pic||"")}</td>
+        <td>${badge(status)}</td>
+        <td><div class="actions">
+          <a class="btn-sm btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">Kirim WA</a>
+          <button class="btn-sm btn-copy" data-link="${esc(g.link||"")}">Salin link</button>
+          <a class="btn-sm btn-link" href="${esc(g.link||"#")}" target="_blank" rel="noopener">Pratinjau</a>
+        </div></td>
+      </tr>`;
+    }).join("");
+    tb.querySelectorAll(".btn-copy[data-link]").forEach(b => b.addEventListener("click", () => {
+      navigator.clipboard.writeText(b.dataset.link).then(() => {
+        const o = b.textContent; b.textContent = "Tersalin ✓"; setTimeout(()=>b.textContent=o, 1200);
+      });
+    }));
+  }
+
+  function loadGuests() {
+    $("#tbl tbody").innerHTML = '<tr><td colspan="5" class="muted">Memuat…</td></tr>';
+    Promise.all([
+      fetch(SHEET_URL + "?type=tamu").then(r => r.json()).catch(() => ({ list: [] })),
+      fetch(SHEET_URL).then(r => r.json()).catch(() => [])
+    ]).then(([tamu, rsvp]) => {
+      guests = (tamu && tamu.list) ? tamu.list : [];
+      rsvpMap = {};
+      (Array.isArray(rsvp) ? rsvp : []).forEach(w => {
+        if (w.name) rsvpMap[String(w.name).trim().toLowerCase()] = w.attend || "";
+      });
+      render();
+    });
+  }
+
+  $("#btn-add").addEventListener("click", () => {
+    const name = $("#i-name").value.trim();
+    if (!name) { $("#msg").textContent = "Nama wajib diisi."; return; }
+    const payload = { type:"tamu", name, phone: $("#i-phone").value.trim(), pic: $("#i-pic").value.trim() };
+    const btn = $("#btn-add"); btn.disabled = true; $("#msg").textContent = "Menyimpan…";
+    fetch(SHEET_URL, { method:"POST", body: JSON.stringify(payload) })
+      .then(() => {
+        $("#i-name").value = $("#i-phone").value = ""; // biarkan petugas tetap terisi
+        $("#msg").textContent = "✓ Tersimpan";
+        setTimeout(() => { $("#msg").textContent = ""; loadGuests(); }, 900);
+      })
+      .catch(() => { $("#msg").textContent = "Gagal — cek koneksi."; })
+      .finally(() => { btn.disabled = false; });
   });
-}
 
-function linkFor(name) {
-  let base = $("#base").value.trim();
-  if (!base.endsWith("/")) base += "/";
-  return base + "?to=" + encodeURIComponent(name);
-}
-
-function waFor(r) {
-  const link = linkFor(r.name);
-  const msg = $("#tpl").value.replace(/{nama}/g, r.name).replace(/{link}/g, link);
-  const text = encodeURIComponent(msg);
-  return r.phone ? `https://wa.me/${r.phone}?text=${text}` : `https://wa.me/?text=${text}`;
-}
-
-function generate() {
-  rows = parseLines();
-  const tb = $("#tbl tbody");
-  tb.innerHTML = "";
-  rows.forEach((r, i) => {
-    const link = linkFor(r.name);
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${i+1}</td>
-      <td class="name">${escapeHtml(r.name)}${r.phone ? `<br><small style="color:#8a7d70">${r.phone}</small>` : ""}</td>
-      <td><div class="actions">
-        <a class="btn-sm btn-wa" href="${waFor(r)}" target="_blank" rel="noopener">Kirim WA</a>
-        <button class="btn-sm btn-copy" onclick="copyText('${escapeAttr(link)}', this)">Salin link</button>
-        <a class="btn-sm btn-link" href="${link}" target="_blank" rel="noopener">Pratinjau</a>
-      </div></td>`;
-    tb.appendChild(tr);
+  $("#search").addEventListener("input", render);
+  $("#btn-refresh").addEventListener("click", loadGuests);
+  $("#btn-csv").addEventListener("click", () => {
+    let csv = "Nama,No WA,Petugas,RSVP,Link\n";
+    guests.forEach(g => {
+      const status = rsvpMap[(g.name||"").trim().toLowerCase()] || "";
+      csv += `"${(g.name||'').replace(/"/g,'""')}","${g.phone||''}","${g.pic||''}","${status}","${g.link||''}"\n`;
+    });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8;"}));
+    a.download = "daftar-tamu.csv"; a.click();
   });
-  $("#count").textContent = rows.length + " tamu";
-  $("#result-card").style.display = rows.length ? "block" : "none";
-}
 
-function copyText(t, btn) {
-  navigator.clipboard.writeText(t).then(() => {
-    if (btn) { const o = btn.textContent; btn.textContent = "Tersalin ✓"; setTimeout(()=>btn.textContent=o, 1200); }
-  });
-}
-function copyAll() {
-  const txt = rows.map(r => r.name + "\t" + linkFor(r.name)).join("\n");
-  copyText(txt); alert("Semua link disalin (format: Nama [tab] Link). Bisa langsung tempel ke Excel/Sheets.");
-}
-function exportCsv() {
-  let csv = "Nama,Link,WhatsApp\n";
-  rows.forEach(r => { csv += `"${r.name.replace(/"/g,'""')}","${linkFor(r.name)}","${r.phone||''}"\n`; });
-  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob); a.download = "daftar-tamu.csv"; a.click();
-}
-function escapeHtml(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function escapeAttr(s){ return String(s).replace(/'/g,"\\'").replace(/"/g,"&quot;"); }
+  loadGuests();
 </script>
 </body>
 </html>
