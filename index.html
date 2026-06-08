@@ -403,22 +403,22 @@
 const CONFIG = {
   // --- Nama panggilan & nama lengkap ---
   groom: {
-    nick: "Rangga",
-    full: "Rangga Putra Pratama, S.T.",
-    father: "Bapak Suryadi",
-    mother: "Ibu Wahyuni",
-    childOrder: "Putra pertama",
-    ig: "rangga",                 // username IG tanpa @
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
+    nick: "Farid",
+    full: "dr. Muhammad Farid",
+    father: "Bapak Abdul Salam Karim, S.Pd",
+    mother: "Ibu Rabiah",
+    childOrder: "Putra ketiga",
+    ig: "",                       // username IG tanpa @ (kosongkan jika tidak ada)
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80", // GANTI foto mempelai pria
   },
   bride: {
-    nick: "Cinta",
-    full: "Cinta Dewi Lestari, S.Pd.",
-    father: "Bapak Hartono",
-    mother: "Ibu Sulastri",
-    childOrder: "Putri kedua",
-    ig: "cinta",
-    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80",
+    nick: "Henny",
+    full: "Henny Puspita Syarifuddin",
+    father: "Bapak Syarifuddin",
+    mother: "",                   // nama ibu mempelai wanita — mohon dilengkapi
+    childOrder: "Putri pertama",
+    ig: "",
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80", // GANTI foto mempelai wanita
   },
 
   // --- Foto cover / background (boleh URL atau path lokal mis. "img/cover.jpg") ---
@@ -430,22 +430,22 @@ const CONFIG = {
   ayatRef: "QS. Ar-Rum: 21",
 
   // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM ---
-  mainDate: "2026-12-12T08:00",
+  mainDate: "2026-07-16T10:00",
 
   // --- Acara ---
   akad: {
-    dateText: "Sabtu, 12 Desember 2026",
-    timeText: "08.00 WIB - Selesai",
-    venue: "Masjid Agung Al-Falah",
-    address: "Jl. Merdeka No. 1, Jakarta Pusat",
-    maps: "https://maps.google.com/?q=Masjid+Agung+Al-Falah+Jakarta",
+    dateText: "Kamis, 16 Juli 2026",
+    timeText: "(jam akad — mohon dilengkapi)",
+    venue: "(Tempat akad — mohon dilengkapi)",
+    address: "(Alamat — mohon dilengkapi)",
+    maps: "",   // tempel link Google Maps; kosongkan jika belum ada
   },
   resepsi: {
-    dateText: "Sabtu, 12 Desember 2026",
-    timeText: "11.00 - 14.00 WIB",
-    venue: "Gedung Serbaguna Mawar",
-    address: "Jl. Merdeka No. 1, Jakarta Pusat",
-    maps: "https://maps.google.com/?q=Gedung+Serbaguna+Mawar+Jakarta",
+    dateText: "Kamis, 16 Juli 2026",
+    timeText: "13.00 WITA - Selesai",
+    venue: "(Tempat resepsi — mohon dilengkapi)",
+    address: "(Alamat — mohon dilengkapi)",
+    maps: "",
   },
 
   // --- Love story (boleh tambah/kurangi) ---
@@ -509,7 +509,8 @@ function fillPerson(p, pre) {
   $(pre + "-photo").src = p.photo;
   $(pre + "-name").textContent = p.nick;
   $(pre + "-full").textContent = p.full;
-  $(pre + "-parents").innerHTML = `${p.childOrder} dari<br>${p.father} &amp; ${p.mother}`;
+  const ortu = p.mother ? `${p.father} &amp; ${p.mother}` : p.father;
+  $(pre + "-parents").innerHTML = `${p.childOrder} dari<br>${ortu}`;
   const ig = $(pre + "-ig");
   if (p.ig) { ig.textContent = "@" + p.ig; ig.href = "https://instagram.com/" + p.ig; }
   else ig.style.display = "none";
@@ -521,7 +522,8 @@ fillPerson(CONFIG.bride, "#bride");
 function fillEvent(e, pre) {
   $(pre + "-when").innerHTML = `<strong>${e.dateText}</strong>${e.timeText}`;
   $(pre + "-where").innerHTML = `<b>${e.venue}</b><br>${e.address}`;
-  $(pre + "-map").href = e.maps;
+  const map = $(pre + "-map");
+  if (e.maps) map.href = e.maps; else map.style.display = "none";
 }
 fillEvent(CONFIG.akad, "#akad");
 fillEvent(CONFIG.resepsi, "#resepsi");
