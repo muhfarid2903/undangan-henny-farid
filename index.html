@@ -259,6 +259,24 @@
   .botnav a .ic { font-size: 18px; line-height: 1; }
   .botnav a.active { color: var(--gold); }
 
+  /* ---------- PETALS / ANIMASI ---------- */
+  .petals {
+    position: fixed; top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px; pointer-events: none; overflow: hidden; z-index: 40;
+  }
+  .petal { position: absolute; top: -10%; animation: fall linear infinite; }
+  .petal i {
+    display: block; border-radius: 50% 0 50% 0; opacity: .65;
+    box-shadow: 0 0 4px rgba(184,155,110,.25);
+    animation: sway ease-in-out infinite alternate;
+  }
+  @keyframes fall { to { transform: translateY(112vh); } }
+  @keyframes sway {
+    from { transform: translateX(-12px) rotate(0deg); }
+    to   { transform: translateX(12px) rotate(160deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .petals { display: none; } }
+
   /* ---------- MUSIC BTN ---------- */
   .music-btn {
     position: fixed; bottom: 78px; right: calc(50% - 240px + 16px);
@@ -532,6 +550,9 @@ const CONFIG = {
   // --- Scroll otomatis pelan setelah undangan dibuka (berhenti saat tamu menyentuh layar). ---
   autoScroll: true,
 
+  // --- Animasi kelopak bunga jatuh. false untuk mematikan. ---
+  petals: true,
+
   // --- RSVP ke Google Sheets ---
   // Tempel URL Web App dari Google Apps Script di sini (lihat file CARA-RSVP-GOOGLE-SHEETS.md).
   // Jika dikosongkan "", RSVP hanya tersimpan di browser tamu (mode demo).
@@ -762,6 +783,26 @@ mbtn.addEventListener("click", () => {
   ["cover","couple","events","gallery","rsvp"].forEach(id => {
     const el = document.getElementById(id); if (el) navIo.observe(el);
   });
+})();
+
+// ---- Animasi kelopak bunga jatuh ----
+(function(){
+  if (CONFIG.petals === false) return;
+  const colors = ["#e7d4ad", "#f3e3c9", "#dcc79a", "#efd9c2", "#cdb98c"];
+  const wrap = document.createElement("div"); wrap.className = "petals";
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement("div"); p.className = "petal";
+    const size = 7 + Math.random() * 9;
+    p.style.left = (Math.random() * 100) + "%";
+    p.style.animationDuration = (8 + Math.random() * 9) + "s";
+    p.style.animationDelay = (-Math.random() * 12) + "s";
+    const ic = document.createElement("i");
+    ic.style.width = size + "px"; ic.style.height = size + "px";
+    ic.style.background = colors[i % colors.length];
+    ic.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+    p.appendChild(ic); wrap.appendChild(p);
+  }
+  document.querySelector(".app").appendChild(wrap);
 })();
 
 // ---- Reveal on scroll ----
