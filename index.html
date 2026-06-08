@@ -79,6 +79,31 @@
   .reveal { opacity: 0; transform: translateY(28px); transition: all .9s cubic-bezier(.2,.7,.2,1); }
   .reveal.show { opacity: 1; transform: none; }
 
+  /* ---------- LOADING SCREEN ---------- */
+  .loader {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(rgba(40,32,26,.6), rgba(40,32,26,.75)), var(--cover-img, #2a241e) center/cover no-repeat;
+    transition: opacity .9s ease, visibility .9s ease;
+  }
+  .loader.hide { opacity: 0; visibility: hidden; }
+  .loader-inner { text-align: center; color: #fff; animation: fadeUp 1s both; }
+  .loader-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: .8; }
+  .loader-script { font-family: var(--script); font-size: 52px; color: #fff; margin: 6px 0; text-shadow: 0 2px 18px rgba(0,0,0,.4); }
+  .loader-ring {
+    width: 42px; height: 42px; margin: 18px auto 12px;
+    border: 2px solid rgba(255,255,255,.25); border-top-color: var(--gold-soft);
+    border-radius: 50%; animation: spin 1s linear infinite;
+  }
+  .loader-text { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: .75; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+  /* animasi masuk elemen cover setelah loader hilang */
+  body.loaded #cover .eyebrow   { animation: fadeUp .9s .05s both; }
+  body.loaded #cover .names     { animation: fadeUp 1.1s .25s both; }
+  body.loaded #cover .date-pill { animation: fadeUp 1s .5s both; }
+  body.loaded #cover .guest-box { animation: fadeUp 1s .75s both; }
+
   /* ---------- COVER ---------- */
   #cover {
     height: 100vh; min-height: 600px;
@@ -301,6 +326,16 @@
 <body>
 <div class="app">
 
+  <!-- ================= LOADING SCREEN ================= -->
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-eyebrow">The Wedding Of</div>
+      <div class="loader-script" id="loader-names">Farid &amp; Henny</div>
+      <div class="loader-ring"></div>
+      <div class="loader-text">Memuat Undangan…</div>
+    </div>
+  </div>
+
   <!-- ================= COVER ================= -->
   <section id="cover">
     <div class="eyebrow">The Wedding Of</div>
@@ -492,7 +527,15 @@ const CONFIG = {
 
   // --- Foto cover / background (boleh URL atau path lokal mis. "img/cover.jpg") ---
   coverImage: "cover.jpg",
-  countdownImage: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1000&q=80",
+  countdownImage: "galeri3.jpg",
+
+  // --- Latar foto samar di balik beberapa bagian (kosongkan "" jika tidak mau). ---
+  backgrounds: {
+    opening: "galeri2.jpg",
+    events:  "galeri4.jpg",
+    story:   "galeri1.jpg",
+    gift:    "galeri5.jpg",
+  },
 
   // --- Ayat / kutipan pembuka ---
   ayat: "“Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu mendapat ketenangan hati...”",
@@ -578,6 +621,29 @@ const mainDate = new Date(CONFIG.mainDate);
 $("#cover-date").textContent = mainDate.toLocaleDateString("id-ID", { day:"2-digit", month:"long", year:"numeric" });
 document.documentElement.style.setProperty("--cover-img", `url('${CONFIG.coverImage}')`);
 document.documentElement.style.setProperty("--cd-img", `url('${CONFIG.countdownImage}')`);
+$("#loader-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
+
+// ---- Latar foto samar di balik beberapa bagian ----
+(function(){
+  const ov = "rgba(250,246,240,.90)";
+  Object.entries(CONFIG.backgrounds || {}).forEach(([id, img]) => {
+    const el = document.getElementById(id);
+    if (el && img) {
+      el.style.backgroundImage = `linear-gradient(${ov}, ${ov}), url('${img}')`;
+      el.style.backgroundSize = "cover";
+      el.style.backgroundPosition = "center";
+      el.style.backgroundAttachment = "fixed";
+    }
+  });
+})();
+
+// ---- Loading screen ----
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+  setTimeout(() => $("#loader").classList.add("hide"), 700);
+});
+// fallback bila event load lambat
+setTimeout(() => { document.body.classList.add("loaded"); $("#loader").classList.add("hide"); }, 4000);
 
 // ---- Opening ----
 $("#opening-ayat").textContent = CONFIG.ayat;
