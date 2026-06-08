@@ -706,7 +706,12 @@ const $$ = (s) => document.querySelectorAll(s);
 // ---- Guest name from URL (?to=Nama) ----
 const params = new URLSearchParams(location.search);
 const guest = params.get("to") || params.get("kepada");
-if (guest) $("#guest-name").textContent = decodeURIComponent(guest);
+if (guest) {
+  const guestName = decodeURIComponent(guest);
+  $("#guest-name").textContent = guestName;
+  // isi otomatis nama di form RSVP agar cocok dgn nama di undangan (tetap bisa diedit)
+  const rn = $("#r-name"); if (rn) rn.value = guestName;
+}
 
 // ---- Fill cover ----
 const coupleNames = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
