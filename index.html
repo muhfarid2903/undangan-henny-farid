@@ -529,6 +529,9 @@ const CONFIG = {
   //     Kosongkan [] / "" jika tidak pakai. ---
   music: ["musik1.mp3", "musik2.mp3"],
 
+  // --- Scroll otomatis pelan setelah undangan dibuka (berhenti saat tamu menyentuh layar). ---
+  autoScroll: true,
+
   // --- RSVP ke Google Sheets ---
   // Tempel URL Web App dari Google Apps Script di sini (lihat file CARA-RSVP-GOOGLE-SHEETS.md).
   // Jika dikosongkan "", RSVP hanya tersimpan di browser tamu (mode demo).
@@ -680,10 +683,27 @@ loadWishes();
 // ---- Open invitation ----
 $("#btn-open").addEventListener("click", () => {
   document.body.classList.add("opened");
-  $("#content")?.scrollIntoView();
   window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
   if (CONFIG.music) playMusic();
+  if (CONFIG.autoScroll !== false) setTimeout(startAutoScroll, 1600);
 });
+
+// ---- Auto-scroll pelan (berhenti saat tamu berinteraksi) ----
+function startAutoScroll(){
+  let active = true, acc = 0;
+  const speed = 0.55; // px per frame (makin besar makin cepat)
+  function step(){
+    if (!active) return;
+    acc += speed;
+    if (acc >= 1) { window.scrollBy(0, Math.floor(acc)); acc -= Math.floor(acc); }
+    if (window.innerHeight + Math.ceil(window.scrollY) >= document.body.scrollHeight - 2) return;
+    requestAnimationFrame(step);
+  }
+  const stop = () => { active = false; };
+  ["wheel","touchstart","mousedown","keydown"].forEach(ev =>
+    window.addEventListener(ev, stop, { once: true, passive: true }));
+  requestAnimationFrame(step);
+}
 
 // ---- Music (mendukung 1 lagu atau playlist) ----
 const audio = $("#audio"); const mbtn = $("#music-btn");
