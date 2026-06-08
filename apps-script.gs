@@ -93,7 +93,8 @@ function doPost(e) {
       new Date(),
       String(data.name || '').slice(0, 100),
       String(data.attend || '').slice(0, 30),
-      String(data.msg || '').slice(0, 500)
+      String(data.msg || '').slice(0, 500),
+      String(data.guests || '').slice(0, 10)
     ]);
     return json({ ok: true });
   } catch (err) {
@@ -129,7 +130,7 @@ function doGet(e) {
   const rows = sheet.getDataRange().getValues();
   rows.shift();
   const list = rows.map(function (r) {
-    return { t: r[0], name: r[1], attend: r[2], msg: r[3] };
+    return { t: r[0], name: r[1], attend: r[2], msg: r[3], guests: r[4] };
   }).reverse();
   return json(list);
 }
@@ -140,7 +141,7 @@ function getRsvpSheet() {
   let sheet = ss.getSheetByName(RSVP_SHEET);
   if (!sheet) {
     sheet = ss.insertSheet(RSVP_SHEET);
-    sheet.appendRow(['Waktu', 'Nama', 'Kehadiran', 'Ucapan']);
+    sheet.appendRow(['Waktu', 'Nama', 'Kehadiran', 'Ucapan', 'Jumlah Tamu']);
   }
   return sheet;
 }

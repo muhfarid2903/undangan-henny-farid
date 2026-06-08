@@ -270,6 +270,13 @@
     font-family: var(--sans); font-size: 14px; background: rgba(255,255,255,.95); color: var(--ink);
   }
   .form textarea { resize: vertical; min-height: 80px; }
+  .attend-group { display: flex; gap: 10px; }
+  .attend-btn {
+    flex: 1; padding: 12px 8px; border-radius: 10px; cursor: pointer;
+    border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.1);
+    color: #fff; font-family: var(--sans); font-size: 13px; transition: all .2s;
+  }
+  .attend-btn.active { background: var(--gold); border-color: var(--gold); font-weight: 500; }
   .btn-submit {
     margin-top: 20px; width: 100%; background: var(--gold); color: #fff; border: none;
     padding: 14px; border-radius: 40px; font-family: var(--sans); font-size: 14px;
@@ -510,10 +517,18 @@
         <label>Nama</label>
         <input type="text" id="r-name" required placeholder="Nama kamu" />
         <label>Kehadiran</label>
-        <select id="r-attend">
-          <option value="Hadir">Insya Allah Hadir</option>
-          <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
-          <option value="Ragu">Masih Ragu</option>
+        <div class="attend-group" id="r-attend-group">
+          <button type="button" class="attend-btn active" data-val="Hadir">Insya Allah Hadir</button>
+          <button type="button" class="attend-btn" data-val="Tidak Hadir">Tidak Bisa Hadir</button>
+        </div>
+        <label>Jumlah Tamu</label>
+        <select id="r-guests">
+          <option value="1">1 orang</option>
+          <option value="2">2 orang</option>
+          <option value="3">3 orang</option>
+          <option value="4">4 orang</option>
+          <option value="5">5 orang</option>
+          <option value="6">6 orang</option>
         </select>
         <label>Ucapan &amp; Doa</label>
         <textarea id="r-msg" placeholder="Tulis ucapan & doa untuk kedua mempelai..."></textarea>
@@ -808,9 +823,17 @@ function afterSend(btn, old){
   alert("Terima kasih, ucapan & konfirmasimu sudah tercatat 💛");
   setTimeout(loadWishes, 1000);
 }
+// tombol kehadiran (Hadir / Tidak Hadir)
+let attendVal = "Hadir";
+$$("#r-attend-group .attend-btn").forEach(b => b.addEventListener("click", () => {
+  $$("#r-attend-group .attend-btn").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  attendVal = b.dataset.val;
+}));
+
 $("#rsvp-form").addEventListener("submit", (e) => {
   e.preventDefault();
-  const w = { name: $("#r-name").value.trim(), attend: $("#r-attend").value, msg: $("#r-msg").value.trim(), t: Date.now() };
+  const w = { name: $("#r-name").value.trim(), attend: attendVal, guests: $("#r-guests").value, msg: $("#r-msg").value.trim(), t: Date.now() };
   if (!w.name) return;
   const btn = $("#rsvp-form .btn-submit"); const old = btn.textContent; btn.textContent = "Mengirim...";
   if (SHEET) {
