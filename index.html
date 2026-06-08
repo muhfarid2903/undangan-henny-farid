@@ -17,16 +17,16 @@
 
 <style>
   :root {
-    --bg: #f5eff7;
-    --bg-deep: #ece1f2;
-    --ink: #463a52;
-    --muted: #897d96;
-    --gold: #b08d57;
-    --gold-soft: #d6bf95;
-    --green: #7c6597;       /* aksen ungu (tombol, map, ig) */
-    --line: #e7dcf0;
-    --deep: #3a2c46;        /* ungu gelap untuk bagian gelap */
-    --deep2: #5b4570;
+    --bg: #f4f0e4;
+    --bg-deep: #e9e3d2;
+    --ink: #41463a;
+    --muted: #898c76;
+    --gold: #b0915a;
+    --gold-soft: #d3c191;
+    --green: #6f7d56;       /* aksen sage (tombol, map, ig) */
+    --line: #e3ddc9;
+    --deep: #353f2d;        /* hijau hutan untuk bagian gelap */
+    --deep2: #54603f;
     --serif: 'Cormorant Garamond', serif;
     --display: 'EB Garamond', serif;   /* serif klasik untuk nama */
     --script: 'Great Vibes', cursive;
@@ -49,7 +49,7 @@
     max-width: 480px;
     margin: 0 auto;
     background:
-      radial-gradient(120% 60% at 50% 0%, #efe4f6 0%, var(--bg) 55%),
+      radial-gradient(120% 60% at 50% 0%, #efe9d6 0%, var(--bg) 55%),
       var(--bg);
     position: relative;
     min-height: 100vh;
@@ -212,13 +212,8 @@
   .photo-wrap { position: relative; display: inline-block; margin: 0 auto 26px; }
   .person .photo {
     width: 190px; height: 248px; border-radius: 50%; object-fit: cover;
-    display: block; border: none; background: #fff;
-    box-shadow:
-      0 0 0 4px #fff,
-      0 0 0 5px var(--gold),
-      0 0 0 10px #fff,
-      0 0 0 11px var(--gold-soft),
-      0 16px 36px rgba(74,58,82,.22);
+    display: block; border: none;
+    box-shadow: 0 14px 34px rgba(65,70,58,.22);
   }
   .person .name {
     font-family: var(--script); font-size: 52px; color: var(--gold); line-height: 1.1;
@@ -1030,7 +1025,7 @@ mbtn.addEventListener("click", () => {
 // ---- Animasi kelopak bunga jatuh ----
 (function(){
   if (CONFIG.petals === false) return;
-  const colors = ["#c9b3d6", "#d9c7e6", "#b59ccb", "#e6d9ef", "#caa9d8"];
+  const colors = ["#cdd6b8", "#e3e6d0", "#bcc9a0", "#eef0e0", "#aebf8f"];
   const wrap = document.createElement("div"); wrap.className = "petals";
   for (let i = 0; i < 16; i++) {
     const p = document.createElement("div"); p.className = "petal";
