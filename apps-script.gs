@@ -8,6 +8,46 @@
 
 const RSVP_SHEET = 'RSVP';
 const CHECKIN_SHEET = 'CheckIn';
+const SITE = 'https://hennyfarid.balanglompo.com/';  // alamat undangan
+
+/* ============================================================
+   SETUP DAFTAR TAMU TERPUSAT
+   Jalankan SEKALI dari editor: pilih fungsi "setupDaftarTamu"
+   di toolbar lalu klik Run. Tab "DaftarTamu" akan terbentuk
+   dengan kolom Link & Kirim WA otomatis. (Tidak perlu deploy.)
+   ============================================================ */
+function setupDaftarTamu() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName('DaftarTamu');
+  if (!sh) sh = ss.insertSheet('DaftarTamu');
+  sh.clear();
+
+  sh.getRange('A1:F1')
+    .setValues([['Nama Tamu', 'No. WA (opsional)', 'PIC / Petugas', 'Catatan', 'Link Undangan', 'Kirim WhatsApp']])
+    .setFontWeight('bold').setBackground('#f3ece2');
+
+  // Kolom E: Link undangan personal (otomatis untuk setiap nama di kolom A)
+  sh.getRange('E2').setFormula(
+    '=ARRAYFORMULA(IF(A2:A="","","' + SITE + '?to="&SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(A2:A,"&","%26"),",","%2C")," ","%20")))'
+  );
+
+  // Kolom F: Link kirim WhatsApp (nomor otomatis dinormalkan ke 62, pesan + link terenkode)
+  var ph = 'IF(B2:B="","",IF(LEFT(B2:B&"",1)="0","62"&MID(B2:B&"",2,30),IF(LEFT(B2:B&"",2)="62",B2:B&"",IF(LEFT(B2:B&"",1)="8","62"&(B2:B&""),B2:B&""))))';
+  var msg = '"Assalamualaikum Wr. Wb. Yth. "&A2:A&", dengan hormat kami mengundang Bapak/Ibu/Saudara/i pada pernikahan Farid & Henny, Kamis 16 Juli 2026. Undangan lengkap: "&E2:E';
+  var enc = function (x) {
+    return 'SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(' + x +
+      ',"%","%25"),":","%3A"),"/","%2F"),"?","%3F"),"=","%3D"),"&","%26")," ","%20"),",","%2C")';
+  };
+  sh.getRange('F2').setFormula(
+    '=ARRAYFORMULA(IF(A2:A="","","https://wa.me/"&(' + ph + ')&"?text="&' + enc(msg) + '))'
+  );
+
+  sh.setFrozenRows(1);
+  sh.setColumnWidth(1, 200);
+  sh.setColumnWidth(5, 340);
+  sh.setColumnWidth(6, 360);
+  SpreadsheetApp.getUi().alert('Tab "DaftarTamu" siap! Bagikan spreadsheet ini (akses Editor) ke pegawai.');
+}
 
 // ---------- POST ----------
 function doPost(e) {
