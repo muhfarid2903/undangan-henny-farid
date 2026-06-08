@@ -180,9 +180,17 @@
   /* ---------- COUPLE ---------- */
   #couple { background: var(--bg-deep, #f3ece2); }
   .person { margin: 30px 0; }
+  .photo-wrap { position: relative; display: inline-block; margin: 0 auto 26px; }
+  .photo-wrap::before, .photo-wrap::after {
+    content: '❧'; position: absolute; left: 50%; transform: translateX(-50%);
+    color: var(--gold); font-size: 26px; z-index: 3; line-height: 1;
+    text-shadow: 0 1px 4px rgba(74,58,82,.18);
+  }
+  .photo-wrap::before { top: -22px; }
+  .photo-wrap::after  { bottom: -22px; transform: translateX(-50%) rotate(180deg); }
   .person .photo {
     width: 190px; height: 248px; border-radius: 50%; object-fit: cover;
-    margin: 0 auto 22px; border: none; background: #fff;
+    display: block; border: none; background: #fff;
     box-shadow:
       0 0 0 4px #fff,
       0 0 0 5px var(--gold),
@@ -367,6 +375,14 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (max-width: 480px) { .music-btn { right: 16px; } }
 
+  /* tekstur botani vintage samar (hanya bagian terang; ditaruh setelah
+     definisi section agar warna dasar tetap, hanya menambah gambar tekstur) */
+  #opening, #couple, #events, #story, #gallery, #gift, #checkin {
+    background-image: url('texture.svg');
+    background-repeat: repeat;
+    background-size: 240px;
+  }
+
   /* lightbox */
   .lightbox {
     position: fixed; inset: 0; background: rgba(0,0,0,.9); z-index: 100;
@@ -421,7 +437,7 @@
       </p>
 
       <div class="person reveal">
-        <img class="photo" id="groom-photo" alt="Mempelai Pria" />
+        <div class="photo-wrap"><img class="photo" id="groom-photo" alt="Mempelai Pria" /></div>
         <div class="name" id="groom-name">Rangga</div>
         <div class="full" id="groom-full">Rangga Putra, S.T.</div>
         <div class="parents" id="groom-parents"></div>
@@ -431,7 +447,7 @@
       <div class="amp reveal">&amp;</div>
 
       <div class="person reveal">
-        <img class="photo" id="bride-photo" alt="Mempelai Wanita" />
+        <div class="photo-wrap"><img class="photo" id="bride-photo" alt="Mempelai Wanita" /></div>
         <div class="name" id="bride-name">Cinta</div>
         <div class="full" id="bride-full">Cinta Dewi, S.Pd.</div>
         <div class="parents" id="bride-parents"></div>
