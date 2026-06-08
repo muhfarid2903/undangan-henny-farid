@@ -17,16 +17,16 @@
 
 <style>
   :root {
-    --bg: #f4f0e4;
-    --bg-deep: #e9e3d2;
-    --ink: #41463a;
-    --muted: #898c76;
-    --gold: #b0915a;
-    --gold-soft: #d3c191;
-    --green: #6f7d56;       /* aksen sage (tombol, map, ig) */
-    --line: #e3ddc9;
-    --deep: #353f2d;        /* hijau hutan untuk bagian gelap */
-    --deep2: #54603f;
+    --bg: #f7efec;
+    --bg-deep: #efe1dc;
+    --ink: #4a3b3b;
+    --muted: #a98a8a;
+    --gold: #bd9968;
+    --gold-soft: #e1c79a;
+    --green: #b07f86;       /* aksen dusty rose (tombol, map, ig) */
+    --line: #ecdcd6;
+    --deep: #6e4046;        /* maroon-rose untuk bagian gelap */
+    --deep2: #8a5760;
     --serif: 'Cormorant Garamond', serif;
     --display: 'Cormorant Garamond', serif;   /* serif italic elegan untuk nama */
     --script: 'Great Vibes', cursive;
@@ -49,7 +49,7 @@
     max-width: 480px;
     margin: 0 auto;
     background:
-      radial-gradient(120% 60% at 50% 0%, #efe9d6 0%, var(--bg) 55%),
+      radial-gradient(120% 60% at 50% 0%, #f6e7e2 0%, var(--bg) 55%),
       var(--bg);
     position: relative;
     min-height: 100vh;
@@ -1014,7 +1014,7 @@ mbtn.addEventListener("click", () => {
 // ---- Animasi kelopak bunga jatuh ----
 (function(){
   if (CONFIG.petals === false) return;
-  const colors = ["#cdd6b8", "#e3e6d0", "#bcc9a0", "#eef0e0", "#aebf8f"];
+  const colors = ["#e9cdd2", "#f0dfe2", "#dcb9c2", "#f5e7ea", "#cfa6b1"];
   const wrap = document.createElement("div"); wrap.className = "petals";
   for (let i = 0; i < 16; i++) {
     const p = document.createElement("div"); p.className = "petal";
