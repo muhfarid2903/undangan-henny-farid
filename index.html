@@ -263,12 +263,26 @@
 
   /* ---------- GALLERY ---------- */
   #gallery { background: var(--bg); }
-  .grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 26px;
+  .gal-title { font-family: var(--serif); font-weight: 500; font-size: 26px; color: var(--ink); margin-top: 4px; }
+  .gallery-wrap { margin-top: 22px; }
+  .gal-main {
+    position: relative; width: 100%; aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 14px 34px rgba(74,58,82,.22); background: var(--bg-deep);
   }
-  .grid img { border-radius: 12px; aspect-ratio: 1; object-fit: cover; cursor: pointer; transition: transform .3s; }
-  .grid img:active { transform: scale(.97); }
-  .grid img.tall { grid-row: span 2; aspect-ratio: 1/2; }
+  .gal-main img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity 1.1s ease; cursor: pointer;
+  }
+  .gal-main img.active { opacity: 1; }
+  .gal-strip {
+    margin-top: 12px; overflow: hidden;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .gal-track { display: flex; gap: 8px; width: max-content; animation: marquee 28s linear infinite; }
+  .gal-track:hover { animation-play-state: paused; }
+  .gal-track img { width: 88px; height: 88px; object-fit: cover; border-radius: 10px; cursor: pointer; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ---------- RSVP ---------- */
   #rsvp { background: linear-gradient(160deg, var(--deep2), var(--deep)); color: #fff; }
@@ -523,8 +537,12 @@
     <!-- ================= GALLERY ================= -->
     <section id="gallery">
       <div class="eyebrow reveal">Galeri</div>
+      <h2 class="gal-title reveal">Momen Bahagia Kami</h2>
       <div class="divider reveal"></div>
-      <div class="grid reveal" id="grid"></div>
+      <div class="gallery-wrap reveal">
+        <div class="gal-main" id="gal-main"></div>
+        <div class="gal-strip"><div class="gal-track" id="gal-track"></div></div>
+      </div>
     </section>
 
     <!-- ================= RSVP ================= -->
@@ -787,14 +805,34 @@ $("#timeline").innerHTML = CONFIG.story.map(s =>
   `<div class="tl-item"><div class="yr">${s.year}</div><div class="tx">${s.text}</div></div>`
 ).join("");
 
-// ---- Gallery ----
-$("#grid").innerHTML = CONFIG.gallery.map((src,i) =>
-  `<img src="${src}" class="${i%3===0?'tall':''}" alt="Galeri ${i+1}" loading="lazy" />`
-).join("");
-$$("#grid img").forEach(img => img.addEventListener("click", () => {
-  $("#lightbox-img").src = img.src; $("#lightbox").classList.add("show");
-}));
+// ---- Gallery (foto utama slideshow + strip bergeser) ----
+function openLightbox(src){ $("#lightbox-img").src = src; $("#lightbox").classList.add("show"); }
 $("#lightbox").addEventListener("click", () => $("#lightbox").classList.remove("show"));
+(function(){
+  const main = $("#gal-main"), track = $("#gal-track");
+  CONFIG.gallery.forEach((src, i) => {
+    const im = document.createElement("img");
+    im.src = src; im.loading = "lazy"; im.alt = "Galeri " + (i+1);
+    if (i === 0) im.className = "active";
+    im.addEventListener("click", () => openLightbox(src));
+    main.appendChild(im);
+  });
+  // strip digandakan agar geseran mulus & tak terputus
+  CONFIG.gallery.concat(CONFIG.gallery).forEach(src => {
+    const t = document.createElement("img");
+    t.src = src; t.loading = "lazy"; t.alt = "";
+    t.addEventListener("click", () => openLightbox(src));
+    track.appendChild(t);
+  });
+  // auto-ganti foto utama
+  const slides = main.querySelectorAll("img");
+  let gi = 0;
+  if (slides.length > 1) setInterval(() => {
+    slides[gi].classList.remove("active");
+    gi = (gi + 1) % slides.length;
+    slides[gi].classList.add("active");
+  }, 3200);
+})();
 
 // ---- Gift ----
 $("#gift-list").innerHTML = CONFIG.gifts.map((g,i) => `
