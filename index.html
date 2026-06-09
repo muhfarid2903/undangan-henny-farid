@@ -170,6 +170,11 @@
     background: url('tenun.svg?v=2') repeat-x center / auto 20px; opacity: .9;
   }
   .tenun-top { top: 0; } .tenun-bottom { bottom: 0; }
+  #cover .monogram {
+    font-family: var(--serif); font-weight: 600; font-size: 40px; letter-spacing: 3px;
+    color: #fff; margin-bottom: 8px; text-shadow: 0 2px 18px rgba(0,0,0,.45);
+  }
+  body.loaded #cover .monogram { animation: fadeUp .9s .02s both; }
   #cover .eyebrow { color: rgba(255,255,255,.85); }
   #cover .names {
     font-family: var(--script); font-size: 66px; line-height: 1.12;
@@ -499,27 +504,24 @@
   /* ============ TAMPILAN LAPTOP (split: foto kiri + undangan kanan) ============ */
   @media (min-width: 1000px) {
     body { background: #e7d6d0; }
-    /* panel foto besar di kiri, tetap saat scroll */
+    /* undangan tetap 480px, dirapatkan ke kanan */
+    .app {
+      max-width: 480px; width: 480px; margin: 0 0 0 auto;
+      box-shadow: -12px 0 50px rgba(74,58,82,.20); z-index: 1;
+    }
+    /* panel foto besar mengisi sisa kiri, tetap saat scroll */
     body::before {
-      content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 50vw;
+      content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 480px;
       background-image: var(--desktop-photo, url('cover.jpg'));
       background-size: cover; background-position: center; z-index: 0;
     }
-    /* undangan pindah ke separuh kanan layar */
-    .app {
-      max-width: none; width: 50vw; min-height: 100vh;
-      margin: 0 0 0 50vw; box-shadow: -12px 0 50px rgba(74,58,82,.20); z-index: 1;
-    }
-    /* kelopak bunga & navigasi mengikuti panel kanan */
-    .petals { left: 50vw; transform: none; width: 50vw; max-width: none; }
+    /* kelopak bunga & navigasi mengikuti panel undangan (480px kanan) */
+    .petals { left: auto; right: 0; transform: none; width: 480px; max-width: none; }
     .botnav {
-      left: 75vw; transform: translateX(-50%);
-      width: auto; max-width: none; border: 1px solid var(--line);
-      border-radius: 40px; bottom: 22px; padding: 8px 10px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.16);
+      left: auto; right: 0; transform: none;
+      width: 480px; max-width: 480px; bottom: 0;
     }
-    .botnav a { flex: 0 0 auto; padding: 4px 16px; }
-    .music-btn { right: 26px; bottom: 26px; }
+    .music-btn { right: 16px; bottom: 78px; }
   }
 </style>
 </head>
@@ -541,12 +543,11 @@
     <div class="frame"></div>
     <div class="tenun tenun-top"></div>
     <div class="cover-card">
+      <div class="monogram" id="cover-monogram">F &amp; H</div>
       <div class="eyebrow">The Wedding Of</div>
       <div class="names" id="cover-names">Rangga & Cinta</div>
-      <div class="date-pill" id="cover-date">00 . 00 . 0000</div>
-      <p class="cover-invite">Dengan hormat, kami mengundang Bapak/Ibu/Saudara/i untuk turut menyaksikan dan mendoakan hari bahagia kami.</p>
       <div class="guest-box">
-        <div class="to">Kepada Yth. Bapak/Ibu/Saudara/i</div>
+        <div class="to">Kepada Yth:</div>
         <div class="guest-name" id="guest-name">Tamu Undangan</div>
         <button class="btn-open" id="btn-open">Buka Undangan</button>
       </div>
@@ -880,7 +881,7 @@ $("#cover-names").textContent = "";
 $("#closing-names").textContent = coupleNames;
 document.title = "The Wedding of " + CONFIG.groom.nick + " & " + CONFIG.bride.nick;
 const mainDate = new Date(CONFIG.mainDate);
-$("#cover-date").textContent = mainDate.toLocaleDateString("id-ID", { day:"2-digit", month:"long", year:"numeric" });
+$("#cover-monogram").textContent = (CONFIG.groom.nick[0] || "") + " & " + (CONFIG.bride.nick[0] || "");
 $("#loader-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
 // Catatan: tema ungu pakai latar gradien (CSS). Foto kalian tampil di Galeri.
 
