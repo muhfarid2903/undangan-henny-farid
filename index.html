@@ -517,11 +517,15 @@
     }
     /* kelopak bunga & navigasi mengikuti panel undangan (480px kanan) */
     .petals { left: auto; right: 0; transform: none; width: 480px; max-width: none; }
+    /* navigasi jadi pill mengambang, ter-center di bawah panel undangan */
     .botnav {
-      left: auto; right: 0; transform: none;
-      width: 480px; max-width: 480px; bottom: 0;
+      left: calc(100vw - 240px); right: auto; transform: translateX(-50%);
+      width: auto; max-width: none; bottom: 22px;
+      border: 1px solid var(--line); border-radius: 40px;
+      padding: 8px 6px; box-shadow: 0 14px 34px rgba(0,0,0,.18);
     }
-    .music-btn { right: 16px; bottom: 78px; }
+    .botnav a { flex: 0 0 auto; padding: 4px 14px; }
+    .music-btn { right: 24px; bottom: 86px; }
   }
 </style>
 </head>
