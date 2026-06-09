@@ -492,6 +492,8 @@
   .bg-white-text .names, .bg-white-text .credit { color: #fff !important; }
   .bg-white-text .divider { background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent); }
   .bg-hide-eyebrow > .eyebrow { display: none; }
+  /* halo putih tipis agar teks tetap terbaca di atas bunga background terang */
+  .has-bg:not(.bg-white-text) { text-shadow: 0 0 7px rgba(255,251,248,.92), 0 1px 2px rgba(255,251,248,.85); }
 
   /* lightbox */
   .lightbox {
@@ -1101,7 +1103,7 @@ loadWishes();
     d.className = "intro-slide" + (s.type === "photo" ? " i-photo" : "");
     d.innerHTML = slideHTML(s);
     if (s.bg) {
-      const veil = "radial-gradient(125% 80% at 50% 50%, rgba(250,244,240,.78), rgba(250,244,240,.22))";
+      const veil = "linear-gradient(rgba(249,243,239,.6), rgba(249,243,239,.6))";
       d.style.background = `${veil}, url('${s.bg}') center center / cover no-repeat`;
     }
     stage.appendChild(d);
@@ -1132,8 +1134,8 @@ loadWishes();
     const cfg = bg[id]; if (!cfg || !cfg.src) return;
     const sec = document.getElementById(id); if (!sec) return;
     const veil = cfg.whiteText
-      ? "radial-gradient(125% 80% at 50% 46%, rgba(58,28,33,.66), rgba(58,28,33,.14))"
-      : "radial-gradient(125% 80% at 50% 50%, rgba(250,244,240,.80), rgba(250,244,240,.24))";
+      ? "radial-gradient(125% 80% at 50% 46%, rgba(58,28,33,.66), rgba(58,28,33,.22))"
+      : "linear-gradient(rgba(249,243,239,.64), rgba(249,243,239,.64))";
     sec.style.background = `${veil}, url('${cfg.src}') center center / cover no-repeat`;
     sec.classList.add("has-bg");
     if (cfg.whiteText)  sec.classList.add("bg-white-text");
