@@ -157,10 +157,8 @@
   /* kartu kaca transparan (frosted) pembungkus konten cover */
   .cover-card {
     max-width: 330px; margin: 0 auto; padding: 34px 26px 30px;
-    background: rgba(255,255,255,.08);
-    -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
-    border: 1px solid rgba(214,191,149,.35); border-radius: 20px;
-    box-shadow: 0 16px 44px rgba(0,0,0,.28);
+    background: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+    border: none; box-shadow: none;
   }
   .cover-invite {
     font-family: var(--serif); font-style: italic; font-size: 14px;
@@ -208,6 +206,8 @@
 
   /* ---------- COUPLE ---------- */
   #couple { background: var(--bg-deep, #f3ece2); }
+  .couple-title { font-family: var(--script); font-weight: 400; font-size: 46px; color: var(--gold); line-height: 1.1; }
+  .couple-intro { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--muted); max-width: 340px; margin: 12px auto 0; line-height: 1.65; }
   .person { margin: 30px 0; }
   .couple-quote {
     font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.6;
@@ -371,6 +371,45 @@
   .qr-card #qrcode img, .qr-card #qrcode canvas { border-radius: 8px; }
   .qr-card .qr-name { font-family: var(--serif); font-size: 20px; margin-top: 14px; color: var(--gold); }
 
+  /* ---------- INTRO (undangan lengkap berurutan, cross-fade) ---------- */
+  #intro {
+    color: var(--ink);
+    background:
+      url('texture.svg?v=2') repeat,
+      radial-gradient(120% 80% at 50% 25%, #fdf7f3, var(--bg-deep));
+    background-size: 240px, auto;
+  }
+  #intro .frame {
+    position: absolute; inset: 22px; border: 1px solid rgba(189,153,104,.5);
+    border-radius: 8px; pointer-events: none; z-index: 2;
+  }
+  #intro .frame::before, #intro .frame::after {
+    content: '❦'; position: absolute; left: 50%; transform: translateX(-50%);
+    color: var(--gold); font-size: 18px;
+  }
+  #intro .frame::before { top: -11px; } #intro .frame::after { bottom: -11px; }
+  .intro-stage { position: absolute; inset: 0; z-index: 1; }
+  .intro-slide {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px; padding: 76px 34px;
+    opacity: 0; transition: opacity 1.2s ease; pointer-events: none;
+  }
+  .intro-slide.show { opacity: 1; }
+  /* slide foto full-bleed (mengisi seluruh frame) */
+  .intro-slide.i-photo { padding: 0; }
+  .intro-slide.i-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .intro-slide .i-sub { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+  .intro-slide .i-big { font-family: var(--script); font-size: 52px; line-height: 1.15; color: var(--deep); }
+  .intro-slide .i-text { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.65; color: var(--ink); }
+  .intro-slide .i-small { font-family: var(--serif); font-size: 15px; line-height: 1.55; color: var(--muted); max-width: 320px; }
+  .intro-slide .i-name { font-family: var(--script); font-size: 30px; line-height: 1.15; color: var(--deep); margin-top: 4px; }
+  .intro-slide .i-parents { font-family: var(--serif); font-size: 15px; color: var(--muted); line-height: 1.5; }
+  .intro-slide .i-amp { font-family: var(--script); font-size: 26px; color: var(--gold); margin: 4px 0; }
+  .intro-slide .i-note { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--gold); letter-spacing: .5px; margin-top: 6px; }
+  .intro-dots { position: absolute; bottom: 38px; left: 0; width: 100%; display: flex; gap: 8px; justify-content: center; z-index: 3; }
+  .intro-dots b { width: 7px; height: 7px; border-radius: 50%; background: rgba(110,64,70,.25); transition: all .3s; }
+  .intro-dots b.on { background: var(--gold); transform: scale(1.25); }
+
   /* ---------- BOTTOM NAV ---------- */
   .botnav {
     position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -435,6 +474,20 @@
     background-size: 240px;
   }
 
+  /* ---------- BACKGROUND PER SEGMEN ---------- */
+  .has-bg { background-repeat: no-repeat; background-position: center; background-size: cover; }
+  /* bg sudah punya hiasan bunga & bingkai sendiri -> matikan hiasan bawaan agar tidak dobel */
+  .has-bg::before, .has-bg::after { display: none !important; }
+  .has-bg .frame { display: none !important; }
+  #cover.has-bg .tenun { display: none !important; }
+  /* segmen berteks putih di atas background gelap */
+  .bg-white-text, .bg-white-text .eyebrow, .bg-white-text .ayat, .bg-white-text .sub,
+  .bg-white-text > p, .bg-white-text .couple-title, .bg-white-text .couple-intro,
+  .bg-white-text .gal-title, .bg-white-text .rsvp-title, .bg-white-text .rsvp-sub,
+  .bg-white-text .names, .bg-white-text .credit { color: #fff !important; }
+  .bg-white-text .divider { background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent); }
+  .bg-hide-eyebrow > .eyebrow { display: none; }
+
   /* lightbox */
   .lightbox {
     position: fixed; inset: 0; background: rgba(0,0,0,.9); z-index: 100;
@@ -442,6 +495,32 @@
   }
   .lightbox.show { display: flex; }
   .lightbox img { max-height: 85vh; border-radius: 8px; }
+
+  /* ============ TAMPILAN LAPTOP (split: foto kiri + undangan kanan) ============ */
+  @media (min-width: 1000px) {
+    body { background: #e7d6d0; }
+    /* panel foto besar di kiri, tetap saat scroll */
+    body::before {
+      content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 50vw;
+      background-image: var(--desktop-photo, url('cover.jpg'));
+      background-size: cover; background-position: center; z-index: 0;
+    }
+    /* undangan pindah ke separuh kanan layar */
+    .app {
+      max-width: none; width: 50vw; min-height: 100vh;
+      margin: 0 0 0 50vw; box-shadow: -12px 0 50px rgba(74,58,82,.20); z-index: 1;
+    }
+    /* kelopak bunga & navigasi mengikuti panel kanan */
+    .petals { left: 50vw; transform: none; width: 50vw; max-width: none; }
+    .botnav {
+      left: 75vw; transform: translateX(-50%);
+      width: auto; max-width: none; border: 1px solid var(--line);
+      border-radius: 40px; bottom: 22px; padding: 8px 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.16);
+    }
+    .botnav a { flex: 0 0 auto; padding: 4px 16px; }
+    .music-btn { right: 26px; bottom: 26px; }
+  }
 </style>
 </head>
 <body>
@@ -478,6 +557,13 @@
 
   <div class="content">
 
+    <!-- ================= INTRO (undangan lengkap berurutan) ================= -->
+    <section id="intro">
+      <div class="frame"></div>
+      <div class="intro-stage" id="intro-stage"></div>
+      <div class="intro-dots" id="intro-dots"></div>
+    </section>
+
     <!-- ================= OPENING ================= -->
     <section id="opening" class="reveal">
       <div class="eyebrow">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيْمِ</div>
@@ -488,9 +574,9 @@
 
     <!-- ================= COUPLE ================= -->
     <section id="couple">
-      <div class="eyebrow reveal">Assalamu'alaikum Wr. Wb.</div>
-      <p class="reveal" style="color:var(--muted);font-size:14px;max-width:340px;margin:6px auto 0">
-        Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:
+      <h2 class="couple-title reveal">Bride &amp; Groom</h2>
+      <p class="couple-intro reveal">
+        Kami adalah sepasang manusia yang sedang berbahagia. Kami mengundang Bapak/Ibu/Saudara sekalian untuk menghadiri hari bahagia kami. Ini adalah kami.
       </p>
 
       <div class="person reveal">
@@ -625,11 +711,13 @@
 
   <!-- ================= BOTTOM NAV ================= -->
   <nav class="botnav" id="botnav">
-    <a data-target="cover"><span class="ic">⌂</span><span>Home</span></a>
+    <a data-target="intro"><span class="ic">⌂</span><span>Home</span></a>
     <a data-target="couple"><span class="ic">♥</span><span>Mempelai</span></a>
     <a data-target="events"><span class="ic">❀</span><span>Acara</span></a>
+    <a data-target="countdown"><span class="ic">◷</span><span>Kalender</span></a>
     <a data-target="gallery"><span class="ic">▦</span><span>Galeri</span></a>
     <a data-target="rsvp"><span class="ic">✎</span><span>Ucapan</span></a>
+    <a data-target="gift"><span class="ic">◈</span><span>Hadiah</span></a>
   </nav>
 
   <button class="music-btn" id="music-btn" title="Musik"><span class="ico">♪</span></button>
@@ -669,6 +757,21 @@ const CONFIG = {
   // --- Ayat / kutipan pembuka ---
   ayat: "“Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu mendapat ketenangan hati...”",
   ayatRef: "QS. Ar-Rum: 21",
+
+  // --- Intro: undangan lengkap berurutan (slide saling fade in/out) setelah "Buka Undangan".
+  //     Tiap slide tampil lalu memudar, berganti slide berikutnya, lalu berulang.
+  //     Slide ber-"type" otomatis ambil data dari CONFIG (hero/ayat/couple/hormat).
+  //     Slide bebas: pakai sub, big ("{names}"=nama mempelai), text, note. Tambah hold (ms) untuk atur durasi.
+  //     Tambah/kurangi/urutkan slide sesuka hati. ---
+  //     Tiap slide bisa punya "bg" sendiri (background-nya ikut berganti saat slide berganti).
+  intro: [
+    { type: "hero", note: "Sakinah, Mawaddah, wa Rahmah", bg: "bg/b9.jpeg" },  // The Wedding Of + nama mempelai
+    { type: "ayat", bg: "bg/b13.jpeg" },                       // ayat + ayatRef di atas
+    { type: "photo", src: "galeri1.jpg" },                     // slide foto full (ganti filenya sesukamu)
+    { type: "photo", src: "galeri3.jpg" },                     // slide foto full kedua (atau hapus baris ini)
+    { type: "couple", bg: "bg/b11.jpeg" },                     // salam + mempelai + orang tua
+    { type: "hormat", bg: "bg/b3.jpeg" },                      // kehormatan + hormat kami
+  ],
 
   // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM+08:00
   //     (+08:00 = WITA, supaya jam tetap benar untuk tamu di zona waktu mana pun). ---
@@ -725,10 +828,33 @@ const CONFIG = {
   // --- Animasi kelopak bunga jatuh. false untuk mematikan. ---
   petals: true,
 
+  // --- Foto besar di sisi kiri saat dibuka di laptop/desktop (layar lebar). ---
+  desktopPhoto: "cover.jpg",
+
   // --- RSVP ke Google Sheets ---
   // Tempel URL Web App dari Google Apps Script di sini (lihat file CARA-RSVP-GOOGLE-SHEETS.md).
   // Jika dikosongkan "", RSVP hanya tersimpan di browser tamu (mode demo).
   sheetUrl: "https://script.google.com/macros/s/AKfycbyjXtZ9kaQFEMj0idXmUesU9fnOEALwWf6Uf9vCh9G4FNv0sYsViN72TwMOeG-ki8y5IQ/exec",
+
+  // --- Background per segmen (foto penuh + veil agar teks terbaca) ---
+  //     src     : nama file gambar (di folder bg/). Kosongkan/hapus baris untuk pakai tampilan default.
+  //     whiteText: true  -> segmen berteks putih (veil gelap). Pakai untuk background bertengah gelap.
+  //     hideEyebrow: true -> sembunyikan judul teks atas (mis. Bismillah sudah ada di gambar).
+  //     Tukar src antar-segmen sesuka hati untuk mengganti background.
+  backgrounds: {
+    cover:     { src: "bg/b1.jpeg", whiteText: true },
+    intro:     { src: "bg/b9.jpeg" },
+    opening:   { src: "bg/b6.jpeg", whiteText: true, hideEyebrow: true },
+    couple:    { src: "bg/b13.jpeg" },   // hiasan tengah atas & bawah -> aman utk section tinggi
+    countdown: { src: "bg/b8.jpeg", whiteText: true },
+    events:    { src: "bg/b11.jpeg" },
+    story:     { src: "bg/b16.jpeg" },
+    gallery:   { src: "bg/b10.jpeg" },
+    rsvp:      { src: "bg/b15.jpeg", whiteText: true },   // arch megah, hiasan atas-bawah terpusat
+    checkin:   { src: "bg/b14.jpeg" },
+    gift:      { src: "bg/b4.jpeg" },
+    closing:   { src: "bg/b1.jpeg", whiteText: true },
+  },
 };
 
 /* =================================================================
@@ -926,12 +1052,102 @@ $("#rsvp-form").addEventListener("submit", (e) => {
 });
 loadWishes();
 
+// ---- Intro: undangan lengkap berurutan (slide cross-fade) ----
+(function(){
+  const stage = $("#intro-stage"), dotsWrap = $("#intro-dots");
+  const slides = Array.isArray(CONFIG.intro) ? CONFIG.intro.slice() : [];
+  if (!stage || !slides.length) { const s = $("#intro"); if (s) s.style.display = "none"; return; }
+
+  const ortu = p => p.mother ? `${esc(p.father)}<br>&amp; ${esc(p.mother)}` : esc(p.father);
+  const pair = p => p.mother ? `${esc(p.father)} &amp; ${esc(p.mother)}` : esc(p.father);
+  function slideHTML(s){
+    if (s.type === "photo") return `<img src="${esc(s.src)}" alt="" loading="lazy" />`;
+    if (s.type === "hero") return `
+      <div class="i-sub">The Wedding Of</div>
+      <div class="i-big">${esc(coupleNames)}</div>
+      ${s.note ? `<div class="i-note">${esc(s.note)}</div>` : ""}`;
+    if (s.type === "ayat") return `
+      <div class="i-text">${esc(CONFIG.ayat)}</div>
+      <div class="i-note">${esc(CONFIG.ayatRef)}</div>`;
+    if (s.type === "couple") { const g = CONFIG.groom, b = CONFIG.bride; return `
+      <div class="i-sub">Assalamu'alaikum Wr. Wb.</div>
+      <div class="i-small">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:</div>
+      <div class="i-name">${esc(g.full)}</div>
+      <div class="i-parents">${esc(g.childOrder)} dari<br>${ortu(g)}</div>
+      <div class="i-amp">Dengan</div>
+      <div class="i-name">${esc(b.full)}</div>
+      <div class="i-parents">${esc(b.childOrder)} dari<br>${ortu(b)}</div>`; }
+    if (s.type === "hormat") { const g = CONFIG.groom, b = CONFIG.bride; return `
+      <div class="i-small">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada kedua mempelai.</div>
+      <div class="i-sub" style="margin-top:14px">Hormat Kami Yang Mengundang</div>
+      <div class="i-parents">${pair(g)}</div>
+      <div class="i-parents">${pair(b)}</div>`; }
+    let h = "";
+    if (s.sub)  h += `<div class="i-sub">${esc(s.sub)}</div>`;
+    if (s.big)  h += `<div class="i-big">${esc(String(s.big).replace("{names}", coupleNames))}</div>`;
+    if (s.text) h += `<div class="i-text">${esc(s.text)}</div>`;
+    if (s.note) h += `<div class="i-note">${esc(s.note)}</div>`;
+    return h;
+  }
+  const holdFor = s => s.hold || ({ hero:3800, ayat:7000, photo:4500, couple:8500, hormat:7000 }[s.type] || 4800);
+
+  const els = slides.map(s => {
+    const d = document.createElement("div");
+    d.className = "intro-slide" + (s.type === "photo" ? " i-photo" : "");
+    d.innerHTML = slideHTML(s);
+    if (s.bg) {
+      const veil = "radial-gradient(125% 80% at 50% 50%, rgba(250,244,240,.78), rgba(250,244,240,.22))";
+      d.style.background = `${veil}, url('${s.bg}') center center / cover no-repeat`;
+    }
+    stage.appendChild(d);
+    const dot = document.createElement("b"); dotsWrap.appendChild(dot);
+    return d;
+  });
+  const dots = Array.from(dotsWrap.children);
+  if (els.length < 2) dotsWrap.style.display = "none";
+  window.__introMs = slides.reduce((a,s) => a + holdFor(s), 0);  // 1 putaran penuh (untuk auto-scroll)
+
+  let i = -1, started = false;
+  function go(n){
+    els.forEach((e,k) => e.classList.toggle("show", k === n));
+    dots.forEach((b,k) => b.classList.toggle("on", k === n));
+    i = n;
+    setTimeout(() => { if (started) go((i + 1) % els.length); }, holdFor(slides[n]));
+  }
+  const io2 = new IntersectionObserver((es) => {
+    es.forEach(en => { if (en.isIntersecting && !started) { started = true; go(0); } });
+  }, { threshold: 0.3 });
+  io2.observe($("#intro"));
+})();
+
+// ---- Background per segmen ----
+(function(){
+  const bg = CONFIG.backgrounds || {};
+  Object.keys(bg).forEach(id => {
+    const cfg = bg[id]; if (!cfg || !cfg.src) return;
+    const sec = document.getElementById(id); if (!sec) return;
+    const veil = cfg.whiteText
+      ? "radial-gradient(125% 80% at 50% 46%, rgba(58,28,33,.66), rgba(58,28,33,.14))"
+      : "radial-gradient(125% 80% at 50% 50%, rgba(250,244,240,.80), rgba(250,244,240,.24))";
+    sec.style.background = `${veil}, url('${cfg.src}') center center / cover no-repeat`;
+    sec.classList.add("has-bg");
+    if (cfg.whiteText)  sec.classList.add("bg-white-text");
+    if (cfg.hideEyebrow) sec.classList.add("bg-hide-eyebrow");
+  });
+})();
+
+// ---- Foto sisi kiri (tampilan laptop) ----
+if (CONFIG.desktopPhoto) document.documentElement.style.setProperty("--desktop-photo", `url('${CONFIG.desktopPhoto}')`);
+
 // ---- Open invitation ----
 $("#btn-open").addEventListener("click", () => {
   document.body.classList.add("opened");
   window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
   if (CONFIG.music) playMusic();
-  if (CONFIG.autoScroll !== false) setTimeout(startAutoScroll, 1600);
+  // Intro berputar terus selama tamu belum scroll. Auto-scroll halaman hanya
+  // jalan jika TIDAK ada intro (agar intro tidak ditinggalkan otomatis).
+  const hasIntro = Array.isArray(CONFIG.intro) && CONFIG.intro.length;
+  if (CONFIG.autoScroll !== false && !hasIntro) setTimeout(startAutoScroll, 1600);
 });
 
 // ---- Auto-maju antar-frame (berhenti saat tamu berinteraksi) ----
@@ -949,7 +1165,9 @@ function startAutoScroll(){
     secs[idx].scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(next, 7000);                     // jeda antar-frame
   }
-  setTimeout(next, 6000);
+  // hop pertama menunggu intro selesai satu putaran penuh (jika ada), lalu lanjut
+  const firstDelay = window.__introMs ? Math.min(window.__introMs, 30000) + 1500 : 6000;
+  setTimeout(next, firstDelay);
 }
 
 // ---- Music (mendukung 1 lagu atau playlist) ----
@@ -1006,7 +1224,7 @@ mbtn.addEventListener("click", () => {
       }
     });
   }, { threshold: 0.4 });
-  ["cover","couple","events","gallery","rsvp"].forEach(id => {
+  ["intro","couple","events","countdown","gallery","rsvp","gift"].forEach(id => {
     const el = document.getElementById(id); if (el) navIo.observe(el);
   });
 })();
