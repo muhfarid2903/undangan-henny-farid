@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kelola Daftar Tamu — Farid &amp; Henny</title>
+<title>Kelola Daftar Tamu — Henny &amp; Farid</title>
 <style>
   :root { --gold:#b89b6e; --ink:#3f3933; --line:#e4d9c8; --green:#25D366; }
   * { box-sizing: border-box; }
@@ -81,6 +81,32 @@
 
   function esc(s){ return String(s||"").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+  // Nomor WA -> format internasional 62…
+  function waPhone(p){
+    p = String(p||"").replace(/\D/g, "");
+    if (!p) return "";
+    if (p.startsWith("0"))  return "62" + p.slice(1);
+    if (p.startsWith("62")) return p;
+    if (p.startsWith("8"))  return "62" + p;
+    return p;
+  }
+
+  // Kata-kata pesan undangan WhatsApp (nama & link otomatis per tamu)
+  function waMessage(g){
+    return "Kepada Yth.\n" +
+      "Bapak/Ibu/Saudara/i\n" +
+      (g.name || "") + "\n" +
+      "___________________\n\n" +
+      "Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami.\n\n" +
+      "Berikut link undangan kami, untuk info lengkap dari acara, bisa kunjungi :\n\n" +
+      (g.link || "") + "\n\n" +
+      "Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.\n\n" +
+      "Terima Kasih\n\n" +
+      "Hormat kami,\n" +
+      "Henny & Farid\n" +
+      "__________________";
+  }
+
   function badge(status){
     const s = (status||"").toLowerCase();
     if (s.indexOf("hadir") === 0) return '<span class="badge b-hadir">Hadir</span>';
@@ -98,7 +124,7 @@
     if (!guests.length) { tb.innerHTML = '<tr><td colspan="5" class="muted">Belum ada tamu. Tambahkan di atas.</td></tr>'; return; }
     tb.innerHTML = rows.map((g, i) => {
       const status = rsvpMap[(g.name||"").trim().toLowerCase()] || "";
-      const wa = g.wa || ("https://wa.me/?text=" + encodeURIComponent("Undangan: " + (g.link||"")));
+      const wa = "https://wa.me/" + waPhone(g.phone) + "?text=" + encodeURIComponent(waMessage(g));
       return `<tr>
         <td>${i+1}</td>
         <td class="name">${esc(g.name)}${g.phone ? `<br><small class="muted">${esc(g.phone)}</small>` : ""}</td>
@@ -106,6 +132,7 @@
         <td>${badge(status)}</td>
         <td><div class="actions">
           <a class="btn-sm btn-wa" href="${esc(wa)}" target="_blank" rel="noopener">Kirim WA</a>
+          <button class="btn-sm btn-copy" data-idx="${i}">Salin pesan</button>
           <button class="btn-sm btn-copy" data-link="${esc(g.link||"")}">Salin link</button>
           <a class="btn-sm btn-link" href="${esc(g.link||"#")}" target="_blank" rel="noopener">Pratinjau</a>
         </div></td>
@@ -113,6 +140,11 @@
     }).join("");
     tb.querySelectorAll(".btn-copy[data-link]").forEach(b => b.addEventListener("click", () => {
       navigator.clipboard.writeText(b.dataset.link).then(() => {
+        const o = b.textContent; b.textContent = "Tersalin ✓"; setTimeout(()=>b.textContent=o, 1200);
+      });
+    }));
+    tb.querySelectorAll(".btn-copy[data-idx]").forEach(b => b.addEventListener("click", () => {
+      navigator.clipboard.writeText(waMessage(rows[+b.dataset.idx])).then(() => {
         const o = b.textContent; b.textContent = "Tersalin ✓"; setTimeout(()=>b.textContent=o, 1200);
       });
     }));

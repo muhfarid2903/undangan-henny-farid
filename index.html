@@ -4,16 +4,19 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Undangan Pernikahan</title>
-<meta name="description" content="The Wedding of Mempelai Pria & Mempelai Wanita" />
+<meta name="description" content="The Wedding of Henny & Farid" />
 
 <!-- ============================================================
      CARA EDIT: ganti semua isi pada blok CONFIG (di <script> bawah).
      Tidak perlu menyentuh kode lain.
      ============================================================ -->
 
+<link rel="icon" type="image/png" href="favicon.png" />
+<link rel="apple-touch-icon" href="favicon.png" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Carattere&family=Cormorant+SC:wght@400;500;600&family=Cormorant+Upright:wght@400;500&family=Montserrat:wght@300;400;500&family=Sura:wght@400;700&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -27,10 +30,11 @@
     --line: #ecdcd6;
     --deep: #6e4046;        /* maroon-rose untuk bagian gelap */
     --deep2: #8a5760;
-    --serif: 'Cormorant Garamond', serif;
-    --display: 'Cormorant Garamond', serif;   /* serif italic elegan untuk nama */
-    --script: 'Great Vibes', cursive;
-    --sans: 'Poppins', sans-serif;
+    --serif: 'Sura', serif;                   /* teks isi (ala referensi) */
+    --serif-i: 'Cormorant Upright', serif;    /* ayat/kutipan "miring" kaligrafis */
+    --display: 'Cormorant SC', serif;         /* small-caps utk monogram & judul */
+    --script: 'Carattere', cursive;           /* nama mempelai & judul dekoratif */
+    --sans: 'Montserrat', sans-serif;         /* label kecil & tombol */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -89,6 +93,9 @@
     font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
     color: var(--gold); font-weight: 500; margin-bottom: 14px;
   }
+  /* judul segmen — satu gaya untuk SEMUA (mengikuti "Bride & Groom") */
+  .sec-title { font-family: var(--script); font-weight: 400; font-size: 42px; color: var(--ink); line-height: 1.15; }
+  .bg-white-text .sec-title { color: #fff; }
   .divider {
     width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
     margin: 22px auto; position: relative;
@@ -97,6 +104,8 @@
     content: '✦'; position: absolute; top: 50%; left: 50%;
     transform: translate(-50%,-50%); color: var(--gold); font-size: 14px;
   }
+  /* teks pengantar segmen — satu gaya untuk semua */
+  section .sub { font-family: var(--serif-i); font-size: 16.5px; color: var(--muted); max-width: 340px; margin: 0 auto; }
 
   /* Reveal-on-scroll */
   .reveal { opacity: 0; transform: translateY(28px); transition: all .9s cubic-bezier(.2,.7,.2,1); }
@@ -161,7 +170,7 @@
     border: none; box-shadow: none;
   }
   .cover-invite {
-    font-family: var(--serif); font-style: italic; font-size: 14px;
+    font-family: var(--serif-i); font-size: 14.5px;
     color: rgba(255,255,255,.85); margin: 16px auto 0; max-width: 260px; line-height: 1.5;
   }
   /* band motif tenun Bugis di tepi atas & bawah cover */
@@ -171,10 +180,14 @@
   }
   .tenun-top { top: 0; } .tenun-bottom { bottom: 0; }
   #cover .monogram {
-    font-family: var(--serif); font-weight: 600; font-size: 40px; letter-spacing: 3px;
+    font-family: var(--display); font-weight: 500; font-size: 40px; letter-spacing: 3px;
     color: #fff; margin-bottom: 8px; text-shadow: 0 2px 18px rgba(0,0,0,.45);
   }
   body.loaded #cover .monogram { animation: fadeUp .9s .02s both; }
+  #cover .monogram img {
+    width: 112px; margin: 0 auto 2px; display: block;
+    filter: drop-shadow(0 3px 16px rgba(0,0,0,.4));
+  }
   #cover .eyebrow { color: rgba(255,255,255,.85); }
   #cover .names {
     font-family: var(--script); font-size: 66px; line-height: 1.12;
@@ -188,7 +201,7 @@
   }
   .guest-box { margin-top: 38px; }
   .guest-box .to { font-size: 12px; letter-spacing: 3px; opacity: .85; }
-  .guest-box .guest-name { font-family: var(--serif); font-size: 26px; margin: 4px 0 18px; }
+  .guest-box .guest-name { font-family: var(--display); font-size: 24px; margin: 4px 0 18px; }
   .btn-open {
     background: #fff; color: var(--ink); border: none;
     padding: 13px 30px; border-radius: 40px; font-family: var(--sans);
@@ -206,16 +219,15 @@
 
   /* ---------- OPENING ---------- */
   #opening { background: var(--bg); }
-  #opening .ayat { font-family: var(--serif); font-size: 19px; color: var(--muted); font-style: italic; max-width: 360px; margin: 0 auto; }
-  #opening p.sub { color: var(--muted); font-size: 14px; margin-top: 18px; }
+  #opening .ayat { font-family: var(--serif-i); font-size: 20px; color: var(--muted); max-width: 360px; margin: 0 auto; }
+  #opening p.sub { margin-top: 18px; }
 
   /* ---------- COUPLE ---------- */
   #couple { background: var(--bg-deep, #f3ece2); }
-  .couple-title { font-family: var(--script); font-weight: 400; font-size: 46px; color: var(--gold); line-height: 1.1; }
-  .couple-intro { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--muted); max-width: 340px; margin: 12px auto 0; line-height: 1.65; }
+  .couple-intro { font-family: var(--serif-i); font-size: 16.5px; color: var(--muted); max-width: 340px; margin: 12px auto 0; line-height: 1.65; }
   .person { margin: 30px 0; }
   .couple-quote {
-    font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.6;
+    font-family: var(--serif-i); font-size: 17.5px; line-height: 1.6;
     color: var(--ink); max-width: 350px; margin: 22px auto 4px;
   }
   .photo-wrap { position: relative; display: inline-block; margin: 14px auto 26px; }
@@ -255,7 +267,7 @@
     background: #fff; border: 1px solid var(--line); border-radius: 18px;
     padding: 34px 24px; margin: 22px 0; box-shadow: 0 12px 30px rgba(0,0,0,.05);
   }
-  .event-card h3 { font-family: var(--script); font-weight: 400; font-size: 42px; color: var(--gold); line-height: 1.1; }
+  .event-card h3 { font-family: var(--script); font-weight: 400; font-size: 42px; color: var(--ink); line-height: 1.1; }
   .event-card .when { margin-top: 14px; font-size: 15px; }
   .event-card .when strong { display: block; font-family: var(--script); font-weight: 400; font-size: 28px; line-height: 1.2; }
   .event-card .where { margin-top: 14px; color: var(--muted); font-size: 14px; }
@@ -271,12 +283,11 @@
   .timeline::before { content:''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--gold-soft); }
   .tl-item { position: relative; margin-bottom: 30px; }
   .tl-item::before { content:''; position: absolute; left: -28px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg-deep,#f3ece2); }
-  .tl-item .yr { font-family: var(--script); font-weight: 400; font-size: 30px; color: var(--gold); line-height: 1.1; }
+  .tl-item .yr { font-family: var(--script); font-weight: 400; font-size: 30px; color: var(--ink); line-height: 1.1; }
   .tl-item .tx { font-size: 14px; color: var(--muted); margin-top: 4px; }
 
   /* ---------- GALLERY ---------- */
   #gallery { background: var(--bg); }
-  .gal-title { font-family: var(--script); font-weight: 400; font-size: 42px; color: var(--ink); margin-top: 4px; line-height: 1.1; }
   .gal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 22px; }
   .gal-grid img {
     width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 12px; cursor: pointer;
@@ -290,11 +301,11 @@
   #rsvp { background: linear-gradient(160deg, var(--deep2), var(--deep)); color: #fff; }
   #rsvp .eyebrow { color: rgba(255,255,255,.85); }
   .rsvp-title {
-    font-family: var(--display); font-style: italic; font-weight: 600; font-size: 27px; line-height: 1.35;
+    font-family: var(--display); font-weight: 500; font-size: 21px; line-height: 1.45;
     color: #fff; max-width: 360px; margin: 0 auto;
   }
   .rsvp-sub {
-    font-family: var(--serif); font-size: 16px; font-style: italic;
+    font-family: var(--serif-i); font-size: 16.5px;
     color: rgba(255,255,255,.85); max-width: 340px; margin: 0 auto;
   }
   .form { margin-top: 24px; text-align: left; }
@@ -332,7 +343,6 @@
 
   /* ---------- GIFT ---------- */
   #gift { background: var(--bg); }
-  #gift p.sub { color: var(--muted); font-size: 14px; max-width: 340px; margin: 0 auto; }
   .gift-card {
     background: linear-gradient(135deg, var(--deep), var(--deep2)); color: #fff;
     border-radius: 16px; padding: 24px; margin: 18px 0; text-align: left;
@@ -349,7 +359,7 @@
   /* ---------- CLOSING ---------- */
   #closing { background: radial-gradient(circle at 50% 35%, var(--deep2), var(--deep)); color:#fff; }
   #closing .names { font-family: var(--script); font-size: 50px; color: #fff; margin: 14px 0; }
-  #closing p { opacity: .9; font-size: 14px; max-width: 320px; margin: 0 auto; }
+  #closing p { font-family: var(--serif-i); opacity: .92; font-size: 16px; max-width: 330px; margin: 0 auto; }
   .credit { margin-top: 40px; font-size: 11px; opacity: .6; letter-spacing: 1px; }
 
   /* ---------- CHECK-IN QR ---------- */
@@ -392,12 +402,12 @@
   .intro-slide.i-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .intro-slide .i-sub { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
   .intro-slide .i-big { font-family: var(--script); font-size: 52px; line-height: 1.15; color: var(--deep); }
-  .intro-slide .i-text { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.65; color: var(--ink); }
+  .intro-slide .i-text { font-family: var(--serif-i); font-size: 18.5px; line-height: 1.65; color: var(--ink); }
   .intro-slide .i-small { font-family: var(--serif); font-size: 15px; line-height: 1.55; color: var(--muted); max-width: 320px; }
   .intro-slide .i-name { font-family: var(--script); font-size: 30px; line-height: 1.15; color: var(--deep); margin-top: 4px; }
   .intro-slide .i-parents { font-family: var(--serif); font-size: 15px; color: var(--muted); line-height: 1.5; }
   .intro-slide .i-amp { font-family: var(--script); font-size: 26px; color: var(--gold); margin: 4px 0; }
-  .intro-slide .i-note { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--gold); letter-spacing: .5px; margin-top: 6px; }
+  .intro-slide .i-note { font-family: var(--serif-i); font-size: 15.5px; color: var(--gold); letter-spacing: .5px; margin-top: 6px; }
   .intro-dots { position: absolute; bottom: 38px; left: 0; width: 100%; display: flex; gap: 8px; justify-content: center; z-index: 3; }
   .intro-dots b { width: 7px; height: 7px; border-radius: 50%; background: rgba(110,64,70,.25); transition: all .3s; }
   .intro-dots b.on { background: var(--gold); transform: scale(1.25); }
@@ -418,7 +428,8 @@
     display: flex; flex-direction: column; align-items: center; gap: 3px;
     padding: 4px 0; transition: color .2s;
   }
-  .botnav a .ic { font-size: 18px; line-height: 1; }
+  .botnav a .ic { line-height: 0; }
+  .botnav a .ic svg { width: 20px; height: 20px; }
   .botnav a.active { color: var(--gold); }
 
   /* ---------- PETALS / ANIMASI ---------- */
@@ -500,8 +511,8 @@
   #cover.has-bg .tenun { display: none !important; }
   /* segmen berteks putih di atas background gelap */
   .bg-white-text, .bg-white-text .eyebrow, .bg-white-text .ayat, .bg-white-text .sub,
-  .bg-white-text > p, .bg-white-text .couple-title, .bg-white-text .couple-intro,
-  .bg-white-text .gal-title, .bg-white-text .rsvp-title, .bg-white-text .rsvp-sub,
+  .bg-white-text > p, .bg-white-text .couple-intro,
+  .bg-white-text .rsvp-title, .bg-white-text .rsvp-sub,
   .bg-white-text .names, .bg-white-text .credit { color: #fff !important; }
   .bg-white-text .divider { background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent); }
   .bg-hide-eyebrow > .eyebrow { display: none; }
@@ -550,7 +561,7 @@
     box-shadow: 0 -16px 50px rgba(0,0,0,.3);
   }
   @keyframes popUp { from { transform: translateY(70px); opacity: 0; } to { transform: none; opacity: 1; } }
-  .popup-title { font-family: var(--script); font-size: 36px; color: var(--gold); line-height: 1.15; }
+  .popup-title { font-family: var(--script); font-size: 36px; color: var(--ink); line-height: 1.15; }
   .popup-sub { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
   .popup-body { margin-top: 14px; overflow-y: auto; text-align: left; padding: 4px 2px 10px; }
   .popup-close {
@@ -614,7 +625,7 @@
   <div id="loader" class="loader">
     <div class="loader-inner">
       <div class="loader-eyebrow">The Wedding Of</div>
-      <div class="loader-script" id="loader-names">Farid &amp; Henny</div>
+      <div class="loader-script" id="loader-names">Henny &amp; Farid</div>
       <div class="loader-ring"></div>
       <div class="loader-text">Memuat Undangan…</div>
     </div>
@@ -625,7 +636,7 @@
     <div class="frame"></div>
     <div class="tenun tenun-top"></div>
     <div class="cover-card">
-      <div class="monogram" id="cover-monogram">F &amp; H</div>
+      <div class="monogram" id="cover-monogram"><img src="logo-hf.png" alt="Monogram HF" /></div>
       <div class="eyebrow">The Wedding Of</div>
       <div class="names" id="cover-names">Rangga & Cinta</div>
       <div class="guest-box">
@@ -657,20 +668,11 @@
 
     <!-- ================= COUPLE ================= -->
     <section id="couple">
-      <h2 class="couple-title reveal">Bride &amp; Groom</h2>
+      <h2 class="sec-title reveal">Bride &amp; Groom</h2>
+      <div class="divider reveal"></div>
       <p class="couple-intro reveal">
         Kami adalah sepasang manusia yang sedang berbahagia. Kami mengundang Bapak/Ibu/Saudara sekalian untuk menghadiri hari bahagia kami. Ini adalah kami.
       </p>
-
-      <div class="person reveal">
-        <div class="photo-wrap"><img class="photo" id="groom-photo" alt="Mempelai Pria" /></div>
-        <div class="name" id="groom-name">Rangga</div>
-        <div class="full" id="groom-full">Rangga Putra, S.T.</div>
-        <div class="parents" id="groom-parents"></div>
-        <a class="ig" id="groom-ig" target="_blank" rel="noopener">@instagram</a>
-      </div>
-
-      <div class="amp reveal">&amp;</div>
 
       <div class="person reveal">
         <div class="photo-wrap"><img class="photo" id="bride-photo" alt="Mempelai Wanita" /></div>
@@ -679,11 +681,21 @@
         <div class="parents" id="bride-parents"></div>
         <a class="ig" id="bride-ig" target="_blank" rel="noopener">@instagram</a>
       </div>
+
+      <div class="amp reveal">&amp;</div>
+
+      <div class="person reveal">
+        <div class="photo-wrap"><img class="photo" id="groom-photo" alt="Mempelai Pria" /></div>
+        <div class="name" id="groom-name">Rangga</div>
+        <div class="full" id="groom-full">Rangga Putra, S.T.</div>
+        <div class="parents" id="groom-parents"></div>
+        <a class="ig" id="groom-ig" target="_blank" rel="noopener">@instagram</a>
+      </div>
     </section>
 
     <!-- ================= COUNTDOWN ================= -->
     <section id="countdown">
-      <div class="eyebrow reveal">Menghitung Hari</div>
+      <h2 class="sec-title reveal">Menghitung Hari</h2>
       <div class="divider reveal"></div>
       <div class="cd-grid reveal">
         <div class="cd-box"><div class="num" id="cd-d">0</div><div class="lbl">Hari</div></div>
@@ -696,8 +708,9 @@
 
     <!-- ================= EVENTS ================= -->
     <section id="events">
-      <div class="eyebrow reveal">Save The Date</div>
+      <h2 class="sec-title reveal">Detail Acara</h2>
       <div class="divider reveal"></div>
+      <p class="sub reveal">Insya Allah akan dilaksanakan pada:</p>
 
       <div class="event-card reveal">
         <h3>Akad Nikah</h3>
@@ -716,22 +729,23 @@
 
     <!-- ================= STORY ================= -->
     <section id="story">
-      <div class="eyebrow reveal">Our Love Story</div>
+      <h2 class="sec-title reveal">Our Love Story</h2>
       <div class="divider reveal"></div>
       <div class="timeline reveal" id="timeline"></div>
     </section>
 
     <!-- ================= GALLERY ================= -->
     <section id="gallery">
-      <h2 class="gal-title reveal">Momen Bahagia</h2>
+      <h2 class="sec-title reveal">Momen Bahagia</h2>
       <div class="divider reveal"></div>
       <div class="gal-grid reveal" id="gal-grid"></div>
     </section>
 
     <!-- ================= RSVP ================= -->
     <section id="rsvp">
-      <h2 class="rsvp-title reveal">Merupakan kebahagiaan bagi kami atas kehadiran Bapak/Ibu/Saudara/i</h2>
+      <h2 class="sec-title reveal">Konfirmasi Kehadiran</h2>
       <div class="divider reveal"></div>
+      <h2 class="rsvp-title reveal">Merupakan kebahagiaan bagi kami atas kehadiran Bapak/Ibu/Saudara/i</h2>
       <p class="rsvp-sub reveal">Mohon berkenan mengonfirmasi kehadiran, serta menyampaikan untaian ucapan dan doa restu terbaik bagi kedua mempelai.</p>
       <form class="form reveal" id="rsvp-form">
         <label>Nama</label>
@@ -761,9 +775,9 @@
 
     <!-- ================= CHECK-IN QR ================= -->
     <section id="checkin">
-      <div class="eyebrow reveal">Check-In Kehadiran</div>
+      <h2 class="sec-title reveal">Check-In Kehadiran</h2>
       <div class="divider reveal"></div>
-      <p class="sub reveal" style="color:var(--muted);font-size:14px;max-width:320px;margin:0 auto">Tunjukkan QR code ini kepada penerima tamu saat tiba di lokasi acara.</p>
+      <p class="sub reveal">Tunjukkan QR code ini kepada penerima tamu saat tiba di lokasi acara.</p>
       <div class="qr-card reveal">
         <div id="qrcode"></div>
         <div class="qr-name" id="qr-guest"></div>
@@ -772,7 +786,7 @@
 
     <!-- ================= GIFT ================= -->
     <section id="gift">
-      <div class="eyebrow reveal">Amplop Digital</div>
+      <h2 class="sec-title reveal">Amplop Digital</h2>
       <div class="divider reveal"></div>
       <p class="sub reveal">Doa restu Anda merupakan karunia yang sangat berarti. Namun jika memberi tanda kasih, dapat melalui:</p>
       <button type="button" class="btn-pop reveal" id="btn-gift">🎁 Kirim Hadiah</button>
@@ -780,7 +794,8 @@
 
     <!-- ================= CLOSING ================= -->
     <section id="closing">
-      <div class="eyebrow reveal" style="color:rgba(255,255,255,.85)">Terima Kasih</div>
+      <h2 class="sec-title reveal">Terima Kasih</h2>
+      <div class="divider reveal"></div>
       <p class="reveal">Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
       <div class="names reveal" id="closing-names">Rangga &amp; Cinta</div>
       <p class="reveal">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
@@ -791,13 +806,13 @@
 
   <!-- ================= BOTTOM NAV ================= -->
   <nav class="botnav" id="botnav">
-    <a data-target="intro"><span class="ic">⌂</span><span>Home</span></a>
-    <a data-target="couple"><span class="ic">♥</span><span>Mempelai</span></a>
-    <a data-target="events"><span class="ic">❀</span><span>Acara</span></a>
-    <a data-target="countdown"><span class="ic">◷</span><span>Kalender</span></a>
-    <a data-target="gallery"><span class="ic">▦</span><span>Galeri</span></a>
-    <a data-target="rsvp"><span class="ic">✎</span><span>Ucapan</span></a>
-    <a data-target="gift"><span class="ic">◈</span><span>Hadiah</span></a>
+    <a data-target="intro"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 20Z"/><path d="M9 21.5v-8h6v8"/></svg></span><span>Home</span></a>
+    <a data-target="couple"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.9a5.3 5.3 0 0 0-7.5 0L12 6.2l-1.3-1.3a5.3 5.3 0 0 0-7.5 7.5l1.3 1.3L12 21.2l7.5-7.5 1.3-1.3a5.3 5.3 0 0 0 0-7.5Z"/></svg></span><span>Mempelai</span></a>
+    <a data-target="events"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="13.5" r="5.5"/><circle cx="15" cy="10.5" r="5.5"/></svg></span><span>Acara</span></a>
+    <a data-target="countdown"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M3.5 10.5h17"/></svg></span><span>Kalender</span></a>
+    <a data-target="gallery"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="m20.5 15.5-4.5-4.5-9.5 9.5"/></svg></span><span>Galeri</span></a>
+    <a data-target="rsvp"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 14.5a2 2 0 0 1-2 2H8l-4.5 4V5a2 2 0 0 1 2-2H19a2 2 0 0 1 2 2Z"/></svg></span><span>Ucapan</span></a>
+    <a data-target="gift"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12.5V21H4v-8.5M2.5 7.5h19v5h-19zM12 21V7.5"/><path d="M12 7.5H7.8a2.4 2.4 0 1 1 0-4.8C11 2.7 12 7.5 12 7.5ZM12 7.5h4.2a2.4 2.4 0 1 0 0-4.8C13 2.7 12 7.5 12 7.5Z"/></svg></span><span>Hadiah</span></a>
   </nav>
 
   <button class="music-btn" id="music-btn" title="Musik"><span class="ico">♪</span></button>
@@ -956,7 +971,7 @@ const CONFIG = {
     cover:     { src: "bg/b1.jpeg", video: "bg/cover-video.mp4", whiteText: true },  // video dibuat dari cover.jpg (zoom pelan); ganti dgn video aslimu kapan saja
     intro:     { src: "bg/b9.jpeg" },
     opening:   { src: "bg/b6.jpeg", whiteText: true, hideEyebrow: true },
-    couple:    { src: "bg/b13.jpeg" },   // hiasan tengah atas & bawah -> aman utk section tinggi
+    couple:    { src: "bg/b12.jpeg" },   // tekstur putih, aksen hanya di pojok -> judul & nama tetap terbaca
     countdown: { src: "bg/b8.jpeg", whiteText: true },
     events:    { src: "bg/b11.jpeg" },
     story:     { src: "bg/b16.jpeg" },
@@ -985,14 +1000,13 @@ if (guest) {
 }
 
 // ---- Fill cover ----
-const coupleNames = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
+const coupleNames = CONFIG.bride.nick + " & " + CONFIG.groom.nick;   // mempelai wanita disebut dulu
 $("#cover-names").dataset.full = coupleNames;   // diketik nanti via JS
 $("#cover-names").textContent = "";
 $("#closing-names").textContent = coupleNames;
-document.title = "The Wedding of " + CONFIG.groom.nick + " & " + CONFIG.bride.nick;
+document.title = "The Wedding of " + coupleNames;
 const mainDate = new Date(CONFIG.mainDate);
-$("#cover-monogram").textContent = (CONFIG.groom.nick[0] || "") + " & " + (CONFIG.bride.nick[0] || "");
-$("#loader-names").textContent = CONFIG.groom.nick + " & " + CONFIG.bride.nick;
+$("#loader-names").textContent = coupleNames;
 // Catatan: tema ungu pakai latar gradien (CSS). Foto kalian tampil di Galeri.
 
 // ---- Loading screen + ketik nama cover ----
@@ -1023,6 +1037,26 @@ function fillPerson(p, pre) {
 fillPerson(CONFIG.groom, "#groom");
 fillPerson(CONFIG.bride, "#bride");
 
+// Nama lengkap selalu 1 baris: kecilkan font otomatis bila kepanjangan.
+// Dijalankan ulang setelah webfont termuat (lebar teks berubah saat font siap).
+function fitOneLine(el, minPx){
+  el.style.whiteSpace = "nowrap";
+  // batas = lebar konten induk (utk flex-item yang lebarnya mengikuti isi)
+  const limit = () => {
+    const p = el.parentElement, cs = getComputedStyle(p);
+    return p.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  };
+  let fs = parseFloat(getComputedStyle(el).fontSize);
+  while ((el.scrollWidth > el.clientWidth || el.getBoundingClientRect().width > limit()) && fs > minPx) {
+    fs -= 1; el.style.fontSize = fs + "px";
+  }
+}
+function fitNames(){
+  $$(".person .full, .intro-slide .i-name").forEach(el => { el.style.fontSize = ""; fitOneLine(el, 19); });
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+window.addEventListener("load", fitNames);
+
 // ---- Events ----
 function fillEvent(e, pre) {
   $(pre + "-when").innerHTML = `<strong>${e.dateText}</strong>${e.timeText}`;
@@ -1038,7 +1072,7 @@ fillEvent(CONFIG.resepsi, "#resepsi");
   const start = mainDate;
   const end = new Date(start.getTime() + 4*60*60*1000);
   const fmt = (d) => d.toISOString().replace(/[-:]/g,"").split(".")[0] + "Z";
-  const title = encodeURIComponent("Pernikahan " + CONFIG.groom.nick + " & " + CONFIG.bride.nick);
+  const title = encodeURIComponent("Pernikahan " + coupleNames);
   const loc = encodeURIComponent(CONFIG.resepsi.venue + ", " + CONFIG.resepsi.address);
   $("#btn-cal").href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${fmt(start)}/${fmt(end)}&location=${loc}`;
 })();

@@ -35,10 +35,32 @@ function setupDaftarTamu() {
 
   // Kolom F: Link kirim WhatsApp (nomor otomatis dinormalkan ke 62, pesan + link terenkode)
   var ph = 'IF(B2:B="","",IF(LEFT(B2:B&"",1)="0","62"&MID(B2:B&"",2,30),IF(LEFT(B2:B&"",2)="62",B2:B&"",IF(LEFT(B2:B&"",1)="8","62"&(B2:B&""),B2:B&""))))';
-  var msg = '"Assalamualaikum Wr. Wb. Yth. "&A2:A&", dengan hormat kami mengundang Bapak/Ibu/Saudara/i pada pernikahan Farid & Henny, Kamis 16 Juli 2026. Undangan lengkap: "&E2:E';
+  // Kata-kata pesan WA per baris (baris kosong = jeda paragraf). Ubah di sini bila perlu,
+  // lalu jalankan ulang setupDaftarTamu agar kolom F diperbarui.
+  var parts = [
+    '"Kepada Yth."',
+    '"Bapak/Ibu/Saudara/i"',
+    'A2:A',
+    '"___________________"',
+    '""',
+    '"Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami."',
+    '""',
+    '"Berikut link undangan kami, untuk info lengkap dari acara, bisa kunjungi :"',
+    '""',
+    'E2:E',
+    '""',
+    '"Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu."',
+    '""',
+    '"Terima Kasih"',
+    '""',
+    '"Hormat kami,"',
+    '"Henny & Farid"',
+    '"__________________"'
+  ];
+  var msg = parts.join('&CHAR(10)&');
   var enc = function (x) {
-    return 'SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(' + x +
-      ',"%","%25"),":","%3A"),"/","%2F"),"?","%3F"),"=","%3D"),"&","%26")," ","%20"),",","%2C")';
+    return 'SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(' + x +
+      ',"%","%25"),":","%3A"),"/","%2F"),"?","%3F"),"=","%3D"),"&","%26")," ","%20"),",","%2C"),CHAR(10),"%0A")';
   };
   sh.getRange('F2').setFormula(
     '=ARRAYFORMULA(IF(A2:A="","","https://wa.me/"&(' + ph + ')&"?text="&' + enc(msg) + '))'
