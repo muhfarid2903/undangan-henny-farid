@@ -1,5 +1,11 @@
 # Alat bantu pribadi & file kerja — tidak dipublish ke situs
+foto-asli/
 daftar-tamu.csv
 apps-script.gs
 CARA-RSVP-GOOGLE-SHEETS.md
 tema-warna.html
+
+# File sistem macOS
+.DS_Store
+bg/.DS_Store
+**/.DS_Store
