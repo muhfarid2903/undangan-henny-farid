@@ -1119,7 +1119,11 @@ const CONFIG = {
 
   // --- Musik latar. Boleh 1 lagu ("musik1.mp3") atau beberapa (playlist berurutan, lalu berulang).
   //     Kosongkan [] / "" jika tidak pakai. ---
-  music: ["musik1.mp3", "musik2.mp3"],
+  music: ["musik3.mp3"],
+
+  // --- Melodi kotak musik pendek saat "Buka Undangan" ditekan (sebelum musik utama).
+  //     Kosongkan "" untuk melewati dan langsung memutar musik utama. ---
+  openJingle: "musik-buka.mp3",
 
   // --- Scroll otomatis pelan setelah undangan dibuka (berhenti saat tamu menyentuh layar). ---
   autoScroll: true,
@@ -1558,7 +1562,13 @@ $("#btn-open").addEventListener("click", () => {
   document.body.classList.add("opened");
   fitNames();   // ukur ulang nama 1-baris: saat load tadi .content masih tersembunyi (lebar terbaca 0)
   window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-  if (CONFIG.music) playMusic();
+  // melodi kotak musik dulu, musik utama menyusul setelah melodinya selesai
+  if (CONFIG.openJingle) {
+    const j = new Audio(CONFIG.openJingle);
+    j.addEventListener("ended", () => { if (CONFIG.music) playMusic(); });
+    j.addEventListener("error", () => { if (CONFIG.music) playMusic(); });
+    j.play().catch(() => { if (CONFIG.music) playMusic(); });
+  } else if (CONFIG.music) playMusic();
   // Intro berputar terus selama tamu belum scroll. Auto-scroll halaman hanya
   // jalan jika TIDAK ada intro (agar intro tidak ditinggalkan otomatis).
   const hasIntro = Array.isArray(CONFIG.intro) && CONFIG.intro.length;
