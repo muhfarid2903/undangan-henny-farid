@@ -1,0 +1,428 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3a472d"/>
+    <stop offset="0.42" stop-color="#2c3a25"/>
+    <stop offset="1" stop-color="#1d281a"/>
+  </linearGradient>
+  <radialGradient id="vig" cx="0.5" cy="0.42" r="0.85">
+    <stop offset="0" stop-color="#3c4a30" stop-opacity="0.55"/>
+    <stop offset="0.55" stop-color="#2a3623" stop-opacity="0"/>
+    <stop offset="1" stop-color="#14190f" stop-opacity="0.6"/>
+  </radialGradient>
+  <radialGradient id="goldR" cx="0.5" cy="0.4" r="0.7">
+    <stop offset="0" stop-color="#f3dca6"/>
+    <stop offset="0.6" stop-color="#d8b878"/>
+    <stop offset="1" stop-color="#b8965d"/>
+  </radialGradient>
+  <linearGradient id="leafG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#8a9c63"/>
+    <stop offset="1" stop-color="#5d6e42"/>
+  </linearGradient>
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="0.6"/></filter>
+  <g id="leaf"><path d="M0,0 C7,-9 8,-22 0,-32 C-8,-22 -7,-9 0,0 Z" fill="url(#leafG)" stroke="#46552f" stroke-width="0.8"/>
+    <path d="M0,-2 L0,-28" stroke="#46552f" stroke-width="0.7" fill="none" opacity="0.7"/></g>
+  <g id="blossom">
+    <g fill="#efe9d6" stroke="#d8cba6" stroke-width="0.6">
+      <ellipse cx="0" cy="-7" rx="4.2" ry="7"/>
+      <ellipse cx="0" cy="-7" rx="4.2" ry="7" transform="rotate(72)"/>
+      <ellipse cx="0" cy="-7" rx="4.2" ry="7" transform="rotate(144)"/>
+      <ellipse cx="0" cy="-7" rx="4.2" ry="7" transform="rotate(216)"/>
+      <ellipse cx="0" cy="-7" rx="4.2" ry="7" transform="rotate(288)"/>
+    </g>
+    <circle r="2.6" fill="#cB9d63"/>
+  </g>
+  <g id="bud"><circle r="3" fill="#e7dcc0" stroke="#cB9d63" stroke-width="0.6"/></g>
+</defs>
+<rect width="1080" height="1920" fill="url(#bg)"/>
+<circle cx="257" cy="1338" r="225" fill="#222d1a" opacity="0.11"/>
+<circle cx="531" cy="1151" r="285" fill="#3f4e2c" opacity="0.09"/>
+<circle cx="177" cy="332" r="288" fill="#3f4e2c" opacity="0.12"/>
+<circle cx="242" cy="832" r="263" fill="#46552f" opacity="0.12"/>
+<circle cx="953" cy="1525" r="221" fill="#222d1a" opacity="0.10"/>
+<circle cx="238" cy="1639" r="215" fill="#3f4e2c" opacity="0.08"/>
+<circle cx="260" cy="405" r="329" fill="#3f4e2c" opacity="0.11"/>
+<rect width="1080" height="1920" fill="url(#vig)"/>
+<rect width="1080" height="1920" filter="url(#grain)" opacity="0.05"/>
+<g id="vines">
+<path d="M40.0,0.0 C55.2,121.6 78.0,258.4 66.6,380.0 C55.2,486.4 10.0,623.2 16.0,760.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M40.0,0.0 C55.2,121.6 78.0,258.4 66.6,380.0 C55.2,486.4 10.0,623.2 16.0,760.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(42.9,23.0) rotate(121) scale(1.02)"/>
+<use href="#leaf" transform="translate(46.0,46.3) rotate(224) scale(0.99)"/>
+<use href="#leaf" transform="translate(49.1,69.8) rotate(121) scale(0.97)"/>
+<use href="#blossom" transform="translate(52.2,93.6) scale(0.89)"/>
+<use href="#leaf" transform="translate(55.2,117.5) rotate(121) scale(0.91)"/>
+<use href="#leaf" transform="translate(58.1,141.6) rotate(225) scale(0.88)"/>
+<use href="#bud" transform="translate(60.8,165.8) scale(0.85)"/>
+<use href="#blossom" transform="translate(63.3,190.0) scale(0.78)"/>
+<use href="#leaf" transform="translate(65.4,214.2) rotate(123) scale(0.80)"/>
+<use href="#leaf" transform="translate(67.2,238.4) rotate(228) scale(0.77)"/>
+<use href="#leaf" transform="translate(68.5,262.5) rotate(125) scale(0.74)"/>
+<use href="#blossom" transform="translate(69.4,286.4) scale(0.68)"/>
+<use href="#leaf" transform="translate(69.7,310.2) rotate(128) scale(0.68)"/>
+<use href="#bud" transform="translate(69.4,333.7) scale(0.66)"/>
+<use href="#leaf" transform="translate(68.3,357.0) rotate(131) scale(0.63)"/>
+<use href="#blossom" transform="translate(66.6,380.0) scale(0.57)"/>
+<use href="#leaf" transform="translate(66.6,380.0) rotate(134) scale(1.05)"/>
+<use href="#leaf" transform="translate(64.1,400.3) rotate(240) scale(1.02)"/>
+<use href="#leaf" transform="translate(60.9,421.3) rotate(137) scale(0.99)"/>
+<use href="#blossom" transform="translate(57.2,442.9) scale(0.92)"/>
+<use href="#bud" transform="translate(53.0,465.0) scale(0.94)"/>
+<use href="#leaf" transform="translate(48.6,487.7) rotate(243) scale(0.91)"/>
+<use href="#leaf" transform="translate(44.0,510.9) rotate(139) scale(0.88)"/>
+<use href="#blossom" transform="translate(39.3,534.6) scale(0.81)"/>
+<use href="#leaf" transform="translate(34.8,558.6) rotate(139) scale(0.83)"/>
+<use href="#leaf" transform="translate(30.4,583.0) rotate(242) scale(0.80)"/>
+<use href="#leaf" transform="translate(26.4,607.7) rotate(137) scale(0.77)"/>
+<use href="#blossom" transform="translate(22.8,632.7) scale(0.70)"/>
+<use href="#leaf" transform="translate(19.8,657.9) rotate(134) scale(0.71)"/>
+<use href="#leaf" transform="translate(17.5,683.3) rotate(236) scale(0.68)"/>
+<use href="#leaf" transform="translate(16.0,708.8) rotate(130) scale(0.66)"/>
+<use href="#blossom" transform="translate(15.5,734.4) scale(0.60)"/>
+<use href="#leaf" transform="translate(16.0,760.0) rotate(125) scale(0.60)"/>
+<use href="#blossom" transform="translate(16.0,760.0) scale(1.15)"/>
+<path d="M115.0,0.0 C104.6,96.0 89.0,204.0 96.8,300.0 C104.6,384.0 149.0,492.0 142.2,600.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M115.0,0.0 C104.6,96.0 89.0,204.0 96.8,300.0 C104.6,384.0 149.0,492.0 142.2,600.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(112.5,22.4) rotate(134) scale(1.02)"/>
+<use href="#leaf" transform="translate(109.9,45.1) rotate(239) scale(0.98)"/>
+<use href="#leaf" transform="translate(107.3,68.1) rotate(134) scale(0.95)"/>
+<use href="#blossom" transform="translate(104.8,91.3) scale(0.87)"/>
+<use href="#leaf" transform="translate(102.3,114.7) rotate(134) scale(0.88)"/>
+<use href="#leaf" transform="translate(100.1,138.2) rotate(237) scale(0.84)"/>
+<use href="#bud" transform="translate(98.1,161.8) scale(0.81)"/>
+<use href="#blossom" transform="translate(96.6,185.3) scale(0.73)"/>
+<use href="#leaf" transform="translate(95.4,208.7) rotate(130) scale(0.74)"/>
+<use href="#leaf" transform="translate(94.8,231.9) rotate(233) scale(0.70)"/>
+<use href="#leaf" transform="translate(94.8,254.9) rotate(127) scale(0.67)"/>
+<use href="#blossom" transform="translate(95.4,277.6) scale(0.60)"/>
+<use href="#leaf" transform="translate(96.8,300.0) rotate(123) scale(0.60)"/>
+<use href="#bud" transform="translate(96.8,300.0) scale(1.05)"/>
+<use href="#leaf" transform="translate(99.2,319.8) rotate(120) scale(1.02)"/>
+<use href="#blossom" transform="translate(102.7,340.4) scale(0.93)"/>
+<use href="#leaf" transform="translate(107.0,361.7) rotate(116) scale(0.95)"/>
+<use href="#leaf" transform="translate(111.8,383.7) rotate(219) scale(0.91)"/>
+<use href="#leaf" transform="translate(117.0,406.2) rotate(115) scale(0.88)"/>
+<use href="#blossom" transform="translate(122.4,429.3) scale(0.80)"/>
+<use href="#bud" transform="translate(127.5,452.8) scale(0.81)"/>
+<use href="#leaf" transform="translate(132.3,476.8) rotate(221) scale(0.77)"/>
+<use href="#leaf" transform="translate(136.5,501.0) rotate(119) scale(0.74)"/>
+<use href="#blossom" transform="translate(139.8,525.5) scale(0.67)"/>
+<use href="#leaf" transform="translate(142.0,550.2) rotate(124) scale(0.67)"/>
+<use href="#leaf" transform="translate(142.9,575.1) rotate(232) scale(0.63)"/>
+<use href="#leaf" transform="translate(142.2,600.0) rotate(132) scale(0.60)"/>
+<use href="#blossom" transform="translate(142.2,600.0) scale(1.15)"/>
+<path d="M205.0,0.0 C223.4,140.8 251.0,299.2 237.2,440.0 C223.4,563.2 183.0,721.6 187.4,880.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M205.0,0.0 C223.4,140.8 251.0,299.2 237.2,440.0 C223.4,563.2 183.0,721.6 187.4,880.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(208.0,22.4) rotate(120) scale(1.03)"/>
+<use href="#leaf" transform="translate(211.1,45.0) rotate(224) scale(1.00)"/>
+<use href="#leaf" transform="translate(214.2,67.9) rotate(120) scale(0.98)"/>
+<use href="#blossom" transform="translate(217.4,90.9) scale(0.91)"/>
+<use href="#leaf" transform="translate(220.5,114.2) rotate(120) scale(0.93)"/>
+<use href="#leaf" transform="translate(223.6,137.5) rotate(225) scale(0.91)"/>
+<use href="#bud" transform="translate(226.6,161.0) scale(0.88)"/>
+<use href="#blossom" transform="translate(229.4,184.6) scale(0.82)"/>
+<use href="#leaf" transform="translate(232.0,208.2) rotate(122) scale(0.84)"/>
+<use href="#leaf" transform="translate(234.3,231.8) rotate(227) scale(0.81)"/>
+<use href="#leaf" transform="translate(236.4,255.4) rotate(123) scale(0.79)"/>
+<use href="#blossom" transform="translate(238.1,279.0) scale(0.73)"/>
+<use href="#leaf" transform="translate(239.5,302.5) rotate(125) scale(0.74)"/>
+<use href="#bud" transform="translate(240.4,325.8) scale(0.72)"/>
+<use href="#leaf" transform="translate(240.9,349.1) rotate(127) scale(0.69)"/>
+<use href="#blossom" transform="translate(240.8,372.1) scale(0.64)"/>
+<use href="#leaf" transform="translate(240.2,395.0) rotate(130) scale(0.65)"/>
+<use href="#leaf" transform="translate(239.0,417.6) rotate(236) scale(0.62)"/>
+<use href="#leaf" transform="translate(237.2,440.0) rotate(134) scale(0.60)"/>
+<use href="#blossom" transform="translate(237.2,440.0) scale(1.00)"/>
+<use href="#bud" transform="translate(234.8,459.7) scale(1.03)"/>
+<use href="#leaf" transform="translate(232.0,480.0) rotate(240) scale(1.00)"/>
+<use href="#leaf" transform="translate(229.0,500.9) rotate(137) scale(0.98)"/>
+<use href="#blossom" transform="translate(225.6,522.2) scale(0.91)"/>
+<use href="#leaf" transform="translate(222.1,543.9) rotate(137) scale(0.93)"/>
+<use href="#leaf" transform="translate(218.4,566.1) rotate(241) scale(0.91)"/>
+<use href="#leaf" transform="translate(214.7,588.7) rotate(137) scale(0.88)"/>
+<use href="#blossom" transform="translate(211.0,611.7) scale(0.82)"/>
+<use href="#leaf" transform="translate(207.3,635.0) rotate(137) scale(0.84)"/>
+<use href="#leaf" transform="translate(203.7,658.6) rotate(240) scale(0.81)"/>
+<use href="#leaf" transform="translate(200.3,682.5) rotate(136) scale(0.79)"/>
+<use href="#blossom" transform="translate(197.2,706.7) scale(0.73)"/>
+<use href="#leaf" transform="translate(194.4,731.0) rotate(134) scale(0.74)"/>
+<use href="#leaf" transform="translate(191.9,755.6) rotate(237) scale(0.72)"/>
+<use href="#bud" transform="translate(189.9,780.3) scale(0.69)"/>
+<use href="#blossom" transform="translate(188.4,805.1) scale(0.64)"/>
+<use href="#leaf" transform="translate(187.4,830.0) rotate(130) scale(0.65)"/>
+<use href="#leaf" transform="translate(187.1,855.0) rotate(232) scale(0.62)"/>
+<use href="#leaf" transform="translate(187.4,880.0) rotate(126) scale(0.60)"/>
+<use href="#blossom" transform="translate(187.4,880.0) scale(1.15)"/>
+<path d="M295.0,0.0 C283.0,83.2 265.0,176.8 274.0,260.0 C283.0,332.8 335.0,426.4 327.0,520.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M295.0,0.0 C283.0,83.2 265.0,176.8 274.0,260.0 C283.0,332.8 335.0,426.4 327.0,520.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(291.6,22.9) rotate(137) scale(1.01)"/>
+<use href="#leaf" transform="translate(288.1,46.3) rotate(241) scale(0.97)"/>
+<use href="#leaf" transform="translate(284.5,70.0) rotate(136) scale(0.93)"/>
+<use href="#blossom" transform="translate(281.1,93.9) scale(0.84)"/>
+<use href="#leaf" transform="translate(278.0,117.9) rotate(135) scale(0.85)"/>
+<use href="#leaf" transform="translate(275.4,142.1) rotate(238) scale(0.80)"/>
+<use href="#bud" transform="translate(273.3,166.1) scale(0.76)"/>
+<use href="#blossom" transform="translate(272.0,190.0) scale(0.69)"/>
+<use href="#leaf" transform="translate(271.6,213.7) rotate(128) scale(0.68)"/>
+<use href="#leaf" transform="translate(272.2,237.1) rotate(229) scale(0.64)"/>
+<use href="#leaf" transform="translate(274.0,260.0) rotate(122) scale(0.60)"/>
+<use href="#blossom" transform="translate(274.0,260.0) scale(1.00)"/>
+<use href="#leaf" transform="translate(277.4,280.4) rotate(116) scale(1.01)"/>
+<use href="#bud" transform="translate(282.6,301.6) scale(0.97)"/>
+<use href="#leaf" transform="translate(288.9,323.8) rotate(111) scale(0.93)"/>
+<use href="#blossom" transform="translate(295.9,346.7) scale(0.84)"/>
+<use href="#leaf" transform="translate(303.3,370.2) rotate(111) scale(0.85)"/>
+<use href="#leaf" transform="translate(310.4,394.3) rotate(216) scale(0.80)"/>
+<use href="#leaf" transform="translate(316.9,418.9) rotate(114) scale(0.76)"/>
+<use href="#blossom" transform="translate(322.2,443.8) scale(0.69)"/>
+<use href="#bud" transform="translate(326.0,469.1) scale(0.68)"/>
+<use href="#leaf" transform="translate(327.8,494.5) rotate(231) scale(0.64)"/>
+<use href="#leaf" transform="translate(327.0,520.0) rotate(133) scale(0.60)"/>
+<use href="#blossom" transform="translate(327.0,520.0) scale(1.15)"/>
+<path d="M90.0,0.0 C98.8,64.0 112.0,136.0 105.4,200.0 C98.8,256.0 118.0,328.0 112.4,400.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M90.0,0.0 C98.8,64.0 112.0,136.0 105.4,200.0 C98.8,256.0 118.0,328.0 112.4,400.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(93.5,24.3) rotate(120) scale(0.99)"/>
+<use href="#leaf" transform="translate(97.0,49.2) rotate(224) scale(0.94)"/>
+<use href="#leaf" transform="translate(100.5,74.5) rotate(121) scale(0.88)"/>
+<use href="#blossom" transform="translate(103.5,100.0) scale(0.78)"/>
+<use href="#leaf" transform="translate(105.7,125.5) rotate(124) scale(0.77)"/>
+<use href="#leaf" transform="translate(107.0,150.8) rotate(230) scale(0.71)"/>
+<use href="#bud" transform="translate(107.0,175.7) scale(0.66)"/>
+<use href="#blossom" transform="translate(105.4,200.0) scale(0.57)"/>
+<use href="#leaf" transform="translate(105.4,200.0) rotate(135) scale(1.05)"/>
+<use href="#leaf" transform="translate(104.0,221.7) rotate(233) scale(0.99)"/>
+<use href="#leaf" transform="translate(104.5,244.8) rotate(125) scale(0.94)"/>
+<use href="#blossom" transform="translate(106.2,268.9) scale(0.84)"/>
+<use href="#leaf" transform="translate(108.5,294.0) rotate(122) scale(0.83)"/>
+<use href="#bud" transform="translate(110.9,319.8) scale(0.77)"/>
+<use href="#leaf" transform="translate(112.7,346.2) rotate(125) scale(0.71)"/>
+<use href="#blossom" transform="translate(113.4,373.0) scale(0.62)"/>
+<use href="#leaf" transform="translate(112.4,400.0) rotate(132) scale(0.60)"/>
+<use href="#blossom" transform="translate(112.4,400.0) scale(1.15)"/>
+<path d="M360.0,0.0 C372.0,48.0 390.0,102.0 381.0,150.0 C372.0,192.0 342.0,246.0 345.6,300.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M360.0,0.0 C372.0,48.0 390.0,102.0 381.0,150.0 C372.0,192.0 342.0,246.0 345.6,300.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(366.3,24.4) rotate(113) scale(0.98)"/>
+<use href="#leaf" transform="translate(372.8,49.6) rotate(218) scale(0.90)"/>
+<use href="#leaf" transform="translate(378.4,75.0) rotate(117) scale(0.83)"/>
+<use href="#blossom" transform="translate(382.2,100.4) scale(0.71)"/>
+<use href="#leaf" transform="translate(383.4,125.6) rotate(129) scale(0.68)"/>
+<use href="#leaf" transform="translate(381.0,150.0) rotate(243) scale(0.60)"/>
+<use href="#bud" transform="translate(381.0,150.0) scale(1.05)"/>
+<use href="#blossom" transform="translate(375.0,171.9) scale(0.93)"/>
+<use href="#leaf" transform="translate(367.0,195.6) rotate(147) scale(0.90)"/>
+<use href="#leaf" transform="translate(358.6,220.5) rotate(250) scale(0.83)"/>
+<use href="#leaf" transform="translate(351.2,246.4) rotate(142) scale(0.75)"/>
+<use href="#blossom" transform="translate(346.3,273.1) scale(0.64)"/>
+<use href="#leaf" transform="translate(345.6,300.0) rotate(124) scale(0.60)"/>
+<use href="#blossom" transform="translate(345.6,300.0) scale(1.15)"/>
+<path d="M1040.0,0.0 C1024.0,118.4 1000.0,251.6 1012.0,370.0 C1024.0,473.6 1068.0,606.8 1062.4,740.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M1040.0,0.0 C1024.0,118.4 1000.0,251.6 1012.0,370.0 C1024.0,473.6 1068.0,606.8 1062.4,740.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(1036.9,22.4) rotate(136) scale(1.02)"/>
+<use href="#leaf" transform="translate(1033.7,45.0) rotate(240) scale(0.99)"/>
+<use href="#leaf" transform="translate(1030.4,68.0) rotate(136) scale(0.97)"/>
+<use href="#blossom" transform="translate(1027.2,91.1) scale(0.89)"/>
+<use href="#leaf" transform="translate(1024.0,114.4) rotate(136) scale(0.91)"/>
+<use href="#leaf" transform="translate(1020.9,137.9) rotate(239) scale(0.88)"/>
+<use href="#bud" transform="translate(1018.1,161.4) scale(0.85)"/>
+<use href="#blossom" transform="translate(1015.5,185.0) scale(0.78)"/>
+<use href="#leaf" transform="translate(1013.2,208.6) rotate(133) scale(0.80)"/>
+<use href="#leaf" transform="translate(1011.4,232.1) rotate(236) scale(0.77)"/>
+<use href="#leaf" transform="translate(1010.0,255.6) rotate(131) scale(0.74)"/>
+<use href="#blossom" transform="translate(1009.1,278.9) scale(0.68)"/>
+<use href="#leaf" transform="translate(1008.8,302.0) rotate(128) scale(0.68)"/>
+<use href="#bud" transform="translate(1009.1,325.0) scale(0.66)"/>
+<use href="#leaf" transform="translate(1010.2,347.6) rotate(124) scale(0.63)"/>
+<use href="#blossom" transform="translate(1012.0,370.0) scale(0.57)"/>
+<use href="#leaf" transform="translate(1012.0,370.0) rotate(121) scale(1.05)"/>
+<use href="#leaf" transform="translate(1014.6,389.8) rotate(224) scale(1.02)"/>
+<use href="#leaf" transform="translate(1017.8,410.2) rotate(118) scale(0.99)"/>
+<use href="#blossom" transform="translate(1021.6,431.2) scale(0.92)"/>
+<use href="#bud" transform="translate(1025.7,452.8) scale(0.94)"/>
+<use href="#leaf" transform="translate(1030.1,474.9) rotate(221) scale(0.91)"/>
+<use href="#leaf" transform="translate(1034.7,497.5) rotate(117) scale(0.88)"/>
+<use href="#blossom" transform="translate(1039.3,520.5) scale(0.81)"/>
+<use href="#leaf" transform="translate(1043.8,543.9) rotate(117) scale(0.83)"/>
+<use href="#leaf" transform="translate(1048.1,567.7) rotate(222) scale(0.80)"/>
+<use href="#leaf" transform="translate(1052.1,591.7) rotate(119) scale(0.77)"/>
+<use href="#blossom" transform="translate(1055.6,616.0) scale(0.70)"/>
+<use href="#leaf" transform="translate(1058.6,640.6) rotate(122) scale(0.71)"/>
+<use href="#leaf" transform="translate(1060.9,665.3) rotate(228) scale(0.68)"/>
+<use href="#leaf" transform="translate(1062.3,690.1) rotate(126) scale(0.66)"/>
+<use href="#blossom" transform="translate(1062.9,715.0) scale(0.60)"/>
+<use href="#leaf" transform="translate(1062.4,740.0) rotate(130) scale(0.60)"/>
+<use href="#blossom" transform="translate(1062.4,740.0) scale(1.15)"/>
+<path d="M965.0,0.0 C977.0,96.0 995.0,204.0 986.0,300.0 C977.0,384.0 933.0,492.0 939.4,600.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M965.0,0.0 C977.0,96.0 995.0,204.0 986.0,300.0 C977.0,384.0 933.0,492.0 939.4,600.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(967.9,22.4) rotate(121) scale(1.02)"/>
+<use href="#leaf" transform="translate(970.8,45.1) rotate(224) scale(0.98)"/>
+<use href="#leaf" transform="translate(973.9,68.1) rotate(121) scale(0.95)"/>
+<use href="#blossom" transform="translate(976.8,91.3) scale(0.87)"/>
+<use href="#leaf" transform="translate(979.6,114.7) rotate(121) scale(0.88)"/>
+<use href="#leaf" transform="translate(982.2,138.2) rotate(226) scale(0.84)"/>
+<use href="#bud" transform="translate(984.5,161.8) scale(0.81)"/>
+<use href="#blossom" transform="translate(986.3,185.3) scale(0.73)"/>
+<use href="#leaf" transform="translate(987.6,208.7) rotate(125) scale(0.74)"/>
+<use href="#leaf" transform="translate(988.3,231.9) rotate(231) scale(0.70)"/>
+<use href="#leaf" transform="translate(988.4,254.9) rotate(129) scale(0.67)"/>
+<use href="#blossom" transform="translate(987.6,277.6) scale(0.60)"/>
+<use href="#leaf" transform="translate(986.0,300.0) rotate(133) scale(0.60)"/>
+<use href="#bud" transform="translate(986.0,300.0) scale(1.05)"/>
+<use href="#leaf" transform="translate(983.3,319.8) rotate(137) scale(1.02)"/>
+<use href="#blossom" transform="translate(979.7,340.4) scale(0.93)"/>
+<use href="#leaf" transform="translate(975.2,361.7) rotate(140) scale(0.95)"/>
+<use href="#leaf" transform="translate(970.2,383.7) rotate(245) scale(0.91)"/>
+<use href="#leaf" transform="translate(964.9,406.2) rotate(141) scale(0.88)"/>
+<use href="#blossom" transform="translate(959.6,429.3) scale(0.80)"/>
+<use href="#bud" transform="translate(954.4,452.8) scale(0.81)"/>
+<use href="#leaf" transform="translate(949.5,476.8) rotate(243) scale(0.77)"/>
+<use href="#leaf" transform="translate(945.3,501.0) rotate(137) scale(0.74)"/>
+<use href="#blossom" transform="translate(942.0,525.5) scale(0.67)"/>
+<use href="#leaf" transform="translate(939.7,550.2) rotate(132) scale(0.67)"/>
+<use href="#leaf" transform="translate(938.8,575.1) rotate(232) scale(0.63)"/>
+<use href="#leaf" transform="translate(939.4,600.0) rotate(125) scale(0.60)"/>
+<use href="#blossom" transform="translate(939.4,600.0) scale(1.15)"/>
+<path d="M875.0,0.0 C857.4,137.6 831.0,292.4 844.2,430.0 C857.4,550.4 899.0,705.2 894.2,860.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M875.0,0.0 C857.4,137.6 831.0,292.4 844.2,430.0 C857.4,550.4 899.0,705.2 894.2,860.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(872.0,23.1) rotate(136) scale(1.03)"/>
+<use href="#leaf" transform="translate(868.9,46.5) rotate(240) scale(1.00)"/>
+<use href="#leaf" transform="translate(865.7,70.1) rotate(136) scale(0.98)"/>
+<use href="#blossom" transform="translate(862.5,93.9) scale(0.90)"/>
+<use href="#leaf" transform="translate(859.3,117.9) rotate(135) scale(0.93)"/>
+<use href="#leaf" transform="translate(856.3,142.1) rotate(239) scale(0.90)"/>
+<use href="#bud" transform="translate(853.3,166.3) scale(0.88)"/>
+<use href="#blossom" transform="translate(850.6,190.6) scale(0.81)"/>
+<use href="#leaf" transform="translate(848.0,215.0) rotate(134) scale(0.83)"/>
+<use href="#leaf" transform="translate(845.8,239.4) rotate(237) scale(0.80)"/>
+<use href="#leaf" transform="translate(843.9,263.7) rotate(132) scale(0.78)"/>
+<use href="#blossom" transform="translate(842.4,287.9) scale(0.71)"/>
+<use href="#leaf" transform="translate(841.3,312.1) rotate(130) scale(0.73)"/>
+<use href="#bud" transform="translate(840.7,336.1) scale(0.70)"/>
+<use href="#leaf" transform="translate(840.7,359.9) rotate(127) scale(0.68)"/>
+<use href="#blossom" transform="translate(841.2,383.5) scale(0.62)"/>
+<use href="#leaf" transform="translate(842.4,406.9) rotate(124) scale(0.62)"/>
+<use href="#leaf" transform="translate(844.2,430.0) rotate(227) scale(0.60)"/>
+<use href="#leaf" transform="translate(844.2,430.0) rotate(122) scale(1.05)"/>
+<use href="#blossom" transform="translate(846.7,450.4) scale(0.97)"/>
+<use href="#bud" transform="translate(849.5,471.4) scale(1.00)"/>
+<use href="#leaf" transform="translate(852.8,492.9) rotate(223) scale(0.98)"/>
+<use href="#leaf" transform="translate(856.4,515.0) rotate(119) scale(0.95)"/>
+<use href="#blossom" transform="translate(860.2,537.6) scale(0.88)"/>
+<use href="#leaf" transform="translate(864.1,560.6) rotate(118) scale(0.90)"/>
+<use href="#leaf" transform="translate(868.1,584.1) rotate(222) scale(0.88)"/>
+<use href="#leaf" transform="translate(872.1,607.9) rotate(119) scale(0.85)"/>
+<use href="#blossom" transform="translate(875.9,632.1) scale(0.78)"/>
+<use href="#leaf" transform="translate(879.7,656.6) rotate(120) scale(0.80)"/>
+<use href="#leaf" transform="translate(883.1,681.4) rotate(224) scale(0.78)"/>
+<use href="#leaf" transform="translate(886.3,706.5) rotate(121) scale(0.75)"/>
+<use href="#blossom" transform="translate(889.1,731.7) scale(0.69)"/>
+<use href="#leaf" transform="translate(891.3,757.2) rotate(123) scale(0.70)"/>
+<use href="#leaf" transform="translate(893.1,782.8) rotate(229) scale(0.68)"/>
+<use href="#bud" transform="translate(894.2,808.4) scale(0.65)"/>
+<use href="#blossom" transform="translate(894.6,834.2) scale(0.59)"/>
+<use href="#leaf" transform="translate(894.2,860.0) rotate(130) scale(0.60)"/>
+<use href="#blossom" transform="translate(894.2,860.0) scale(1.15)"/>
+<path d="M785.0,0.0 C798.6,80.0 819.0,170.0 808.8,250.0 C798.6,320.0 755.0,410.0 761.0,500.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M785.0,0.0 C798.6,80.0 819.0,170.0 808.8,250.0 C798.6,320.0 755.0,410.0 761.0,500.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(789.2,24.3) rotate(118) scale(1.01)"/>
+<use href="#leaf" transform="translate(793.7,49.0) rotate(222) scale(0.96)"/>
+<use href="#leaf" transform="translate(798.1,74.2) rotate(118) scale(0.92)"/>
+<use href="#blossom" transform="translate(802.2,99.5) scale(0.83)"/>
+<use href="#leaf" transform="translate(805.8,125.0) rotate(121) scale(0.83)"/>
+<use href="#leaf" transform="translate(808.7,150.5) rotate(226) scale(0.78)"/>
+<use href="#bud" transform="translate(810.7,175.8) scale(0.74)"/>
+<use href="#blossom" transform="translate(811.5,201.0) scale(0.66)"/>
+<use href="#leaf" transform="translate(811.0,225.7) rotate(131) scale(0.65)"/>
+<use href="#leaf" transform="translate(808.8,250.0) rotate(239) scale(0.60)"/>
+<use href="#leaf" transform="translate(808.8,250.0) rotate(136) scale(1.05)"/>
+<use href="#blossom" transform="translate(805.3,269.6) scale(0.96)"/>
+<use href="#leaf" transform="translate(800.4,290.0) rotate(142) scale(0.97)"/>
+<use href="#bud" transform="translate(794.7,311.3) scale(0.93)"/>
+<use href="#leaf" transform="translate(788.4,333.3) rotate(144) scale(0.89)"/>
+<use href="#blossom" transform="translate(782.0,356.0) scale(0.80)"/>
+<use href="#leaf" transform="translate(775.8,379.2) rotate(142) scale(0.80)"/>
+<use href="#leaf" transform="translate(770.1,402.8) rotate(244) scale(0.76)"/>
+<use href="#leaf" transform="translate(765.5,426.8) rotate(138) scale(0.72)"/>
+<use href="#blossom" transform="translate(762.1,451.0) scale(0.65)"/>
+<use href="#bud" transform="translate(760.5,475.5) scale(0.64)"/>
+<use href="#leaf" transform="translate(761.0,500.0) rotate(228) scale(0.60)"/>
+<use href="#blossom" transform="translate(761.0,500.0) scale(1.15)"/>
+<path d="M995.0,0.0 C986.2,60.8 973.0,129.2 979.6,190.0 C986.2,243.2 969.0,311.6 974.2,380.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M995.0,0.0 C986.2,60.8 973.0,129.2 979.6,190.0 C986.2,243.2 969.0,311.6 974.2,380.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(991.5,23.1) rotate(137) scale(0.99)"/>
+<use href="#leaf" transform="translate(988.0,46.8) rotate(240) scale(0.94)"/>
+<use href="#leaf" transform="translate(984.5,70.8) rotate(136) scale(0.88)"/>
+<use href="#blossom" transform="translate(981.5,95.0) scale(0.78)"/>
+<use href="#leaf" transform="translate(979.3,119.2) rotate(132) scale(0.77)"/>
+<use href="#leaf" transform="translate(978.0,143.2) rotate(234) scale(0.71)"/>
+<use href="#bud" transform="translate(978.0,166.9) scale(0.66)"/>
+<use href="#blossom" transform="translate(979.6,190.0) scale(0.57)"/>
+<use href="#leaf" transform="translate(979.6,190.0) rotate(121) scale(1.05)"/>
+<use href="#leaf" transform="translate(981.0,210.6) rotate(231) scale(0.99)"/>
+<use href="#leaf" transform="translate(980.8,232.5) rotate(130) scale(0.94)"/>
+<use href="#blossom" transform="translate(979.4,255.5) scale(0.84)"/>
+<use href="#leaf" transform="translate(977.4,279.3) rotate(133) scale(0.83)"/>
+<use href="#bud" transform="translate(975.4,303.9) scale(0.77)"/>
+<use href="#leaf" transform="translate(973.8,328.9) rotate(131) scale(0.71)"/>
+<use href="#blossom" transform="translate(973.2,354.4) scale(0.62)"/>
+<use href="#leaf" transform="translate(974.2,380.0) rotate(124) scale(0.60)"/>
+<use href="#blossom" transform="translate(974.2,380.0) scale(1.15)"/>
+<path d="M720.0,0.0 C708.8,48.0 692.0,102.0 700.4,150.0 C708.8,192.0 740.0,246.0 736.0,300.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M720.0,0.0 C708.8,48.0 692.0,102.0 700.4,150.0 C708.8,192.0 740.0,246.0 736.0,300.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(714.1,24.4) rotate(142) scale(0.98)"/>
+<use href="#leaf" transform="translate(708.1,49.6) rotate(245) scale(0.90)"/>
+<use href="#leaf" transform="translate(702.8,75.0) rotate(138) scale(0.83)"/>
+<use href="#blossom" transform="translate(699.3,100.4) scale(0.71)"/>
+<use href="#leaf" transform="translate(698.2,125.6) rotate(127) scale(0.68)"/>
+<use href="#leaf" transform="translate(700.4,150.0) rotate(222) scale(0.60)"/>
+<use href="#bud" transform="translate(700.4,150.0) scale(1.05)"/>
+<use href="#blossom" transform="translate(706.2,171.9) scale(0.93)"/>
+<use href="#leaf" transform="translate(714.3,195.6) rotate(109) scale(0.90)"/>
+<use href="#leaf" transform="translate(722.8,220.5) rotate(214) scale(0.83)"/>
+<use href="#leaf" transform="translate(730.4,246.4) rotate(114) scale(0.75)"/>
+<use href="#blossom" transform="translate(735.3,273.1) scale(0.64)"/>
+<use href="#leaf" transform="translate(736.0,300.0) rotate(132) scale(0.60)"/>
+<use href="#blossom" transform="translate(736.0,300.0) scale(1.15)"/>
+<path d="M470.0,0.0 C477.2,40.0 488.0,85.0 482.6,125.0 C477.2,160.0 458.0,205.0 460.4,250.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M470.0,0.0 C477.2,40.0 488.0,85.0 482.6,125.0 C477.2,160.0 458.0,205.0 460.4,250.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(474.6,24.5) rotate(117) scale(0.96)"/>
+<use href="#leaf" transform="translate(479.1,49.8) rotate(223) scale(0.87)"/>
+<use href="#leaf" transform="translate(482.6,75.2) rotate(122) scale(0.78)"/>
+<use href="#blossom" transform="translate(484.1,100.5) scale(0.66)"/>
+<use href="#leaf" transform="translate(482.6,125.0) rotate(136) scale(0.60)"/>
+<use href="#leaf" transform="translate(482.6,125.0) rotate(241) scale(1.05)"/>
+<use href="#bud" transform="translate(478.0,147.1) scale(0.96)"/>
+<use href="#blossom" transform="translate(471.8,171.2) scale(0.83)"/>
+<use href="#leaf" transform="translate(465.6,196.6) rotate(140) scale(0.78)"/>
+<use href="#leaf" transform="translate(461.3,223.1) rotate(238) scale(0.69)"/>
+<use href="#leaf" transform="translate(460.4,250.0) rotate(125) scale(0.60)"/>
+<use href="#blossom" transform="translate(460.4,250.0) scale(1.15)"/>
+<path d="M610.0,0.0 C602.8,40.0 592.0,85.0 597.4,125.0 C602.8,160.0 622.0,205.0 619.6,250.0 " fill="none" stroke="#5d6e42" stroke-width="2.4" opacity="0.9"/>
+<path d="M610.0,0.0 C602.8,40.0 592.0,85.0 597.4,125.0 C602.8,160.0 622.0,205.0 619.6,250.0 " fill="none" stroke="#7c8d57" stroke-width="1" opacity="0.8"/>
+<use href="#leaf" transform="translate(605.4,24.5) rotate(139) scale(0.96)"/>
+<use href="#leaf" transform="translate(600.9,49.8) rotate(241) scale(0.87)"/>
+<use href="#leaf" transform="translate(597.4,75.2) rotate(134) scale(0.78)"/>
+<use href="#blossom" transform="translate(595.9,100.5) scale(0.66)"/>
+<use href="#leaf" transform="translate(597.4,125.0) rotate(120) scale(0.60)"/>
+<use href="#leaf" transform="translate(597.4,125.0) rotate(223) scale(1.05)"/>
+<use href="#bud" transform="translate(602.0,147.1) scale(0.96)"/>
+<use href="#blossom" transform="translate(608.2,171.2) scale(0.83)"/>
+<use href="#leaf" transform="translate(614.4,196.6) rotate(116) scale(0.78)"/>
+<use href="#leaf" transform="translate(618.7,223.1) rotate(226) scale(0.69)"/>
+<use href="#leaf" transform="translate(619.6,250.0) rotate(131) scale(0.60)"/>
+<use href="#blossom" transform="translate(619.6,250.0) scale(1.15)"/>
+</g>
+<g id="crest">
+<path d="M540,46 C 536,120 544,150 540,126" stroke="#caa766" stroke-width="1.6" fill="none" opacity="0.85"/>
+<circle cx="540" cy="46" r="4" fill="url(#goldR)"/>
+<circle cx="540" cy="212" r="86" fill="#243019" stroke="url(#goldR)" stroke-width="3"/>
+<circle cx="540" cy="212" r="79" fill="none" stroke="#caa766" stroke-width="1" opacity="0.7"/>
+<g transform="translate(540,212)"><path d="M0,34 C-22,22 -44,24 -58,30 L-58,52 C-44,46 -22,44 0,54 Z" fill="none" stroke="url(#goldR)" stroke-width="2.4"/><path d="M0,34 C22,22 44,24 58,30 L58,52 C44,46 22,44 0,54 Z" fill="none" stroke="url(#goldR)" stroke-width="2.4"/><path d="M0,34 L0,54" stroke="#caa766" stroke-width="1.4"/><path d="M-50,32 C-32,28 -14,28 -6,31" stroke="#caa766" stroke-width="0.8" fill="none" opacity="0.6"/><path d="M50,32 C32,28 14,28 6,31" stroke="#caa766" stroke-width="0.8" fill="none" opacity="0.6"/><path d="M-50,38 C-32,34 -14,34 -6,37" stroke="#caa766" stroke-width="0.8" fill="none" opacity="0.6"/><path d="M50,38 C32,34 14,34 6,37" stroke="#caa766" stroke-width="0.8" fill="none" opacity="0.6"/><path d="M0,18 C-12,2 -34,-4 -34,-20 C-34,-32 -24,-39 -14,-39 C-7,-39 -2,-34 0,-28 C2,-34 7,-39 14,-39 C24,-39 34,-32 34,-20 C34,-4 12,2 0,18 Z" fill="none" stroke="url(#goldR)" stroke-width="2.6"/><path d="M-30,-16 L-14,-16 L-8,-28 L0,-2 L6,-22 L11,-16 L30,-16" fill="none" stroke="#f3dca6" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></g>
+<path d="M448,177 L449.3,180.7 L453,182 L449.3,183.3 L448,187 L446.7,183.3 L443,182 L446.7,180.7 Z" fill="#e7d3a0" opacity="0.8"/>
+<path d="M632,225 L633.3,228.7 L637,230 L633.3,231.3 L632,235 L630.7,231.3 L627,230 L630.7,228.7 Z" fill="#e7d3a0" opacity="0.8"/>
+<path d="M540,111 L541.3,114.7 L545,116 L541.3,117.3 L540,121 L538.7,117.3 L535,116 L538.7,114.7 Z" fill="#e7d3a0" opacity="0.8"/>
+</g>
+<g transform="translate(60,1850) scale(1,1)"><path d="M0,0 C30,-8 60,-30 84,-72" stroke="#caa766" stroke-width="1.6" fill="none" opacity="0.8"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(20,-7) rotate(40)" opacity="0.75"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(40,-20) rotate(55)" opacity="0.75"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(60,-40) rotate(70)" opacity="0.75"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(74,-58) rotate(80)" opacity="0.75"/></g>
+<g transform="translate(1020,1850) scale(-1,1)"><path d="M0,0 C30,-8 60,-30 84,-72" stroke="#caa766" stroke-width="1.6" fill="none" opacity="0.8"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(20,-7) rotate(40)" opacity="0.75"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(40,-20) rotate(55)" opacity="0.75"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(60,-40) rotate(70)" opacity="0.75"/><path d="M0,0 C5,-7 5,-16 0,-22 C-5,-16 -5,-7 0,0 Z" fill="none" stroke="#caa766" stroke-width="1.2" transform="translate(74,-58) rotate(80)" opacity="0.75"/></g>
+</svg>
