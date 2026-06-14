@@ -144,18 +144,10 @@
     color: #fff;
     background:
       linear-gradient(rgba(44,56,41,.22), rgba(44,56,41,.22)),
-      url('bg/bgcover.svg') center / cover no-repeat;
+      url('bg/bgcover.jpeg') center / cover no-repeat;
   }
   /* bingkai ornamen di cover */
-  #cover .frame {
-    position: absolute; inset: 22px; border: 1px solid rgba(214,191,149,.5);
-    border-radius: 8px; pointer-events: none; z-index: 1;
-  }
-  #cover .frame::before, #cover .frame::after {
-    content: '❦'; position: absolute; left: 50%; transform: translateX(-50%);
-    color: var(--gold-soft); font-size: 18px;
-  }
-  #cover .frame::before { top: -11px; } #cover .frame::after { bottom: -11px; }
+  #cover .frame { display: none; }
   /* kartu kaca transparan (frosted) pembungkus konten cover */
   .cover-card {
     max-width: 330px; margin: 0 auto; padding: 8px 26px;
@@ -179,12 +171,6 @@
   }
   .cover-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
   body.loaded #cover .cover-frame { animation: fadeUp 1s .35s both; }
-  /* band motif tenun Bugis di tepi atas & bawah cover */
-  .tenun {
-    position: absolute; left: 0; width: 100%; height: 20px; z-index: 2;
-    background: url('tenun.svg?v=2') repeat-x center / auto 20px; opacity: .9;
-  }
-  .tenun-top { top: 0; } .tenun-bottom { bottom: 0; }
   #cover .eyebrow { color: rgba(255,255,255,.85); }
   #cover .names {
     font-family: var(--script); font-size: clamp(38px, 11vw, 48px); line-height: 1.12;
@@ -216,7 +202,7 @@
   body.opened { overflow: auto; }
 
   /* ---------- OPENING ---------- */
-  #opening { background: var(--bg); }
+  #opening { background: #f3e9e2; }
   #opening .ayat { font-family: var(--serif-i); font-size: 20px; color: var(--muted); max-width: 360px; margin: 0 auto; }
   #opening p.sub { margin-top: 18px; }
 
@@ -305,8 +291,10 @@
   #rsvp.has-card .btn-submit { background: #969d7f; color: #fff; border-radius: 8px; }
   #rsvp.has-card .btn-pop { background: rgba(150,157,127,.16); border: 1px solid rgba(53,69,47,.4); color: #35452f; box-shadow: none; }
   #checkin .sec-card { background: rgba(236,217,182,.85); }                     /* krem emas */
-  #opening .sec-card { background: rgba(236,217,182,.9); }                      /* ayat: krem emas */
-  #opening .sec-card .eyebrow, #opening .sec-card .ayat, #opening .sec-card .sub { color: #35452f; }
+  #opening .sec-card { background: rgba(255,252,247,.66); border-color: rgba(138,59,66,.20); }  /* ayat: kartu krem lembut senada ivory */
+  #opening .sec-card .eyebrow { color: #8a3b42; }   /* basmalah: maroon senada judul galeri */
+  #opening .sec-card .ayat { color: #4a3b3b; }      /* ayat: charcoal hangat */
+  #opening .sec-card .sub  { color: #a98a8a; }      /* sumber ayat: muted rose */
   /* bismillah: diperbesar & tanpa letter-spacing (spacing memutus sambungan huruf Arab) */
   #opening .sec-card .eyebrow { font-size: 25px; font-weight: 400; letter-spacing: 0; line-height: 1.7; }
   /* Amplop Digital: hijau tua + emas, senada kotak Detail Acara */
@@ -500,14 +488,10 @@
   /* ---------- INTRO (undangan lengkap berurutan, cross-fade) ---------- */
   #intro {
     color: var(--ink);
-    background:
-      url('texture.svg?v=2') repeat,
-      radial-gradient(120% 80% at 50% 25%, #fdf7f3, var(--bg-deep));
-    background-size: 240px, auto;
+    background: radial-gradient(120% 80% at 50% 25%, #fdf7f3, var(--bg-deep));
   }
   #intro .frame {
-    position: absolute; inset: 22px; border: 1px solid rgba(189,153,104,.5);
-    border-radius: 8px; pointer-events: none; z-index: 2;
+    position: absolute; inset: 22px; pointer-events: none; z-index: 2;
   }
   #intro .frame::before, #intro .frame::after {
     content: '❦'; position: absolute; left: 50%; transform: translateX(-50%);
@@ -639,14 +623,6 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (max-width: 480px) { .music-btn { right: 16px; } }
 
-  /* tekstur botani vintage samar (hanya bagian terang; ditaruh setelah
-     definisi section agar warna dasar tetap, hanya menambah gambar tekstur) */
-  #opening, #couple, #couple2, #events, #story, #gift, #checkin {
-    background-image: url('texture.svg?v=2');
-    background-repeat: repeat;
-    background-size: 240px;
-  }
-
   /* ---------- BACKGROUND PER SEGMEN ---------- */
   .has-bg { background-repeat: no-repeat; background-position: center; background-size: cover; }
   /* latar video (di belakang konten, di atas foto background) */
@@ -659,7 +635,6 @@
   /* bg sudah punya hiasan bunga & bingkai sendiri -> matikan hiasan bawaan agar tidak dobel */
   .has-bg::before, .has-bg::after { display: none !important; }
   .has-bg .frame { display: none !important; }
-  #cover.has-bg .tenun { display: none !important; }
   /* segmen berteks putih di atas background gelap */
   .bg-white-text, .bg-white-text .eyebrow, .bg-white-text .ayat, .bg-white-text .sub,
   .bg-white-text > p, .bg-white-text .couple-intro,
@@ -1154,7 +1129,6 @@ const CONFIG = {
   //     Tukar src antar-segmen sesuka hati untuk mengganti background.
   backgrounds: {
     // cover: pakai bg/bg.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
-    opening:   { src: "bg/bg.jpeg", video: "bg/ayat-video.mp4", veil: .25 },
     couple:    { src: "bg/bg.jpeg", veil: .4 },
     couple2:   { src: "bg/bg.jpeg", veil: .4 },
     countdown: { src: "bg/bg.jpeg", veil: .4 },
