@@ -205,6 +205,20 @@
   #opening { background: #f3e9e2; }
   #opening .ayat { font-family: var(--serif-i); font-size: 20px; color: var(--muted); max-width: 360px; margin: 0 auto; }
   #opening p.sub { margin-top: 18px; }
+  /* bingkai foto (arch) di atas kartu ayat — gaya sama seperti cover */
+  #opening .opening-frame {
+    width: min(210px, 58vw); margin: 0 auto 26px; padding: 9px;
+    border: 1px solid rgba(214,191,149,.7);
+    border-radius: 12px;
+    background: rgba(255,255,255,.12);
+    box-shadow: 0 14px 38px rgba(0,0,0,.30), inset 0 0 0 1px rgba(255,255,255,.10);
+  }
+  #opening .opening-frame-inner {
+    border-radius: 6px; overflow: hidden; aspect-ratio: 3 / 4.1;
+  }
+  #opening .opening-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* kartu ayat sedikit lebih sempit & turun di bawah bingkai */
+  #opening.has-card .sec-card { margin-top: 6px; }
 
   /* ---------- COUPLE ---------- */
   #couple, #couple2 { background: var(--bg-deep, #f3ece2); padding-top: 52px; padding-bottom: 52px; }
@@ -806,6 +820,11 @@
 
     <!-- ================= OPENING ================= -->
     <section id="opening" class="reveal">
+      <div class="opening-frame">
+        <div class="opening-frame-inner">
+          <img id="opening-photo" src="opening-ayat.jpg" alt="Mempelai" />
+        </div>
+      </div>
       <div class="eyebrow">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيْمِ</div>
       <div class="divider"></div>
       <p class="ayat" id="opening-ayat"></p>
@@ -1154,7 +1173,7 @@ const CONFIG = {
   //     Tukar src antar-segmen sesuka hati untuk mengganti background.
   backgrounds: {
     // cover: pakai bg/bg.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
-    opening:   { src: "bg/bgclosing.jpeg", veil: .3 },
+    opening:   { src: "bg/gift.jpeg", veil: .3 },
     couple:    { src: "bg/bg.jpeg", veil: .4 },
     couple2:   { src: "bg/bg.jpeg", veil: .4 },
     countdown: { src: "bg/bg.jpeg", veil: .4 },
@@ -1564,7 +1583,7 @@ loadWishes();
     const sec = document.getElementById(id); if (!sec) return;
     const card = document.createElement("div"); card.className = "sec-card";
     // pindahkan semua isi ke dalam kartu, kecuali latar video bila ada
-    Array.from(sec.children).forEach(ch => { if (!ch.classList.contains("bg-video-wrap")) card.appendChild(ch); });
+    Array.from(sec.children).forEach(ch => { if (!ch.classList.contains("bg-video-wrap") && !ch.classList.contains("opening-frame")) card.appendChild(ch); });
     sec.appendChild(card);
     sec.classList.add("has-card");
   });
