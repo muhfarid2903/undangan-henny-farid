@@ -138,14 +138,22 @@
 
   /* ---------- COVER ---------- */
   #cover {
+    position: relative; overflow: hidden;
     min-height: 100vh;
     min-height: 100svh;   /* tinggi layar yang terlihat di browser HP (tanpa area address bar) */
     padding-top: 34px; padding-bottom: 34px;
     color: #fff;
     background:
       linear-gradient(rgba(44,56,41,.22), rgba(44,56,41,.22)),
-      url('bg/bgcover.jpeg') center / cover no-repeat;
+      url('bg/bgcover.jpeg') center / cover no-repeat;   /* fallback selagi video dimuat */
   }
+  /* video latar penuh layar untuk sampul */
+  #cover .cover-bg-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 0; pointer-events: none;
+  }
+  /* konten cover di atas video */
+  #cover .cover-card, #cover .scroll-cue { position: relative; z-index: 2; }
   /* bingkai ornamen di cover */
   #cover .frame { display: none; }
   /* kartu kaca transparan (frosted) pembungkus konten cover */
@@ -792,6 +800,7 @@
 
   <!-- ================= COVER ================= -->
   <section id="cover">
+    <video class="cover-bg-video" src="bg/bgcover-video.mp4" poster="bg/bgcover.jpeg" muted loop autoplay playsinline preload="auto"></video>
     <div class="cover-card">
       <div class="eyebrow">The Wedding Of</div>
       <div class="cover-frame">
@@ -1055,12 +1064,11 @@ const CONFIG = {
   //     Untuk bg gelap, tambah white: true -> veil gelap + teks putih agar terbaca.
   //     veil: 0..1 (opsional) -> ketebalan lapisan di atas gambar; makin kecil makin terlihat gambarnya.
   intro: [
-    { type: "hero", note: "Sakinah, Mawaddah, wa Rahmah", video: "videointro.mp4", veil: .28, delayText: true },  // video intro ±6 detik (tanpa teks) + overlay The Wedding Of + nama muncul di detik ke-2
-    { type: "ayat", bg: "bgintro2.jpg", veil: .32 },   // ayat + ayatRef (background terang -> teks gelap sage)
+    { type: "hero", video: "intro-1-2.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 1 & 2 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
     { type: "photo", src: "galeri3.jpg" },                     // slide foto full (ganti filenya sesukamu)
     { type: "photo", src: "intro-foto2.jpg" },                    // slide foto full kedua (atau hapus baris ini)
-    { type: "couple", bg: "bgintro5.jpg", veil: .32 },  // salam + mempelai + orang tua (background terang -> teks gelap sage)
-    { type: "hormat", bg: "bgintro6.jpeg", white: true, veil: .38 },  // kehormatan + hormat kami
+    { type: "couple", video: "intro-5-6.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 5 & 6 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
+    { type: "photo", src: "foto-intro-7.jpeg" },  // slide 7: foto full
   ],
 
   // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM+08:00
@@ -1504,8 +1512,9 @@ loadWishes();
     if (s.video) {
       const wrap = document.createElement("div"); wrap.className = "bg-video-wrap";
       const v = document.createElement("video");
-      v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+      v.muted = true; v.loop = (s.loop !== false); v.autoplay = true; v.playsInline = true;
       v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); // wajib utk autoplay iOS
+      if (v.loop) v.setAttribute("loop", "");
       v.preload = "metadata"; v.src = s.video;
       const ve = document.createElement("div"); ve.className = "bg-video-veil";
       ve.style.background = veil;
