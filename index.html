@@ -177,7 +177,7 @@
   .cover-frame-inner {
     border-radius: 192px 192px 9px 9px; overflow: hidden; aspect-ratio: 3 / 4.1;
   }
-  .cover-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover-frame video, .cover-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
   body.loaded #cover .cover-frame { animation: fadeUp 1s .35s both; }
   #cover .eyebrow { color: rgba(255,255,255,.85); }
   #cover .names {
@@ -805,7 +805,7 @@
       <div class="eyebrow">The Wedding Of</div>
       <div class="cover-frame">
         <div class="cover-frame-inner">
-          <video id="cover-video" src="bg/cover-video.mp4" poster="coverbaru.jpg" muted loop autoplay playsinline preload="metadata"></video>
+          <img id="cover-photo" src="coverbaru.jpg" alt="Foto mempelai">
         </div>
       </div>
       <div class="names" id="cover-names">Rangga & Cinta</div>
@@ -1605,15 +1605,6 @@ loadWishes();
     sec.appendChild(card);
     sec.classList.add("has-card");
   });
-})();
-
-// ---- Video di bingkai cover: hanya berputar saat cover terlihat (hemat baterai) ----
-(function(){
-  const cv = $("#cover-video"); if (!cv) return;
-  cv.muted = true;
-  new IntersectionObserver((es) => es.forEach(en => {
-    if (en.isIntersecting) cv.play().catch(()=>{}); else cv.pause();
-  }), { threshold: .15 }).observe(cv);
 })();
 
 // ---- Foto sisi kiri (tampilan laptop) ----
