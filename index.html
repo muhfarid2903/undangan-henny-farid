@@ -145,7 +145,7 @@
     color: #fff;
     background:
       linear-gradient(rgba(44,56,41,.22), rgba(44,56,41,.22)),
-      url('coverbaru.jpg') center / cover no-repeat;   /* fallback selagi video dimuat */
+      url('cover.jpg') center / cover no-repeat;   /* fallback selagi video dimuat */
   }
   /* video latar penuh layar untuk sampul */
   #cover .cover-bg-video {
@@ -767,7 +767,7 @@
     /* panel foto besar mengisi sisa kiri, tetap saat scroll */
     body::before {
       content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 480px;
-      background-image: var(--desktop-photo, url('coverbaru.jpg'));
+      background-image: var(--desktop-photo, url('cover.jpg'));
       background-size: cover; background-position: center; z-index: 0;
     }
     /* kelopak bunga, partikel & navigasi mengikuti panel undangan (480px kanan) */
@@ -802,12 +802,12 @@
 
   <!-- ================= COVER ================= -->
   <section id="cover">
-    <video class="cover-bg-video" src="bg/bgcover-video.mp4" poster="coverbaru.jpg" muted autoplay playsinline preload="auto"></video>
+    <video class="cover-bg-video" src="bg/cover-video.mp4" poster="cover.jpg" muted autoplay playsinline preload="auto"></video>
     <div class="cover-card">
       <div class="eyebrow">The Wedding Of</div>
       <div class="cover-frame">
         <div class="cover-frame-inner">
-          <img id="cover-photo" src="coverbaru.jpg" alt="Foto mempelai">
+          <img id="cover-photo" src="cover.jpg" alt="Foto mempelai">
         </div>
       </div>
       <div class="names" id="cover-names">Rangga & Cinta</div>
@@ -1035,7 +1035,7 @@ const CONFIG = {
     mother: "Ibu St. Rabiatul Adawiah Balido",
     childOrder: "Putra ketiga",
     ig: "muhfarid2994",           // username IG tanpa @ (kosongkan jika tidak ada)
-    photo: "foto-pria.jpg",
+    photo: "mempelai-pria.jpg",
   },
   bride: {
     nick: "Henny",
@@ -1044,7 +1044,7 @@ const CONFIG = {
     mother: "Ibu Habrita, S.Ag.",
     childOrder: "Putri pertama",
     ig: "hennysyr",
-    photo: "foto-wanita.jpg",
+    photo: "mempelai-wanita.jpg",
   },
 
   // --- Ayat / kutipan pembuka ---
@@ -1062,9 +1062,9 @@ const CONFIG = {
   intro: [
     { type: "hero", video: "intro-1-2.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 1 & 2 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
     { type: "photo", src: "galeri2.jpg" },                     // slide foto full (ganti filenya sesukamu)
-    { type: "photo", src: "intro-foto2.jpg" },                    // slide foto full kedua (atau hapus baris ini)
+    { type: "photo", src: "intro-4.jpg" },                    // slide foto full kedua (atau hapus baris ini)
     { type: "couple", video: "intro-5-6.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 5 & 6 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
-    { type: "photo", src: "foto-intro-7.jpeg" },  // slide 7: foto full
+    { type: "photo", src: "intro-7.jpeg" },  // slide 7: foto full
   ],
 
   // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM+08:00
@@ -1125,7 +1125,7 @@ const CONFIG = {
 
   // --- Musik latar. Boleh 1 lagu ("musik1.mp3") atau beberapa (playlist berurutan, lalu berulang).
   //     Kosongkan [] / "" jika tidak pakai. ---
-  music: ["musik3.mp3"],
+  music: ["musik.mp3"],
 
   // --- Melodi kotak musik pendek saat "Buka Undangan" ditekan (sebelum musik utama).
   //     Kosongkan "" untuk melewati dan langsung memutar musik utama. ---
@@ -1141,7 +1141,7 @@ const CONFIG = {
   sparkles: true,
 
   // --- Foto besar di sisi kiri saat dibuka di laptop/desktop (layar lebar). ---
-  desktopPhoto: "coverbaru.jpg",
+  desktopPhoto: "cover.jpg",
 
   // --- RSVP ke Google Sheets ---
   // Tempel URL Web App dari Google Apps Script di sini (lihat file CARA-RSVP-GOOGLE-SHEETS.md).
@@ -1179,16 +1179,16 @@ const CONFIG = {
   //     hideEyebrow: true -> sembunyikan judul teks atas (mis. Bismillah sudah ada di gambar).
   //     Tukar src antar-segmen sesuka hati untuk mengganti background.
   backgrounds: {
-    // cover: pakai bg/gift.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
-    opening:   { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
-    couple:    { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    couple2:   { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    countdown: { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    events:    { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    story:     { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
-    rsvp:      { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
-    checkin:   { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    gift:      { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
+    // cover: pakai bg/segmen.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
+    opening:   { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    couple:    { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    couple2:   { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    countdown: { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    events:    { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    story:     { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    rsvp:      { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    checkin:   { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    gift:      { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
     closing:   { video: "bg/penutup.mp4", loop: false, veil: .3 },
   },
 };
@@ -1250,8 +1250,8 @@ function revealCover(){
 // diputar mulus) — bukan menunggu seluruh halaman. Intro berputar ~20 dtk, cukup
 // waktu bagi segmen lain memuat di belakang layar agar tetap tampil berurutan.
 (function(){
-  const imgs = ["coverbaru.jpg"];                 // foto cover
-  const vids = ["bg/bgcover-video.mp4"];          // video latar cover
+  const imgs = ["cover.jpg"];                 // foto cover
+  const vids = ["bg/cover-video.mp4"];          // video latar cover
   (CONFIG.intro || []).forEach(s => { if (s.video) vids.push(s.video); if (s.src) imgs.push(s.src); });
   let left = imgs.length + vids.length;
   const done = () => { if (--left <= 0) revealCover(); };
