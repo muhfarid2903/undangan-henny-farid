@@ -810,7 +810,7 @@
           <img id="cover-photo" src="cover.jpg" alt="Foto mempelai">
         </div>
       </div>
-      <div class="names" id="cover-names">Rangga & Cinta</div>
+      <div class="names" id="cover-names">Henny & Farid</div>
       <div class="guest-box">
         <div class="to">Kepada Yth:</div>
         <div class="guest-name" id="guest-name">Tamu Undangan</div>
@@ -852,8 +852,8 @@
 
       <div class="person reveal-left">
         <div class="photo-wrap"><img class="photo" id="bride-photo" alt="Mempelai Wanita" /></div>
-        <div class="name" id="bride-name">Cinta</div>
-        <div class="full" id="bride-full">Cinta Dewi, S.Pd.</div>
+        <div class="name" id="bride-name">Henny</div>
+        <div class="full" id="bride-full">Henny Puspita Syarifuddin, S.Pd., Gr.</div>
         <div class="parents" id="bride-parents"></div>
         <a class="ig" id="bride-ig" target="_blank" rel="noopener">@instagram</a>
       </div>
@@ -865,8 +865,8 @@
 
       <div class="person reveal-right">
         <div class="photo-wrap"><img class="photo" id="groom-photo" alt="Mempelai Pria" /></div>
-        <div class="name" id="groom-name">Rangga</div>
-        <div class="full" id="groom-full">Rangga Putra, S.T.</div>
+        <div class="name" id="groom-name">Farid</div>
+        <div class="full" id="groom-full">dr. Muhammad Farid</div>
         <div class="parents" id="groom-parents"></div>
         <a class="ig" id="groom-ig" target="_blank" rel="noopener">@instagram</a>
       </div>
@@ -1061,8 +1061,8 @@ const CONFIG = {
   //     veil: 0..1 (opsional) -> ketebalan lapisan di atas gambar; makin kecil makin terlihat gambarnya.
   intro: [
     { type: "hero", video: "intro-1-2.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 1 & 2 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
-    { type: "photo", src: "galeri2.jpg" },                     // slide foto full (ganti filenya sesukamu)
-    { type: "photo", src: "intro-4.jpg" },                    // slide foto full kedua (atau hapus baris ini)
+    { type: "photo", src: "galeri2.jpg" },   // slide foto (slide 3)
+    { type: "photo", src: "intro-4.jpg" },   // slide foto (slide 4)
     { type: "couple", video: "intro-5-6.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 5 & 6 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
     { type: "photo", src: "intro-7.jpeg" },  // slide 7: foto full
   ],
@@ -1094,7 +1094,7 @@ const CONFIG = {
     { year: "2026", text: "Dengan restu kedua orang tua, melangkah ke jenjang pernikahan." },
   ],
 
-  // --- Galeri (URL foto). Tampil sebagai grid; foto pertama melebar.
+  // --- Galeri (URL foto). Tampil sebagai grid masonry (tinggi bervariasi).
   //     Klik foto untuk memperbesar (bisa geser kiri/kanan). ---
   gallery: [
     "galeri1.jpg",
@@ -1217,11 +1217,10 @@ $("#cover-names").textContent = "";
 document.title = "The Wedding of " + coupleNames;
 const mainDate = new Date(CONFIG.mainDate);
 $("#loader-names").textContent = coupleNames;
-// Catatan: tema ungu pakai latar gradien (CSS). Foto kalian tampil di Galeri.
 
 // ---- Loading screen: progres 0 -> 100% + ketik nama cover ----
-// Persen merambat cepat di awal, tertahan di ~90% sampai halaman benar-benar
-// siap (event load), lalu melesat ke 100% dan loader memudar.
+// Persen merambat cepat di awal, tertahan di ~90% sampai aset cover & intro
+// siap, lalu melesat ke 100% dan loader memudar.
 let loaderPct = 0, loaderDone = false;
 function setLoaderPct(v){
   loaderPct = Math.min(100, Math.max(loaderPct, Math.round(v)));
