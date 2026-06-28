@@ -145,7 +145,7 @@
     color: #fff;
     background:
       linear-gradient(rgba(44,56,41,.22), rgba(44,56,41,.22)),
-      url('bg/bgcover.jpeg') center / cover no-repeat;   /* fallback selagi video dimuat */
+      url('coverbaru.jpg') center / cover no-repeat;   /* fallback selagi video dimuat */
   }
   /* video latar penuh layar untuk sampul */
   #cover .cover-bg-video {
@@ -800,7 +800,7 @@
 
   <!-- ================= COVER ================= -->
   <section id="cover">
-    <video class="cover-bg-video" src="bg/bgcover-video.mp4" poster="bg/bgcover.jpeg" muted loop autoplay playsinline preload="auto"></video>
+    <video class="cover-bg-video" src="bg/bgcover-video.mp4" poster="coverbaru.jpg" muted loop autoplay playsinline preload="auto"></video>
     <div class="cover-card">
       <div class="eyebrow">The Wedding Of</div>
       <div class="cover-frame">
@@ -1177,17 +1177,17 @@ const CONFIG = {
   //     hideEyebrow: true -> sembunyikan judul teks atas (mis. Bismillah sudah ada di gambar).
   //     Tukar src antar-segmen sesuka hati untuk mengganti background.
   backgrounds: {
-    // cover: pakai bg/bg.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
+    // cover: pakai bg/gift.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
     opening:   { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
-    couple:    { src: "bg/bg.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    couple2:   { src: "bg/bg.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    countdown: { src: "bg/bg.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
-    events:    { src: "bg/bg.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
+    couple:    { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
+    couple2:   { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
+    countdown: { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
+    events:    { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
     story:     { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
     rsvp:      { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
-    checkin:   { src: "bg/bg.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
+    checkin:   { src: "bg/gift.jpeg",   video: "bg/background.mp4", loop: false, veil: .4 },
     gift:      { src: "bg/gift.jpeg", video: "bg/background.mp4", loop: false, veil: .3 },
-    closing:   { src: "bg/bgclosing.jpeg", video: "bg/penutup.mp4", loop: false, veil: .3 },
+    closing:   { video: "bg/penutup.mp4", loop: false, veil: .3 },
   },
 };
 
@@ -1247,7 +1247,7 @@ function revealCover(){
 // Loader tidak perlu menunggu SELURUH aset (galeri, video intro, musik) selesai —
 // itu bikin terasa lama. Cukup tunggu gambar cover siap; sisanya memuat di belakang layar.
 (function(){
-  const covers = ["bg/bgcover.jpeg", "coverbaru.jpg"];
+  const covers = ["coverbaru.jpg"];
   let left = covers.length;
   const done = () => { if (--left <= 0) revealCover(); };
   covers.forEach(src => {
