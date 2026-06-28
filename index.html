@@ -586,11 +586,25 @@
     flex: 1; text-align: center; color: var(--muted); text-decoration: none;
     font-size: 10px; letter-spacing: .5px; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; gap: 3px;
-    padding: 4px 0; transition: color .2s;
+    padding: 4px 0; transition: color .2s, transform .15s ease;
+    -webkit-tap-highlight-color: transparent;
   }
   .botnav a .ic { line-height: 0; }
-  .botnav a .ic svg { width: 20px; height: 20px; }
+  .botnav a .ic svg { width: 20px; height: 20px; transition: filter .3s ease; }
   .botnav a.active { color: var(--gold); }
+  .botnav a:active { transform: scale(.93); }            /* umpan-balik saat ditekan */
+  /* efek klik: ikon memantul membesar + kilau emas, lalu kembali */
+  @keyframes nav-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.38); }
+    70%  { transform: scale(.9); }
+    100% { transform: scale(1); }
+  }
+  .botnav a.tap { color: var(--gold); }
+  .botnav a.tap .ic svg {
+    animation: nav-pop .4s cubic-bezier(.34,1.56,.64,1);
+    filter: drop-shadow(0 0 7px rgba(212,175,55,.75));
+  }
 
   /* ---------- PETALS / ANIMASI ---------- */
   .petals {
@@ -1705,6 +1719,10 @@ mbtn.addEventListener("click", () => {
   links.forEach(a => {
     map[a.dataset.target] = a;
     a.addEventListener("click", () => {
+      // efek pop + glow emas saat diklik
+      a.classList.remove("tap"); void a.offsetWidth;   // restart animasi bila diklik beruntun
+      a.classList.add("tap");
+      a.addEventListener("animationend", () => a.classList.remove("tap"), { once: true });
       const el = document.getElementById(a.dataset.target);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     });
