@@ -1244,14 +1244,22 @@ function revealCover(){
     }
   }, 30);
 }
-// Loader selesai begitu video INTRO siap diputar mulus (canplaythrough) — bukan
-// menunggu seluruh aset. Intro berputar ~20 dtk, cukup waktu bagi segmen lain
-// memuat di belakang layar sehingga tetap tampil berurutan saat di-scroll.
+// Loader selesai begitu SEMUA aset cover + intro siap (foto termuat & video siap
+// diputar mulus) — bukan menunggu seluruh halaman. Intro berputar ~20 dtk, cukup
+// waktu bagi segmen lain memuat di belakang layar agar tetap tampil berurutan.
 (function(){
-  const introVids = ["intro-1-2.mp4", "intro-5-6.mp4"];
-  let left = introVids.length;
+  const imgs = ["coverbaru.jpg"];                 // foto cover
+  const vids = ["bg/bgcover-video.mp4"];          // video latar cover
+  (CONFIG.intro || []).forEach(s => { if (s.video) vids.push(s.video); if (s.src) imgs.push(s.src); });
+  let left = imgs.length + vids.length;
   const done = () => { if (--left <= 0) revealCover(); };
-  introVids.forEach(src => {
+  if (left === 0) { revealCover(); return; }
+  imgs.forEach(src => {
+    let fired = false; const one = () => { if (!fired) { fired = true; done(); } };
+    const im = new Image(); im.onload = one; im.onerror = one; im.src = src;
+    if (im.complete) one();   // sudah di cache
+  });
+  vids.forEach(src => {
     const v = document.createElement("video");
     v.muted = true; v.preload = "auto"; v.src = src;
     v.addEventListener("canplaythrough", done, { once: true });
