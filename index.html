@@ -1244,8 +1244,19 @@ function revealCover(){
     }
   }, 30);
 }
-window.addEventListener("load", revealCover);
-setTimeout(revealCover, 4000); // fallback bila event load lambat
+// Loader tidak perlu menunggu SELURUH aset (galeri, video intro, musik) selesai —
+// itu bikin terasa lama. Cukup tunggu gambar cover siap; sisanya memuat di belakang layar.
+(function(){
+  const covers = ["bg/bgcover.jpeg", "coverbaru.jpg"];
+  let left = covers.length;
+  const done = () => { if (--left <= 0) revealCover(); };
+  covers.forEach(src => {
+    const im = new Image();
+    im.onload = done; im.onerror = done; im.src = src;
+    if (im.complete) done();   // sudah di cache
+  });
+})();
+setTimeout(revealCover, 2500); // fallback bila gambar cover lambat termuat
 
 // ---- Opening ----
 $("#opening-ayat").textContent = CONFIG.ayat;
