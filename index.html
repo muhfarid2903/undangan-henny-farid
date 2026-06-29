@@ -280,48 +280,48 @@
   /* di dalam kartu kaca: kotak putih akad/resepsi dihapus -> cukup satu kotak besar Detail Acara */
   .has-card .event-card { background: none; border: none; box-shadow: none; padding: 14px 0; margin: 8px 0; }
   /* kotak besar Detail Acara: latar hijau tua (senada veil cover), teks putih agar terbaca */
-  #events .sec-card { background: #35452f; border-color: rgba(255,255,255,.35); }
+  #events .sec-card { background: linear-gradient(170deg, #6e4046, #5c373d); border-color: rgba(255,255,255,.30); }
   #events .sec-card .sec-title, #events .sec-card .sub, #events .sec-card .divider ~ p,
   #events .sec-card .event-card h3, #events .sec-card .when, #events .sec-card .where { color: #fff; }
   #events .sec-card .sub, #events .sec-card .where { opacity: .88; }
-  /* tombol Lihat Lokasi di kotak hijau tua: emas lembut + teks hijau gelap (ganti dusty rose) */
-  #events .sec-card .btn-map { background: var(--gold-soft); color: #2c3829; }
-  /* ---- Variasi warna kartu per segmen (selang-seling terang & gelap agar tidak monoton) ----
-     opening, couple, closing tetap krem kaca; countdown & rsvp kembali ke desain teks putihnya. */
-  /* countdown: krem emas + hijau tua (selang-seling: maroon mempelai di atas, hijau acara di bawah) */
-  #countdown .sec-card { background: rgba(236,217,182,.92); border-color: rgba(53,69,47,.25); }
-  #countdown.has-card { color: #35452f; }
-  #countdown.has-card .sec-title { color: #35452f; }
-  #countdown.has-card .cd-box { background: rgba(53,69,47,.08); border-color: rgba(53,69,47,.35); }
-  #countdown.has-card .btn-cal { border-color: rgba(53,69,47,.6); color: #35452f; }
-  #story .sec-card { background: rgba(233,237,221,.88); }                       /* sage muda */
-  /* RSVP ala referensi: kartu kaca terang, judul maroon, input transparan bingkai tipis, tombol sage */
-  #rsvp .sec-card { background: rgba(253,250,244,.80); border-color: rgba(122,139,110,.4); }
+  /* tombol Lihat Lokasi di kartu maroon: emas lembut + teks maroon gelap */
+  #events .sec-card .btn-map { background: var(--gold-soft); color: #5c373d; }
+  /* ---- Variasi warna kartu per segmen — palet "Maroon & Emas": burgundy + krem + emas menyatu ----
+     opening/story/rsvp kartu krem-blush terang; couple/events/gift maroon tua; aksen emas & maroon. */
+  /* countdown: krem hangat + teks maroon (senada kartu mempelai & acara) */
+  #countdown .sec-card { background: rgba(246,235,226,.93); border-color: rgba(92,55,61,.28); }
+  #countdown.has-card { color: #5c373d; }
+  #countdown.has-card .sec-title { color: #5c373d; }
+  #countdown.has-card .cd-box { background: rgba(92,55,61,.08); border-color: rgba(92,55,61,.30); }
+  #countdown.has-card .btn-cal { border-color: rgba(92,55,61,.6); color: #5c373d; }
+  #story .sec-card { background: rgba(247,236,233,.90); }                       /* blush krem */
+  /* RSVP ala referensi: kartu kaca terang, judul maroon, input transparan bingkai tipis, tombol maroon */
+  #rsvp .sec-card { background: rgba(253,250,244,.84); border-color: rgba(138,59,66,.30); }
   #rsvp.has-card { color: var(--ink); }
   #rsvp.has-card .sec-title { color: #8a3b42; }
   #rsvp.has-card .rsvp-title { color: var(--ink); }
   #rsvp.has-card .rsvp-sub { color: var(--ink); opacity: .75; }
-  #rsvp.has-card .form label { color: #35452f; opacity: 1; font-weight: 600; letter-spacing: .5px; }
+  #rsvp.has-card .form label { color: #5c373d; opacity: 1; font-weight: 600; letter-spacing: .5px; }
   #rsvp.has-card .form input, #rsvp.has-card .form textarea, #rsvp.has-card .form select {
-    background: rgba(255,255,255,.45); border: 1px solid rgba(53,69,47,.35);
+    background: rgba(255,255,255,.45); border: 1px solid rgba(138,59,66,.30);
     border-radius: 6px; color: var(--ink);
   }
   #rsvp.has-card .attend-btn {
-    background: rgba(255,255,255,.4); border: 1px solid rgba(53,69,47,.35);
-    border-radius: 6px; color: #35452f;
+    background: rgba(255,255,255,.4); border: 1px solid rgba(138,59,66,.30);
+    border-radius: 6px; color: #5c373d;
   }
-  #rsvp.has-card .attend-btn.active { background: #969d7f; border-color: #969d7f; color: #fff; font-weight: 500; }
-  #rsvp.has-card .btn-submit { background: #969d7f; color: #fff; border-radius: 8px; }
-  #rsvp.has-card .btn-pop { background: rgba(150,157,127,.16); border: 1px solid rgba(53,69,47,.4); color: #35452f; box-shadow: none; }
+  #rsvp.has-card .attend-btn.active { background: #8a3b42; border-color: #8a3b42; color: #fff; font-weight: 500; }
+  #rsvp.has-card .btn-submit { background: #8a3b42; color: #fff; border-radius: 8px; }
+  #rsvp.has-card .btn-pop { background: rgba(138,59,66,.12); border: 1px solid rgba(138,59,66,.40); color: #5c373d; box-shadow: none; }
   #checkin .sec-card { background: rgba(236,217,182,.85); }                     /* krem emas */
-  #opening .sec-card { background: rgba(255,252,247,.66); border-color: rgba(138,59,66,.20); }  /* ayat: kartu krem lembut senada ivory */
+  #opening .sec-card { background: rgba(255,252,247,.74); border-color: rgba(138,59,66,.22); }  /* ayat: kartu krem lembut senada ivory */
   #opening .sec-card .eyebrow { color: #8a3b42; }   /* basmalah: maroon senada judul galeri */
   #opening .sec-card .ayat { color: #4a3b3b; }      /* ayat: charcoal hangat */
   #opening .sec-card .sub  { color: #a98a8a; }      /* sumber ayat: muted rose */
   /* bismillah: diperbesar & tanpa letter-spacing (spacing memutus sambungan huruf Arab) */
   #opening .sec-card .eyebrow { font-size: 25px; font-weight: 400; letter-spacing: 0; line-height: 1.7; }
-  /* Amplop Digital: hijau tua + emas, senada kotak Detail Acara */
-  #gift .sec-card { background: #35452f; border-color: rgba(255,255,255,.35); }
+  /* Amplop Digital: maroon tua + emas, senada kartu mempelai & Detail Acara */
+  #gift .sec-card { background: linear-gradient(170deg, #6e4046, #5c373d); border-color: rgba(255,255,255,.30); }
   #gift.has-card .sec-title { color: var(--gold-soft); }
   #gift.has-card .sub { color: rgba(255,255,255,.85); }
   #gift.has-card .btn-pop { background: var(--gold-soft); color: #2c3829; box-shadow: none; }
@@ -1129,6 +1129,9 @@ const CONFIG = {
     "galeri16.jpg",
     "galeri17.jpg",
     "galeri18.jpg",
+    "galeri19.jpg",
+    "galeri20.jpg",
+    "galeri21.jpg",
   ],
 
   // --- Amplop digital / rekening ---
@@ -1348,7 +1351,14 @@ $("#timeline").innerHTML = CONFIG.story.map(s =>
 
 // ---- Gallery (grid foto; klik untuk lightbox dengan prev/next, swipe & keyboard) ----
 (function(){
-  const grid = $("#gal-grid"), pics = CONFIG.gallery;
+  const grid = $("#gal-grid");
+  // Urutan galeri diacak tiap kali halaman dibuka (Fisher-Yates), pakai salinan
+  // agar CONFIG.gallery asli tak berubah. Grid, lightbox & nomor semua pakai urutan ini.
+  const pics = CONFIG.gallery.slice();
+  for (let i = pics.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pics[i], pics[j]] = [pics[j], pics[i]];
+  }
   const box = $("#lightbox"), img = $("#lightbox-img"), count = $("#lb-count");
   if (!pics.length) { $("#gallery").style.display = "none"; return; }
   let cur = 0;
