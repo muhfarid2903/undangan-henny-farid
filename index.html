@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Carattere&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Cormorant+SC:wght@400;500;600&family=Cormorant+Upright:wght@400;500&family=Montserrat:wght@300;400;500&family=Sura:wght@400;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Carattere&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -30,12 +30,15 @@
     --line: #ecdcd6;
     --deep: #6e4046;        /* maroon-rose untuk bagian gelap */
     --deep2: #8a5760;
-    --serif: 'Sura', serif;                   /* teks isi (ala referensi) */
-    --serif-i: 'Cormorant Upright', serif;    /* ayat/kutipan "miring" kaligrafis */
-    --quote: 'Cormorant Garamond', serif;     /* kutipan italic anggun (intro) */
-    --display: 'Cormorant SC', serif;         /* small-caps utk monogram & judul */
-    --script: 'Carattere', cursive;           /* nama mempelai & judul dekoratif */
-    --sans: 'Montserrat', sans-serif;         /* label kecil & tombol */
+    /* Tipografi disederhanakan jadi 4 kategori, 2 keluarga font:
+       - Carattere (--script): Judul utama, Nama panggilan & Nama lengkap (kartu mempelai)
+       - Lora (sisanya): Teks body (lebih mudah dibaca, x-height besar) */
+    --serif: 'Lora', serif;
+    --serif-i: 'Lora', serif;
+    --quote: 'Lora', serif;
+    --display: 'Lora', serif;
+    --script: 'Carattere', cursive;
+    --sans: 'Lora', serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -366,7 +369,9 @@
   .tl-item { position: relative; margin-bottom: 30px; }
   .tl-item::before { content:''; position: absolute; left: -28px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg-deep,#f3ece2); }
   .tl-item .yr { font-family: var(--script); font-weight: 400; font-size: 30px; color: var(--ink); line-height: 1.1; }
-  .tl-item .tx { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .tl-item .step { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 500; display:block; margin-bottom: 4px; }
+  .tl-item .tx { font-family: var(--serif-i); font-size: 16.5px; color: var(--muted); margin-top: 6px; line-height: 1.65; }
+  .tl-item .quote { font-family: var(--serif-i); font-size: 16.5px; color: var(--ink); margin-top: 12px; padding-left: 13px; border-left: 2px solid var(--gold-soft); line-height: 1.6; }
 
   /* ---------- GALLERY ---------- */
   /* galeri: warna ivory polos (tanpa foto taman) agar foto-foto jadi fokus */
@@ -1103,9 +1108,24 @@ const CONFIG = {
 
   // --- Love story (boleh tambah/kurangi) ---
   story: [
-    { year: "2019", text: "Pertama bertemu di bangku kuliah dan menjadi teman dekat." },
-    { year: "2022", text: "Memutuskan untuk menjalin hubungan yang lebih serius." },
-    { year: "2026", text: "Dengan restu kedua orang tua, melangkah ke jenjang pernikahan." },
+    {
+      step: "Bagian 01",
+      year: "Pertemuan",
+      text: "Semuanya berawal dari hal yang sederhana — sebuah izin untuk berkenalan. Cara dia datang terasa berbeda: sopan, baik-baik, dan tidak pernah memaksa. Pertemuan pertama kami di sebuah kafe, obrolan mengalir begitu saja, dan ternyata banyak hal yang kami sukai sama. Tidak lama setelahnya, aku diajak berbuka puasa bersama dan untuk pertama kalinya bertemu keluarganya — rasanya hangat, seperti sudah lama saling kenal.",
+      quote: "“Jawabanku waktu itu sederhana saja: iya, kenalan dulu aja, Kak. Ternyata, dari satu kalimat itulah semuanya bermula.”",
+    },
+    {
+      step: "Bagian 02",
+      year: "Komitmen",
+      text: "Perkenalan kami memang singkat. Tapi ternyata, untuk yakin tidak selalu butuh waktu yang lama. Dengan niat yang tulus, dia memberanikan diri datang ke rumah, bertemu langsung, dan menyampaikannya dengan jujur: dia ingin melangkah ke arah yang lebih serius.",
+      quote: "“Ada hal-hal yang tidak perlu waktu lama untuk diyakini. Cukup niat yang baik dan hati yang jujur.”",
+    },
+    {
+      step: "Bagian 03",
+      year: "Pernikahan",
+      text: "Kami tidak punya tanggal jadian — yang kami punya hanya tanggal lamaran dan tanggal pernikahan. Bagi kami, ini bukan soal seberapa lama saling mengenal, tapi seberapa berani melangkah dengan cara yang benar. Alhamdulillah, Allah memudahkan semuanya — dari perkenalan hingga akhirnya halal.",
+      quote: "“Dia datang bukan untuk sekadar dekat, tapi untuk serius. Dia tidak meminta waktu untuk mencoba — dia datang untuk memilih.”",
+    },
   ],
 
   // --- Galeri (URL foto). Tampil sebagai grid masonry (tinggi bervariasi).
@@ -1346,7 +1366,7 @@ fillEvent(CONFIG.resepsi, "#resepsi");
 
 // ---- Story ----
 $("#timeline").innerHTML = CONFIG.story.map(s =>
-  `<div class="tl-item"><div class="yr">${s.year}</div><div class="tx">${s.text}</div></div>`
+  `<div class="tl-item">${s.step ? `<span class="step">${s.step}</span>` : ""}<div class="yr">${s.year}</div><div class="tx">${s.text}</div>${s.quote ? `<div class="quote">${s.quote}</div>` : ""}</div>`
 ).join("");
 
 // ---- Gallery (grid foto; klik untuk lightbox dengan prev/next, swipe & keyboard) ----
