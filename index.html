@@ -297,7 +297,8 @@
   #countdown.has-card .sec-title { color: #5c373d; }
   #countdown.has-card .cd-box { background: rgba(92,55,61,.08); border-color: rgba(92,55,61,.30); }
   #countdown.has-card .btn-cal { border-color: rgba(92,55,61,.6); color: #5c373d; }
-  #story .sec-card { background: rgba(247,236,233,.90); }                       /* blush krem */
+  #story .sec-card { background: rgba(250,244,238,.92); }                       /* ivory hangat */
+  #story .sec-title { color: #8a3b42; }                                         /* judul: maroon */
   /* RSVP ala referensi: kartu kaca terang, judul maroon, input transparan bingkai tipis, tombol maroon */
   #rsvp .sec-card { background: rgba(253,250,244,.84); border-color: rgba(138,59,66,.30); }
   #rsvp.has-card { color: var(--ink); }
@@ -365,13 +366,37 @@
   /* ---------- STORY ---------- */
   #story { background: var(--bg-deep, #f3ece2); }
   .timeline { margin-top: 30px; text-align: left; position: relative; padding-left: 28px; }
-  .timeline::before { content:''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--gold-soft); }
-  .tl-item { position: relative; margin-bottom: 30px; }
-  .tl-item::before { content:''; position: absolute; left: -28px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg-deep,#f3ece2); }
-  .tl-item .yr { font-family: var(--script); font-weight: 400; font-size: 30px; color: var(--ink); line-height: 1.1; }
-  .tl-item .step { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 500; display:block; margin-bottom: 4px; }
-  .tl-item .tx { font-family: var(--serif-i); font-size: 16.5px; color: var(--muted); margin-top: 6px; line-height: 1.65; }
-  .tl-item .quote { font-family: var(--serif-i); font-size: 16.5px; color: var(--ink); margin-top: 12px; padding-left: 13px; border-left: 2px solid var(--gold-soft); line-height: 1.6; }
+  /* kontainer cukup fade; gerak utama ada di garis + tiap bagian */
+  #timeline.reveal { transform: none; }
+  /* garis emas: tumbuh dari atas ke bawah saat segmen muncul */
+  .timeline::before { content:''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--gold-soft);
+    transform: scaleY(0); transform-origin: top; transition: transform 1.2s cubic-bezier(.2,.7,.2,1) .15s; }
+  .timeline.show::before { transform: scaleY(1); }
+  /* tiap bagian: fade + naik, muncul bergiliran (stagger) */
+  .tl-item { position: relative; margin-bottom: 30px;
+    opacity: 0; transform: translateY(22px);
+    transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .timeline.show .tl-item { opacity: 1; transform: none; }
+  .timeline.show .tl-item:nth-child(1) { transition-delay: .25s; }
+  .timeline.show .tl-item:nth-child(2) { transition-delay: .55s; }
+  .timeline.show .tl-item:nth-child(3) { transition-delay: .85s; }
+  /* titik emas: "pop" mengikuti tiap bagian */
+  .tl-item::before { content:''; position: absolute; left: -28px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg-deep,#f3ece2);
+    transform: scale(0); transition: transform .5s cubic-bezier(.34,1.56,.64,1); }
+  .timeline.show .tl-item:nth-child(1)::before { transform: scale(1); transition-delay: .35s; }
+  .timeline.show .tl-item:nth-child(2)::before { transform: scale(1); transition-delay: .65s; }
+  .timeline.show .tl-item:nth-child(3)::before { transform: scale(1); transition-delay: .95s; }
+  /* hormati pengaturan kurangi-gerak: tampilkan langsung tanpa animasi */
+  @media (prefers-reduced-motion: reduce) {
+    .timeline::before, .timeline.show::before,
+    .tl-item, .timeline.show .tl-item,
+    .tl-item::before, .timeline.show .tl-item::before {
+      transition: none; transform: none; opacity: 1;
+    }
+  }
+  .tl-item .yr { font-family: var(--script); font-weight: 400; font-size: 30px; color: #8a3b42; line-height: 1.1; }
+  .tl-item .tx { font-family: var(--serif-i); font-size: 16.5px; color: #4a3b3b; margin-top: 6px; line-height: 1.65; }
+  .tl-item .quote { font-family: var(--serif-i); font-size: 16.5px; color: #6e4046; margin-top: 12px; padding-left: 13px; border-left: 2px solid var(--gold-soft); line-height: 1.6; }
 
   /* ---------- GALLERY ---------- */
   /* galeri: warna ivory polos (tanpa foto taman) agar foto-foto jadi fokus */
@@ -388,13 +413,20 @@
   }
   .gal-grid img:hover { transform: scale(1.03); box-shadow: 0 12px 30px rgba(74,58,82,.26); }
   /* saat reveal, pakai transisi .9s (kelas dilepas setelah selesai agar hover kembali gesit) */
-  .gal-grid img.reveal-zoom { transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  /* reveal galeri mewah: foto naik + membesar pelan + blur yang menajam (focus-in sinematik) */
+  .gal-grid img.reveal-zoom {
+    opacity: 0; transform: translateY(26px) scale(.94); filter: blur(7px);
+    transition: opacity 1s cubic-bezier(.22,.61,.36,1),
+                transform 1.15s cubic-bezier(.22,.61,.36,1),
+                filter .9s ease;
+  }
+  .gal-grid img.reveal-zoom.show { opacity: 1; transform: none; filter: none; }
 
   /* ---------- RSVP ---------- */
   #rsvp { background: linear-gradient(160deg, var(--deep2), var(--deep)); color: #fff; }
   #rsvp .eyebrow { color: rgba(255,255,255,.85); }
   .rsvp-title {
-    font-family: var(--display); font-weight: 500; font-size: 21px; line-height: 1.45;
+    font-family: var(--display); font-weight: 500; font-size: 17px; line-height: 1.5;
     color: #fff; max-width: 360px; margin: 0 auto;
   }
   .rsvp-sub {
@@ -1109,19 +1141,16 @@ const CONFIG = {
   // --- Love story (boleh tambah/kurangi) ---
   story: [
     {
-      step: "Bagian 01",
       year: "Pertemuan",
       text: "Semuanya berawal dari hal yang sederhana — sebuah izin untuk berkenalan. Cara dia datang terasa berbeda: sopan, baik-baik, dan tidak pernah memaksa. Pertemuan pertama kami di sebuah kafe, obrolan mengalir begitu saja, dan ternyata banyak hal yang kami sukai sama. Tidak lama setelahnya, aku diajak berbuka puasa bersama dan untuk pertama kalinya bertemu keluarganya — rasanya hangat, seperti sudah lama saling kenal.",
       quote: "“Jawabanku waktu itu sederhana saja: iya, kenalan dulu aja, Kak. Ternyata, dari satu kalimat itulah semuanya bermula.”",
     },
     {
-      step: "Bagian 02",
       year: "Komitmen",
       text: "Perkenalan kami memang singkat. Tapi ternyata, untuk yakin tidak selalu butuh waktu yang lama. Dengan niat yang tulus, dia memberanikan diri datang ke rumah, bertemu langsung, dan menyampaikannya dengan jujur: dia ingin melangkah ke arah yang lebih serius.",
       quote: "“Ada hal-hal yang tidak perlu waktu lama untuk diyakini. Cukup niat yang baik dan hati yang jujur.”",
     },
     {
-      step: "Bagian 03",
       year: "Pernikahan",
       text: "Kami tidak punya tanggal jadian — yang kami punya hanya tanggal lamaran dan tanggal pernikahan. Bagi kami, ini bukan soal seberapa lama saling mengenal, tapi seberapa berani melangkah dengan cara yang benar. Alhamdulillah, Allah memudahkan semuanya — dari perkenalan hingga akhirnya halal.",
       quote: "“Dia datang bukan untuk sekadar dekat, tapi untuk serius. Dia tidak meminta waktu untuk mencoba — dia datang untuk memilih.”",
@@ -1387,7 +1416,7 @@ fillEvent(CONFIG.resepsi, "#resepsi");
 
 // ---- Story ----
 $("#timeline").innerHTML = CONFIG.story.map(s =>
-  `<div class="tl-item">${s.step ? `<span class="step">${s.step}</span>` : ""}<div class="yr">${s.year}</div><div class="tx">${s.text}</div>${s.quote ? `<div class="quote">${s.quote}</div>` : ""}</div>`
+  `<div class="tl-item"><div class="yr">${s.year}</div><div class="tx">${s.text}</div>${s.quote ? `<div class="quote">${s.quote}</div>` : ""}</div>`
 ).join("");
 
 // ---- Gallery (grid foto; klik untuk lightbox dengan prev/next, swipe & keyboard) ----
@@ -1420,16 +1449,33 @@ $("#timeline").innerHTML = CONFIG.story.map(s =>
     const im = document.createElement("img");
     im.src = src; im.loading = "lazy"; im.alt = "Galeri " + (i+1);
     im.style.aspectRatio = ratios[order[i % order.length]];
-    // muncul bergantian (stagger 0.12s) sambil membesar; kelas dilepas usai animasi
-    im.classList.add("reveal-zoom");
-    im.style.transitionDelay = (i * 0.12) + "s";
-    im.addEventListener("transitionend", () => {
-      im.classList.remove("reveal-zoom", "show");
-      im.style.transitionDelay = "";
-    }, { once: true });
+    im.classList.add("reveal-zoom");           // mulai tersembunyi; dimunculkan saat scroll
     im.addEventListener("click", () => open(i));
     grid.appendChild(im);
   });
+
+  // Muncul mengikuti scroll, BERURUTAN atas->bawah (lalu kiri->kanan). Foto yang
+  // masuk layar bersamaan diberi jeda kecil berurutan agar berirama & mewah —
+  // bukan penundaan menumpuk berdasarkan indeks absolut seperti sebelumnya.
+  const galIo = new IntersectionObserver((entries) => {
+    entries.filter(e => e.isIntersecting)
+      .sort((a, b) => (a.boundingClientRect.top - b.boundingClientRect.top)
+                   || (a.boundingClientRect.left - b.boundingClientRect.left))
+      .forEach((en, n) => {
+        const im = en.target;
+        im.style.transitionDelay = (n * 0.09) + "s";
+        im.classList.add("show");
+        galIo.unobserve(im);
+        const onEnd = (e) => {                  // bersihkan kelas usai animasi (agar hover gesit), setelah transform selesai
+          if (e.propertyName !== "transform") return;
+          im.removeEventListener("transitionend", onEnd);
+          im.classList.remove("reveal-zoom", "show");
+          im.style.transitionDelay = "";
+        };
+        im.addEventListener("transitionend", onEnd);
+      });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  Array.from(grid.children).forEach(im => galIo.observe(im));
 
   $("#lb-prev").addEventListener("click", (e) => { e.stopPropagation(); show(cur - 1); });
   $("#lb-next").addEventListener("click", (e) => { e.stopPropagation(); show(cur + 1); });
@@ -1834,7 +1880,9 @@ mbtn.addEventListener("click", () => {
 const io = new IntersectionObserver((entries) => {
   entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("show"); io.unobserve(en.target); } });
 }, { threshold: 0.15 });
-$$(".reveal, .reveal-left, .reveal-right, .reveal-zoom").forEach(el => io.observe(el));
+Array.from($$(".reveal, .reveal-left, .reveal-right, .reveal-zoom"))
+  .filter(el => !el.closest("#gal-grid"))   // galeri ditangani observer khusus (urutan atas->bawah)
+  .forEach(el => io.observe(el));
 
 // ---- Animasi ketik + aktivasi tiap frame ----
 function typeText(el, speed, text) {
