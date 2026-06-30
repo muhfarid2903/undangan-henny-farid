@@ -926,7 +926,7 @@
           <img id="cover-photo" src="cover.jpg" alt="Foto mempelai">
         </div>
       </div>
-      <div class="names" id="cover-names">Henny & Farid</div>
+      <div class="names" id="cover-names">Henny & dr. Farid</div>
       <div class="guest-box">
         <div class="to">Kepada Yth:</div>
         <div class="guest-name" id="guest-name">Tamu Undangan</div>
@@ -1343,7 +1343,7 @@ if (guest) {
 
 // ---- Fill cover ----
 const coupleNames = CONFIG.bride.nick + " & " + CONFIG.groom.nick;   // mempelai wanita disebut dulu
-$("#cover-names").dataset.full = coupleNames;   // diketik nanti via JS
+$("#cover-names").dataset.full = CONFIG.bride.nick + " & dr. " + CONFIG.groom.nick;   // khusus cover: "dr. Farid" (diketik nanti via JS)
 $("#cover-names").textContent = "";
 { const cn = $("#closing-names"); if (cn) cn.textContent = coupleNames; }
 document.title = "The Wedding of " + coupleNames;
