@@ -70,16 +70,17 @@
 
 ---
 
-## 8. Story (Kisah)
-- **2019** — Pertama bertemu di bangku kuliah dan menjadi teman dekat.
-- **2022** — Memutuskan untuk menjalin hubungan yang lebih serius.
-- **2026** — Dengan restu kedua orang tua, melangkah ke jenjang pernikahan.
+## 8. Story — Our Love Story (3 bagian)
+- **Bagian 01 · Pertemuan** — Berawal dari izin berkenalan, pertemuan pertama di kafe, hingga buka puasa bersama keluarganya.
+- **Bagian 02 · Komitmen** — Datang ke rumah dengan niat tulus untuk melangkah lebih serius.
+- **Bagian 03 · Pernikahan** — Tanpa tanggal jadian; hanya tanggal lamaran & pernikahan. Berani melangkah dengan cara yang benar.
+- Tiap bagian: label "Bagian 0x", judul, narasi, dan satu kutipan (italic bergaris emas).
 
 ---
 
 ## 9. Gallery (Galeri)
-- Grid **masonry** 18 foto (tinggi bervariasi / berseni) + lightbox geser kiri/kanan
-- File: `galeri1.jpg` – `galeri18.jpg`
+- Grid **masonry** 21 foto (urutan acak, tinggi bervariasi / berseni) + lightbox geser kiri/kanan
+- File: `galeri1.jpg` – `galeri21.jpg`
 
 ---
 
@@ -114,6 +115,14 @@
 - **Popup Ucapan & Doa** · **Popup Amplop Digital** · **Lightbox** galeri
 - **Efek:** kelopak bunga jatuh (`petals`), partikel emas (`sparkles`), auto-scroll pelan
 - **Desktop:** foto besar sisi kiri (`cover.jpg`)
+
+---
+
+## ✍️ Tipografi (4 kategori / 2 font)
+- **Judul utama** (Bride & Groom, Our Love Story, dll.) → **Carattere**
+- **Nama panggilan** (Henny & Farid) → **Carattere**
+- **Nama lengkap** (di kartu mempelai) → **Carattere**
+- **Teks body** (semua paragraf, label, tombol, countdown) → **Lora**
 
 ---
 
