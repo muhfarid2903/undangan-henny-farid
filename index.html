@@ -3,8 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Undangan Pernikahan</title>
-<meta name="description" content="The Wedding of Henny & Farid" />
+<title>Henny &amp; Farid — Undangan Pernikahan</title>
+<meta name="description" content="Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di hari bahagia kami — Kamis, 16 Juli 2026." />
+<meta name="theme-color" content="#6e4046" />
+
+<!-- Open Graph / WhatsApp & media sosial: preview kaya (foto + judul) saat link dibagikan -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Undangan Henny &amp; Farid" />
+<meta property="og:title" content="Henny &amp; Farid — Undangan Pernikahan" />
+<meta property="og:description" content="Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di hari bahagia kami — Kamis, 16 Juli 2026." />
+<meta property="og:url" content="https://hennyfarid.balanglompo.com/" />
+<meta property="og:image" content="https://hennyfarid.balanglompo.com/cover.jpg" />
+<meta property="og:image:width" content="1066" />
+<meta property="og:image:height" content="1600" />
+<meta property="og:image:alt" content="Henny &amp; Farid" />
+<meta property="og:locale" content="id_ID" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Henny &amp; Farid — Undangan Pernikahan" />
+<meta name="twitter:description" content="Kami mengundang Bapak/Ibu/Saudara/i untuk hadir di hari bahagia kami — Kamis, 16 Juli 2026." />
+<meta name="twitter:image" content="https://hennyfarid.balanglompo.com/cover.jpg" />
 
 <!-- ============================================================
      CARA EDIT: ganti semua isi pada blok CONFIG (di <script> bawah).
@@ -197,13 +214,23 @@
   .guest-box { margin-top: 24px; }
   .guest-box .to { font-size: 12px; letter-spacing: 3px; opacity: .85; }
   .guest-box .guest-name { font-family: var(--display); font-size: 24px; margin: 4px 0 18px; }
+  /* CTA utama: pil emas + teks maroon (kontras tinggi) + glow lembut berdenyut */
   .btn-open {
-    background: #fff; color: var(--ink); border: none;
-    padding: 13px 30px; border-radius: 40px; font-family: var(--sans);
-    font-size: 13px; letter-spacing: 2px; cursor: pointer; font-weight: 500;
-    box-shadow: 0 8px 24px rgba(0,0,0,.25); transition: transform .2s;
+    background: linear-gradient(135deg, #e7d0a4 0%, #bd9968 52%, #d8b87f 100%);
+    color: #5c373d; border: none;
+    padding: 15px 40px; border-radius: 40px; font-family: var(--sans);
+    font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; cursor: pointer; font-weight: 600;
+    box-shadow: 0 10px 28px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.45);
+    transition: transform .2s ease, box-shadow .3s ease;
+    animation: openGlow 2.6s ease-in-out infinite;
   }
-  .btn-open:active { transform: scale(.96); }
+  .btn-open:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,.34), 0 0 22px rgba(225,199,154,.55); }
+  .btn-open:active { transform: scale(.97); }
+  @keyframes openGlow {
+    0%,100% { box-shadow: 0 10px 28px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.45), 0 0 0 0 rgba(225,199,154,0); }
+    50%     { box-shadow: 0 10px 28px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.45), 0 0 26px 2px rgba(225,199,154,.5); }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn-open { animation: none; } }
   .scroll-cue { position: absolute; bottom: 26px; left: 0; width: 100%; text-align: center; animation: bob 1.8s infinite; opacity: .8; font-size: 22px; z-index: 3; }
   @keyframes bob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(8px);} }
 
@@ -453,6 +480,12 @@
     letter-spacing: 2px; cursor: pointer; font-weight: 500;
   }
   .btn-submit:active { transform: scale(.98); }
+  .btn-submit:disabled { opacity: .7; cursor: default; }
+  /* pesan status RSVP (sukses / gagal) — jelas & senada palet */
+  .rsvp-status { display: none; margin-top: 14px; font-family: var(--serif-i); font-size: 15px; line-height: 1.55; padding: 11px 14px; border-radius: 8px; text-align: center; }
+  .rsvp-status.show { display: block; }
+  .rsvp-status.ok  { background: rgba(138,59,66,.10); color: #5c373d; border: 1px solid rgba(138,59,66,.28); }
+  .rsvp-status.err { background: rgba(176,58,46,.10); color: #9a3328; border: 1px solid rgba(176,58,46,.32); }
   /* tombol pembuka popup (Lihat Ucapan / Kirim Hadiah) */
   .btn-pop {
     margin-top: 22px; display: inline-flex; align-items: center; gap: 8px;
@@ -999,6 +1032,7 @@
         <label>Ucapan &amp; Doa</label>
         <textarea id="r-msg" placeholder="Tulis ucapan & doa untuk kedua mempelai..."></textarea>
         <button type="submit" class="btn-submit">Kirim</button>
+        <div id="rsvp-status" class="rsvp-status" role="status" aria-live="polite"></div>
       </form>
       <button type="button" class="btn-pop reveal" id="btn-wishes">💌 Lihat Ucapan &amp; Doa</button>
     </section>
@@ -1560,12 +1594,23 @@ function loadWishes() {
   if (SHEET) fetch(SHEET).then(r => r.json()).then(renderWishes).catch(() => renderWishes(localList()));
   else renderWishes(localList());
 }
-function afterSend(btn, old){
+function rsvpStatus(msg, type){
+  const el = $("#rsvp-status"); if (!el) return;
+  el.textContent = msg;
+  el.className = "rsvp-status show " + (type || "");
+}
+function rsvpBtnReset(btn, old){ if (btn){ btn.disabled = false; btn.textContent = old; } }
+function onSendOk(btn, old){
+  rsvpBtnReset(btn, old);
   $("#rsvp-form").reset();
-  if (btn) btn.textContent = old;
-  alert("Terima kasih, ucapan & konfirmasimu sudah tercatat 💛");
-  setTimeout(loadWishes, 1000);
-  openPopup("#popup-wishes"); // tunjukkan feed ucapan setelah mengirim
+  $("#r-guests-wrap").style.display = "";   // tampilkan lagi Jumlah Tamu setelah reset
+  rsvpStatus("Terima kasih 💛 Konfirmasi & doamu sudah kami terima.", "ok");
+  setTimeout(loadWishes, 1200);
+  setTimeout(() => openPopup("#popup-wishes"), 500); // tunjukkan feed ucapan setelah mengirim
+}
+function onSendFail(btn, old){
+  rsvpBtnReset(btn, old);   // data di form sengaja TIDAK dihapus agar bisa kirim ulang
+  rsvpStatus("Koneksi sepertinya bermasalah. Mohon cek internet, lalu tekan Kirim sekali lagi 🙏", "err");
 }
 // tombol kehadiran (Hadir / Tidak Hadir) — sembunyikan Jumlah Tamu jika tidak hadir
 let attendVal = "Hadir";
@@ -1580,16 +1625,21 @@ $("#rsvp-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const hadir = attendVal === "Hadir";
   const w = { name: $("#r-name").value.trim(), attend: attendVal, guests: hadir ? $("#r-guests").value : "", msg: $("#r-msg").value.trim(), t: Date.now() };
-  if (!w.name) return;
-  const btn = $("#rsvp-form .btn-submit"); const old = btn.textContent; btn.textContent = "Mengirim...";
+  if (!w.name) { rsvpStatus("Mohon isi nama dulu ya 🙏", "err"); $("#r-name").focus(); return; }
+  const btn = $("#rsvp-form .btn-submit"); const old = btn.textContent;
+  btn.disabled = true; btn.textContent = "Mengirim…"; rsvpStatus("", "");
   if (SHEET) {
-    // text/plain agar dianggap "simple request" (tanpa preflight CORS)
-    fetch(SHEET, { method: "POST", body: JSON.stringify(w) })
-      .then(() => afterSend(btn, old)).catch(() => afterSend(btn, old));
+    // no-cors + text/plain: "simple request" tanpa preflight; .catch hanya saat
+    // jaringan benar-benar gagal -> beri pesan error jujur (bukan klaim sukses palsu).
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 12000);   // batas 12 dtk agar tak menggantung
+    fetch(SHEET, { method: "POST", mode: "no-cors", body: JSON.stringify(w), signal: ctrl.signal })
+      .then(() => { clearTimeout(timer); onSendOk(btn, old); })
+      .catch(() => { clearTimeout(timer); onSendFail(btn, old); });
   } else {
     const list = localList(); list.unshift(w);
     localStorage.setItem(STORE, JSON.stringify(list.slice(0,50)));
-    afterSend(btn, old);
+    onSendOk(btn, old);
   }
 });
 loadWishes();
