@@ -85,12 +85,17 @@
     if (!name) { busy = false; return; }
 
     setStatus("", "Memproses…");
-    fetch(SHEET_URL, { method:"POST", body: JSON.stringify({ type:"checkin", name: name }) })
+    // GET bisa dibaca lintas-asal → dipakai untuk deteksi "sudah pernah check-in".
+    // POST simpan pakai no-cors (respons Apps Script tak terbaca browser, tapi
+    // datanya tetap tersimpan; server juga menolak duplikat).
+    fetch(SHEET_URL + "?type=checkin")
       .then(r => r.json())
       .then(d => {
-        if (d.already) setStatus("dup", `Sudah pernah check-in<span class="big">${esc(d.name)}</span>`);
-        else setStatus("ok", `✓ Selamat datang<span class="big">${esc(d.name || name)}</span>`);
-        refreshCount();
+        const list = (d && d.list) || [];
+        const already = list.some(x => String(x.name || "").trim().toLowerCase() === name.toLowerCase());
+        if (already) { setStatus("dup", `Sudah pernah check-in<span class="big">${esc(name)}</span>`); return; }
+        return fetch(SHEET_URL, { method:"POST", mode:"no-cors", body: JSON.stringify({ type:"checkin", name: name }) })
+          .then(() => { setStatus("ok", `✓ Selamat datang<span class="big">${esc(name)}</span>`); refreshCount(); });
       })
       .catch(() => setStatus("err", "Gagal — cek koneksi internet, lalu scan ulang."))
       .finally(() => setTimeout(() => { busy = false; }, 1200));
