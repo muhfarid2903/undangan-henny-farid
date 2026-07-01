@@ -79,6 +79,30 @@ function setDaftarFormulas(sh) {
   );
 }
 
+/* ============================================================
+   RAPIKAN DAFTAR TAMU — jalankan SEKALI dari editor bila daftar
+   ada "gap" (nama berpencar dengan banyak baris kosong).
+   Menarik semua nama agar berurutan rapat dari baris 2, lalu
+   mengosongkan sisa baris di bawahnya. Tidak perlu Deploy.
+   (JANGAN jalankan setupDaftarTamu untuk ini — itu mengosongkan
+   seluruh tab.)
+   ============================================================ */
+function rapikanDaftarTamu() {
+  const sh = getDaftarSheet();
+  if (!sh) { SpreadsheetApp.getUi().alert('Tab DaftarTamu belum ada.'); return; }
+  const maxRow = sh.getMaxRows();
+  // Ambil semua data kolom A-D, buang baris tanpa nama (urutan dipertahankan).
+  const data = sh.getRange(2, 1, maxRow - 1, 4).getValues()
+    .filter(function (r) { return String(r[0]).trim() !== ''; });
+  // Tulis rapat dari baris 2 dulu (aman: data sudah tersalin ke memori).
+  if (data.length) sh.getRange(2, 1, data.length, 4).setValues(data);
+  // Kosongkan sisa baris di bawahnya (bekas gap / salinan lama).
+  const firstEmpty = 2 + data.length;
+  if (firstEmpty <= maxRow) sh.getRange(firstEmpty, 1, maxRow - firstEmpty + 1, 4).clearContent();
+  setDaftarFormulas(sh);
+  SpreadsheetApp.getUi().alert('Rapikan selesai: ' + data.length + ' tamu kini berurutan dari baris 2.');
+}
+
 // ---------- POST ----------
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -106,12 +130,23 @@ function doPost(e) {
       if (!sheet) return json({ ok: false, error: 'Tab DaftarTamu belum ada. Jalankan setupDaftarTamu dulu.' });
       const name = String(data.name || '').trim().slice(0, 100);
       if (!name) return json({ ok: false, error: 'nama kosong' });
-      sheet.appendRow([
+      const rowData = [
         name,
         String(data.phone || '').slice(0, 30),
         String(data.pic || '').slice(0, 50),
         String(data.note || '').slice(0, 200)
-      ]);
+      ];
+      // Jangan pakai appendRow: ARRAYFORMULA di kolom E/F membuat getLastRow
+      // terbaca sampai ~1000, sehingga tamu baru meloncat jauh (menimbulkan gap).
+      // Cari baris kosong pertama di kolom A lalu tulis di situ agar menempel rapat.
+      const maxRow = sheet.getMaxRows();
+      const colA = sheet.getRange(2, 1, maxRow - 1, 1).getValues();
+      let target = 0;
+      for (let i = 0; i < colA.length; i++) {
+        if (String(colA[i][0]).trim() === '') { target = i + 2; break; }
+      }
+      if (target) sheet.getRange(target, 1, 1, 4).setValues([rowData]);
+      else sheet.appendRow(rowData); // semua baris terpakai → tambah baris baru di bawah
       return json({ ok: true });
     }
 
