@@ -1382,10 +1382,14 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
 // ---- Guest name from URL (?to=Nama) ----
+// safeDecode: params.get() sudah men-decode sekali; decode kedua ini hanya untuk
+// merapikan link lama yang ter-encode ganda. Nama ber-"%" liar (mis. "Diskon 100%")
+// membuat decodeURIComponent melempar URIError — tangkap agar tidak mematikan seluruh script.
+const safeDecode = (s) => { try { return decodeURIComponent(s); } catch (_) { return s; } };
 const params = new URLSearchParams(location.search);
 const guest = params.get("to") || params.get("kepada");
 if (guest) {
-  const guestName = decodeURIComponent(guest);
+  const guestName = safeDecode(guest);
   $("#guest-name").textContent = guestName;
   // isi otomatis nama di form RSVP agar cocok dgn nama di undangan (tetap bisa diedit)
   const rn = $("#r-name"); if (rn) rn.value = guestName;
@@ -1976,7 +1980,7 @@ mbtn.addEventListener("click", () => {
 // ---- QR Check-in (muncul hanya jika ada nama tamu di link) ----
 (function(){
   const sec = $("#checkin");
-  const name = guest ? decodeURIComponent(guest).trim() : "";
+  const name = guest ? safeDecode(guest).trim() : "";
   if (!name || typeof QRCode === "undefined") { sec.style.display = "none"; return; }
   new QRCode($("#qrcode"), {
     text: "CHECKIN:" + name, width: 180, height: 180,
