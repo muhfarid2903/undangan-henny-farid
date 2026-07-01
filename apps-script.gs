@@ -28,6 +28,18 @@ function setupDaftarTamu() {
     .setValues([['Nama Tamu', 'No. WA (opsional)', 'PIC / Petugas', 'Catatan', 'Link Undangan', 'Kirim WhatsApp']])
     .setFontWeight('bold').setBackground('#f3ece2');
 
+  setDaftarFormulas(sh);
+
+  sh.setFrozenRows(1);
+  sh.setColumnWidth(1, 200);
+  sh.setColumnWidth(5, 340);
+  sh.setColumnWidth(6, 360);
+  SpreadsheetApp.getUi().alert('Tab "DaftarTamu" siap! Bagikan spreadsheet ini (akses Editor) ke pegawai.');
+}
+
+// Pasang rumus kolom E (link undangan) & F (link WA). Dipanggil saat setup dan
+// setiap kali menghapus baris, agar ARRAYFORMULA (jangkar di baris 2) selalu ada.
+function setDaftarFormulas(sh) {
   // Kolom E: Link undangan personal (otomatis untuk setiap nama di kolom A)
   sh.getRange('E2').setFormula(
     '=ARRAYFORMULA(IF(A2:A="","","' + SITE + '?to="&SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(A2:A,"&","%26"),",","%2C")," ","%20")))'
@@ -65,12 +77,6 @@ function setupDaftarTamu() {
   sh.getRange('F2').setFormula(
     '=ARRAYFORMULA(IF(A2:A="","","https://wa.me/"&(' + ph + ')&"?text="&' + enc(msg) + '))'
   );
-
-  sh.setFrozenRows(1);
-  sh.setColumnWidth(1, 200);
-  sh.setColumnWidth(5, 340);
-  sh.setColumnWidth(6, 360);
-  SpreadsheetApp.getUi().alert('Tab "DaftarTamu" siap! Bagikan spreadsheet ini (akses Editor) ke pegawai.');
 }
 
 // ---------- POST ----------
@@ -109,6 +115,26 @@ function doPost(e) {
       return json({ ok: true });
     }
 
+    // --- Hapus tamu dari DaftarTamu (dari kelola-tamu.html) ---
+    if (data.type === 'hapus-tamu') {
+      const sheet = getDaftarSheet();
+      if (!sheet) return json({ ok: false, error: 'Tab DaftarTamu belum ada.' });
+      const row = parseInt(data.row, 10);
+      if (!row || row < 2) return json({ ok: false, error: 'baris tidak valid' });
+      if (row > sheet.getLastRow()) return json({ ok: false, error: 'Data sudah berubah, muat ulang dulu.' });
+      // Verifikasi nama di baris cocok agar tidak salah hapus bila urutan berubah.
+      const expect = String(data.name || '').trim().toLowerCase();
+      const actual = String(sheet.getRange(row, 1).getValue()).trim().toLowerCase();
+      if (expect && expect !== actual) {
+        return json({ ok: false, error: 'Data sudah berubah, muat ulang dulu.' });
+      }
+      sheet.deleteRow(row);
+      // Pasang ulang rumus kolom E & F (jangkar ARRAYFORMULA di baris 2 bisa
+      // ikut terhapus bila baris 2 yang dihapus).
+      setDaftarFormulas(sheet);
+      return json({ ok: true });
+    }
+
     // --- RSVP & ucapan ---
     const sheet = getRsvpSheet();
     sheet.appendRow([
@@ -141,11 +167,12 @@ function doGet(e) {
     const sheet = getDaftarSheet();
     if (!sheet || sheet.getLastRow() < 2) return json({ list: [] });
     const rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, 6).getValues();
-    const list = rows
-      .filter(function (r) { return String(r[0]).trim() !== ''; })
-      .map(function (r) {
-        return { name: r[0], phone: r[1], pic: r[2], note: r[3], link: r[4], wa: r[5] };
-      });
+    const list = [];
+    rows.forEach(function (r, i) {
+      if (String(r[0]).trim() === '') return;
+      // row = nomor baris asli di Sheet (dipakai kelola-tamu.html untuk hapus)
+      list.push({ row: i + 2, name: r[0], phone: r[1], pic: r[2], note: r[3], link: r[4], wa: r[5] });
+    });
     return json({ list: list });
   }
   const sheet = getRsvpSheet();
