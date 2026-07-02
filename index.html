@@ -245,7 +245,7 @@
   }
   .guest-box { margin-top: 24px; }
   .guest-box .to { font-size: 12px; letter-spacing: 3px; opacity: .85; }
-  .guest-box .guest-name { font-family: var(--display); font-size: 24px; margin: 4px 0 18px; }
+  .guest-box .guest-name { font-family: var(--display); font-size: 24px; margin: 4px 0 18px; line-height: 1.3; text-wrap: balance; }
   /* CTA utama: pil emas + teks maroon (kontras tinggi) + glow lembut berdenyut */
   .btn-open {
     background: linear-gradient(135deg, #e7d0a4 0%, #bd9968 52%, #d8b87f 100%);
@@ -1395,6 +1395,7 @@ if (guest) {
   $("#guest-name").textContent = guestName;
   // isi otomatis nama di form RSVP agar cocok dgn nama di undangan (tetap bisa diedit)
   const rn = $("#r-name"); if (rn) rn.value = guestName;
+  fitGuestName();   // nama panjang: kecilkan font agar cover tidak terdorong (fungsi di bawah, hoisted)
 }
 
 // ---- Pelacak buka undangan (untuk dasbor.html) ----
@@ -1529,8 +1530,22 @@ function fitOneLine(el, minPx){
     fs -= 1; el.style.fontSize = fs + "px";
   }
 }
+// Nama tamu di cover: coba 1 baris (kecilkan bertahap sampai 18px); nama yang
+// sangat panjang dibiarkan melipat maksimal 2 baris seimbang (kecilkan sampai
+// 15px) agar tombol "Buka Undangan" tidak terdorong turun. Nama pendek tetap 24px.
+function fitGuestName(){
+  const el = $("#guest-name"); if (!el || !el.textContent.trim()) return;
+  el.style.fontSize = ""; el.style.whiteSpace = "nowrap";
+  let fs = parseFloat(getComputedStyle(el).fontSize);
+  while (el.scrollWidth > el.clientWidth && fs > 18) { fs -= 1; el.style.fontSize = fs + "px"; }
+  if (el.scrollWidth <= el.clientWidth) return;   // muat satu baris
+  el.style.whiteSpace = "";                        // terlalu panjang: izinkan 2 baris
+  const lines = () => Math.round(el.scrollHeight / parseFloat(getComputedStyle(el).lineHeight));
+  while (lines() > 2 && fs > 15) { fs -= 1; el.style.fontSize = fs + "px"; }
+}
 function fitNames(){
   $$(".person .full, .intro-slide .i-name").forEach(el => { el.style.fontSize = ""; fitOneLine(el, 19); });
+  fitGuestName();   // ukur ulang setelah webfont siap (lebar teks berubah)
 }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
 window.addEventListener("load", fitNames);
