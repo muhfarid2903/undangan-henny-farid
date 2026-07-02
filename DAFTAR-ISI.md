@@ -6,14 +6,14 @@
 ## 0. Loading Screen
 - Teks **"Memuat Undangan…"** + progress bar (0–100%)
 - Nama pasangan: **Henny & Farid**
-- Background: foto `galeri14.jpg` (tampil utuh / `contain` + veil gelap)
-- Selesai (100%) begitu semua aset **cover + intro** siap; batas maksimal 5 detik
+- Background: foto `galeri14.webp` (tampil utuh / `contain` + veil gelap)
+- Durasi minimal **2,5 detik** (agar kesan memuat terasa di koneksi cepat); selesai begitu foto cover siap, batas maksimal 3,5 detik
 
 ---
 
 ## 1. Cover (Sampul)
-- Video latar: `bg/cover-video.mp4` (sekali putar, tidak loop), poster `cover.jpg`
-- Foto mempelai dalam bingkai melengkung: `cover.jpg`
+- Video latar: `bg/cover-video.mp4` (sekali putar, tidak loop), poster `cover.webp`
+- Foto mempelai dalam bingkai melengkung: `cover.webp` (`cover.jpg` dipertahankan untuk preview WhatsApp/og:image)
 - Nama pasangan + nama tamu undangan (otomatis dari `?to=` di URL)
 - Tombol **"Buka Undangan"**
 
@@ -23,15 +23,15 @@
 | # | Type | Background | Isi |
 |---|------|-----------|-----|
 | 1 | `hero` | 🎥 `intro-1-2.mp4` (±10 dtk, tanpa veil) | Video slide 1 & 2 — teks sudah di dalam video |
-| 2 | `photo` | `galeri2.jpg` | Foto layar penuh (slide 3) |
-| 3 | `photo` | `intro-4.jpg` | Foto layar penuh (slide 4) |
+| 2 | `photo` | `galeri2.webp` | Foto layar penuh (slide 3) |
+| 3 | `photo` | `intro-4.webp` | Foto layar penuh (slide 4) |
 | 4 | `couple` | 🎥 `intro-5-6.mp4` (±10 dtk, tanpa veil) | Video slide 5 & 6 — teks sudah di dalam video |
-| 5 | `photo` | `intro-7.jpeg` | Foto layar penuh (slide 7) |
+| 5 | `photo` | `intro-7.webp` | Foto layar penuh (slide 7) |
 
 ---
 
 ## 3. Opening (Ayat)
-- Foto berbingkai melengkung: `opening-ayat.jpg`
+- Foto berbingkai melengkung: `opening-ayat.webp`
 - Eyebrow: basmalah (maroon)
 - **Ayat:** *"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu mendapat ketenangan hati..."*
 - **Sumber:** QS. Ar-Rum: 21
@@ -39,13 +39,13 @@
 ---
 
 ## 4. Couple — Mempelai Wanita
-- Foto: `mempelai-wanita.jpg`
+- Foto: `mempelai-wanita.webp`
 - Nama: **Henny** — Henny Puspita Syarifuddin, S.Pd., Gr.
 - Putri pertama dari Bapak Syarifuddin Achmad & Ibu Habrita, S.Ag.
 - IG: [@hennysyr](https://instagram.com/hennysyr)
 
 ## 5. Couple — Mempelai Pria
-- Foto: `mempelai-pria.jpg`
+- Foto: `mempelai-pria.webp`
 - Nama: **Farid** — dr. Muhammad Farid
 - Putra ketiga dari Bapak Abdul Salam Karim, S.Pd. & Ibu St. Rabiatul Adawiah Balido
 - IG: [@muhfarid2994](https://instagram.com/muhfarid2994)
@@ -80,7 +80,7 @@
 
 ## 9. Gallery (Galeri)
 - Grid **masonry** 21 foto (urutan acak, tinggi bervariasi / berseni) + lightbox geser kiri/kanan
-- File: `galeri1.jpg` – `galeri21.jpg`
+- File: `galeri1.webp` – `galeri21.webp` — grid memakai thumbnail ringan di `thumb/` (nama sama); foto penuh hanya dimuat saat lightbox dibuka
 
 ---
 
@@ -114,7 +114,7 @@
 - **Tombol Musik ♪** — musik latar: `musik.mp3` (tanpa jingle pembuka)
 - **Popup Ucapan & Doa** · **Popup Amplop Digital** · **Lightbox** galeri
 - **Efek:** kelopak bunga jatuh (`petals`), partikel emas (`sparkles`), auto-scroll pelan
-- **Desktop:** foto besar sisi kiri (`cover.jpg`)
+- **Desktop:** foto besar sisi kiri (`cover.webp`)
 
 ---
 
@@ -127,5 +127,5 @@
 ---
 
 ## 🎨 Background per Segmen
-- Semua segmen berteks (opening, couple, countdown, events, story, rsvp, checkin, gift): foto `bg/segmen.jpeg` + video latar `bg/segmen-video.mp4`
+- Semua segmen berteks (opening, couple, countdown, events, story, rsvp, checkin, gift): foto `bg/segmen.webp` + video latar `bg/segmen-video.mp4`
 - Cover: `bg/cover-video.mp4` · Penutup: `bg/penutup.mp4`

@@ -161,7 +161,7 @@
   .loader {
     position: fixed; inset: 0; z-index: 200;
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(rgba(30,24,20,.25), rgba(30,24,20,.25)), url('galeri14.jpg') center center / contain no-repeat, #2a2018;   /* foto utuh (tak terpotong) + veil tipis + latar gelap mengisi sisi */
+    background: linear-gradient(rgba(30,24,20,.25), rgba(30,24,20,.25)), url('galeri14.webp') center center / contain no-repeat, #2a2018;   /* foto utuh (tak terpotong) + veil tipis + latar gelap mengisi sisi */
     transition: opacity .9s ease, visibility .9s ease;
   }
   .loader.hide { opacity: 0; visibility: hidden; }
@@ -197,7 +197,7 @@
     color: #fff;
     background:
       linear-gradient(rgba(44,56,41,.22), rgba(44,56,41,.22)),
-      url('cover.jpg') center / cover no-repeat;   /* fallback selagi video dimuat */
+      url('cover.webp') center / cover no-repeat;   /* fallback selagi video dimuat */
   }
   /* video latar penuh layar untuk sampul */
   #cover .cover-bg-video {
@@ -898,7 +898,7 @@
     /* panel foto besar mengisi sisa kiri, tetap saat scroll */
     body::before {
       content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 480px;
-      background-image: var(--desktop-photo, url('cover.jpg'));
+      background-image: var(--desktop-photo, url('cover.webp'));
       background-size: cover; background-position: center; z-index: 0;
     }
     /* kelopak bunga, partikel & navigasi mengikuti panel undangan (480px kanan) */
@@ -933,12 +933,12 @@
 
   <!-- ================= COVER ================= -->
   <section id="cover">
-    <video class="cover-bg-video" src="bg/cover-video.mp4" poster="cover.jpg" muted autoplay playsinline preload="auto"></video>
+    <video class="cover-bg-video" src="bg/cover-video.mp4" poster="cover.webp" muted autoplay playsinline preload="auto"></video>
     <div class="cover-card">
       <div class="eyebrow">The Wedding Of</div>
       <div class="cover-frame">
         <div class="cover-frame-inner">
-          <img id="cover-photo" src="cover.jpg" alt="Foto mempelai">
+          <img id="cover-photo" src="cover.webp" alt="Foto mempelai" onerror="this.onerror=null;this.src='cover.jpg'">
         </div>
       </div>
       <div class="names" id="cover-names">Henny & dr. Farid</div>
@@ -964,7 +964,7 @@
     <section id="opening" class="reveal">
       <div class="opening-frame">
         <div class="opening-frame-inner">
-          <img id="opening-photo" src="opening-ayat.jpg" alt="Mempelai" />
+          <img id="opening-photo" src="opening-ayat.webp" alt="Mempelai" onerror="this.onerror=null;this.src='opening-ayat.jpg'" />
         </div>
       </div>
       <div class="eyebrow">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيْمِ</div>
@@ -1120,7 +1120,7 @@
   </nav>
 
   <button class="music-btn" id="music-btn" title="Musik" aria-label="Putar atau jeda musik"><span class="ico">♪</span></button>
-  <audio id="audio" loop></audio>
+  <audio id="audio" loop preload="none"></audio>
 </div>
 
 <!-- ================= POPUP: UCAPAN & DOA ================= -->
@@ -1167,7 +1167,7 @@ const CONFIG = {
     mother: "Ibu St. Rabiatul Adawiah Dallo",
     childOrder: "Putra ketiga",
     ig: "muhfarid2994",           // username IG tanpa @ (kosongkan jika tidak ada)
-    photo: "mempelai-pria.jpg",
+    photo: "mempelai-pria.webp",
   },
   bride: {
     nick: "Henny",
@@ -1176,7 +1176,7 @@ const CONFIG = {
     mother: "Ibu Habrita, S.Ag.",
     childOrder: "Putri pertama",
     ig: "hennysyr",
-    photo: "mempelai-wanita.jpg",
+    photo: "mempelai-wanita.webp",
   },
 
   // --- Ayat / kutipan pembuka ---
@@ -1193,10 +1193,10 @@ const CONFIG = {
   //     veil: 0..1 (opsional) -> ketebalan lapisan di atas gambar; makin kecil makin terlihat gambarnya.
   intro: [
     { type: "hero", video: "intro-1-2.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 1 & 2 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
-    { type: "photo", src: "galeri2.jpg" },   // slide foto (slide 3)
-    { type: "photo", src: "intro-4.jpg" },   // slide foto (slide 4)
+    { type: "photo", src: "galeri2.webp" },   // slide foto (slide 3)
+    { type: "photo", src: "intro-4.webp" },   // slide foto (slide 4)
     { type: "couple", video: "intro-5-6.mp4", bare: true, veil: 0, loop: false, hold: 10000 },  // video 10s sudah memuat slide 5 & 6 (teks di dalam video) -> tanpa overlay, tanpa veil, sekali putar
-    { type: "photo", src: "intro-7.jpeg" },  // slide 7: foto full
+    { type: "photo", src: "intro-7.webp" },  // slide 7: foto full
   ],
 
   // --- Tanggal utama (untuk countdown & kalender). Format: YYYY-MM-DDTHH:MM+08:00
@@ -1239,29 +1239,31 @@ const CONFIG = {
   ],
 
   // --- Galeri (URL foto). Tampil sebagai grid masonry (tinggi bervariasi).
-  //     Klik foto untuk memperbesar (bisa geser kiri/kanan). ---
+  //     Klik foto untuk memperbesar (bisa geser kiri/kanan).
+  //     Grid memakai thumbnail ringan di folder thumb/ (nama file sama);
+  //     foto penuh di daftar ini hanya dimuat saat lightbox dibuka. ---
   gallery: [
-    "galeri1.jpg",
-    "galeri2.jpg",
-    "galeri3.jpg",
-    "galeri4.jpg",
-    "galeri5.jpg",
-    "galeri6.jpg",
-    "galeri7.jpg",
-    "galeri8.jpg",
-    "galeri9.jpg",
-    "galeri10.jpg",
-    "galeri11.jpg",
-    "galeri12.jpg",
-    "galeri13.jpg",
-    "galeri14.jpg",
-    "galeri15.jpg",
-    "galeri16.jpg",
-    "galeri17.jpg",
-    "galeri18.jpg",
-    "galeri19.jpg",
-    "galeri20.jpg",
-    "galeri21.jpg",
+    "galeri1.webp",
+    "galeri2.webp",
+    "galeri3.webp",
+    "galeri4.webp",
+    "galeri5.webp",
+    "galeri6.webp",
+    "galeri7.webp",
+    "galeri8.webp",
+    "galeri9.webp",
+    "galeri10.webp",
+    "galeri11.webp",
+    "galeri12.webp",
+    "galeri13.webp",
+    "galeri14.webp",
+    "galeri15.webp",
+    "galeri16.webp",
+    "galeri17.webp",
+    "galeri18.webp",
+    "galeri19.webp",
+    "galeri20.webp",
+    "galeri21.webp",
   ],
 
   // --- Amplop digital / rekening ---
@@ -1288,7 +1290,7 @@ const CONFIG = {
   sparkles: true,
 
   // --- Foto besar di sisi kiri saat dibuka di laptop/desktop (layar lebar). ---
-  desktopPhoto: "cover.jpg",
+  desktopPhoto: "cover.webp",
 
   // --- RSVP ke Google Sheets ---
   // Tempel URL Web App dari Google Apps Script di sini (lihat file CARA-RSVP-GOOGLE-SHEETS.md).
@@ -1361,16 +1363,16 @@ const CONFIG = {
   //     hideEyebrow: true -> sembunyikan judul teks atas (mis. Bismillah sudah ada di gambar).
   //     Tukar src antar-segmen sesuka hati untuk mengganti background.
   backgrounds: {
-    // cover: pakai bg/segmen.jpeg langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
-    opening:   { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
-    couple:    { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
-    couple2:   { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
-    countdown: { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
-    events:    { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
-    story:     { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
-    rsvp:      { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
-    checkin:   { src: "bg/segmen.jpeg",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
-    gift:      { src: "bg/segmen.jpeg", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    // cover: pakai bg/segmen.webp langsung lewat CSS (#cover) dengan veil gelap; video mempelai tetap di bingkai foto
+    opening:   { src: "bg/segmen.webp", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    couple:    { src: "bg/segmen.webp",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    couple2:   { src: "bg/segmen.webp",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    countdown: { src: "bg/segmen.webp",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    events:    { src: "bg/segmen.webp",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    story:     { src: "bg/segmen.webp", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    rsvp:      { src: "bg/segmen.webp", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
+    checkin:   { src: "bg/segmen.webp",   video: "bg/segmen-video.mp4", loop: false, veil: .4 },
+    gift:      { src: "bg/segmen.webp", video: "bg/segmen-video.mp4", loop: false, veil: .3 },
     closing:   { video: "bg/penutup.mp4", loop: false, veil: 0 },
   },
 };
@@ -1413,8 +1415,12 @@ const mainDate = new Date(CONFIG.mainDate);
 $("#loader-names").textContent = coupleNames;
 
 // ---- Loading screen: progres 0 -> 100% + ketik nama cover ----
-// Persen merambat cepat di awal, tertahan di ~90% sampai aset cover & intro
-// siap, lalu melesat ke 100% dan loader memudar.
+// Persen merambat cepat di awal lalu melambat, tertahan di ~92% sampai aset
+// cover siap, lalu melesat ke 100% dan loader memudar. Di koneksi cepat aset
+// siap nyaris seketika — tanpa durasi minimal, loader hanya berkedip dan tak
+// terasa "memuat"; LOADER_MIN menahan layar loading agar kesannya tetap ada.
+const LOADER_MIN = 2500;            // durasi minimal layar loading (ms) — sweet spot UX 2–2,5 dtk; >3 dtk terasa lama saat tamu buka ulang
+const loaderStart = Date.now();
 let loaderPct = 0, loaderDone = false;
 function setLoaderPct(v){
   loaderPct = Math.min(100, Math.max(loaderPct, Math.round(v)));
@@ -1422,30 +1428,35 @@ function setLoaderPct(v){
   $("#loader-fill").style.width = loaderPct + "%";
 }
 const loaderTrickle = setInterval(() => {
-  if (loaderPct < 92) setLoaderPct(loaderPct + (loaderPct < 70 ? 5 + Math.random() * 5 : 2));
+  if (loaderPct < 92) setLoaderPct(loaderPct + (loaderPct < 70 ? 5 + Math.random() * 5 : 1));
 }, 80);
 function revealCover(){
   if (loaderDone) return;
   loaderDone = true;
-  clearInterval(loaderTrickle);
   startSequentialPreload();   // halaman berikutnya dimuat berurutan di belakang layar
-  const sprint = setInterval(() => {
-    setLoaderPct(loaderPct + 8);
-    if (loaderPct >= 100) {
-      clearInterval(sprint);
-      document.body.classList.add("loaded");
-      setTimeout(() => $("#loader").classList.add("hide"), 250);   // loader mulai memudar
-      // ketik nama cover SETELAH loader benar-benar hilang (hindari berbayang)
-      setTimeout(() => { const n = $("#cover-names"); typeText(n, 150, n.dataset.full); }, 1300);
-    }
-  }, 30);
+  // koneksi cepat: tunggu sisa durasi minimal (persen terus merambat selama itu);
+  // koneksi lambat: durasi minimal sudah lewat, langsung melaju ke 100%.
+  const wait = Math.max(0, LOADER_MIN - (Date.now() - loaderStart));
+  setTimeout(() => {
+    clearInterval(loaderTrickle);
+    const sprint = setInterval(() => {
+      setLoaderPct(loaderPct + 2);
+      if (loaderPct >= 100) {
+        clearInterval(sprint);
+        document.body.classList.add("loaded");
+        setTimeout(() => $("#loader").classList.add("hide"), 250);   // loader mulai memudar
+        // ketik nama cover SETELAH loader benar-benar hilang (hindari berbayang)
+        setTimeout(() => { const n = $("#cover-names"); typeText(n, 150, n.dataset.full); }, 1300);
+      }
+    }, 30);
+  }, wait);
 }
 // Loader selesai begitu HALAMAN PERTAMA (cover) siap — cukup foto cover termuat.
-// Video latar cover punya poster (cover.jpg) sehingga tak perlu diganjal; ia
+// Video latar cover punya poster (cover.webp) sehingga tak perlu diganjal; ia
 // menyusul streaming. Aset halaman berikutnya dimuat berurutan (preloadInOrder).
 (function(){
   let fired = false; const one = () => { if (!fired) { fired = true; revealCover(); } };
-  const im = new Image(); im.onload = one; im.onerror = one; im.src = "cover.jpg";
+  const im = new Image(); im.onload = one; im.onerror = one; im.src = "cover.webp";
   if (im.complete) one();   // sudah di cache
 })();
 setTimeout(revealCover, 3500); // batas atas: maksimal 3,5 detik (hanya menunggu cover)
@@ -1475,11 +1486,11 @@ function preloadInOrder(list){
 function startSequentialPreload(){
   const list = ["bg/cover-video.mp4"];                               // sisa halaman 1 (cover)
   (CONFIG.intro || []).forEach(s => { if (s.src) list.push(s.src); if (s.video) list.push(s.video); }); // intro
-  list.push("opening-ayat.jpg");                                     // opening
+  list.push("opening-ayat.webp");                                    // opening
   if (CONFIG.bride && CONFIG.bride.photo) list.push(CONFIG.bride.photo);
   if (CONFIG.groom && CONFIG.groom.photo) list.push(CONFIG.groom.photo);
-  list.push("bg/segmen.jpeg", "bg/segmen-video.mp4");               // background bersama semua segmen
-  (CONFIG.gallery || []).slice(0, 6).forEach(g => list.push(g));    // beberapa foto galeri pertama
+  list.push("bg/segmen.webp", "bg/segmen-video.mp4");               // background bersama semua segmen
+  (CONFIG.gallery || []).slice(0, 6).forEach(g => list.push("thumb/" + g)); // thumbnail galeri pertama (ringan)
   list.push("bg/penutup.mp4");                                       // closing
   preloadInOrder(list);
 }
@@ -1490,7 +1501,9 @@ $("#opening-ref").textContent = CONFIG.ayatRef;
 
 // ---- Couple ----
 function fillPerson(p, pre) {
-  $(pre + "-photo").src = p.photo;
+  const ph = $(pre + "-photo");
+  ph.onerror = () => { ph.onerror = null; ph.src = String(p.photo).replace(/\.webp$/, ".jpg"); }; // fallback WebP -> JPEG
+  ph.src = p.photo;
   $(pre + "-name").textContent = p.nick;
   $(pre + "-full").textContent = p.full;
   const ortu = p.mother ? `${p.father} &amp; ${p.mother}` : p.father;
@@ -1560,6 +1573,8 @@ $("#timeline").innerHTML = CONFIG.story.map(s =>
   const box = $("#lightbox"), img = $("#lightbox-img"), count = $("#lb-count");
   if (!pics.length) { $("#gallery").style.display = "none"; return; }
   let cur = 0;
+  // browser tanpa WebP: mundur ke JPEG (nama sama, ekstensi .jpg)
+  img.addEventListener("error", () => { if (/\.webp$/i.test(img.src)) img.src = pics[cur].replace(/\.webp$/, ".jpg"); });
   function show(i){
     cur = (i + pics.length) % pics.length;
     img.src = pics[cur];
@@ -1575,7 +1590,10 @@ $("#timeline").innerHTML = CONFIG.story.map(s =>
   const order = [0, 4, 2, 6, 1, 5, 3];  // urutan rasio yang sengaja berselang agar tinggi-pendek bergantian
   pics.forEach((src, i) => {
     const im = document.createElement("img");
-    im.src = src; im.loading = "lazy"; im.alt = "Galeri " + (i+1);
+    // grid pakai thumbnail ringan (thumb/, nama sama); foto penuh hanya di lightbox.
+    // Fallback ke JPEG penuh bila browser sangat lama tidak mendukung WebP.
+    im.src = "thumb/" + src; im.loading = "lazy"; im.alt = "Galeri " + (i+1);
+    im.onerror = () => { im.onerror = null; im.src = src.replace(/\.webp$/, ".jpg"); };
     im.style.aspectRatio = ratios[order[i % order.length]];
     im.classList.add("reveal-zoom");           // mulai tersembunyi; dimunculkan saat scroll
     im.addEventListener("click", () => open(i));
