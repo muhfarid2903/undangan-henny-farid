@@ -72,7 +72,10 @@ function setDaftarFormulas(sh) {
     '""',
     '"Hormat kami,"',
     '"*Henny & Farid*"',
-    '"__________________"'
+    '"__________________"',
+    '""',
+    '"Dibuat dengan ❤️ oleh *Undangan Balanglompo*"',
+    '"undangan.balanglompo.com"'
   ];
   var msg = parts.join('&CHAR(10)&');
   var enc = function (x) {
