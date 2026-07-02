@@ -57,7 +57,7 @@ function setDaftarFormulas(sh) {
   var parts = [
     '"Kepada Yth."',
     '"Bapak/Ibu/Saudara/i"',
-    'A2:A',
+    '"*"&A2:A&"*"',
     '"___________________"',
     '""',
     '"Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk menghadiri acara pernikahan kami."',
@@ -71,7 +71,7 @@ function setDaftarFormulas(sh) {
     '"Terima Kasih"',
     '""',
     '"Hormat kami,"',
-    '"Henny & Farid"',
+    '"*Henny & Farid*"',
     '"__________________"'
   ];
   var msg = parts.join('&CHAR(10)&');
@@ -150,16 +150,62 @@ function rapikanDaftarTamu() {
   const sh = getDaftarSheet();
   if (!sh) { SpreadsheetApp.getUi().alert('Tab DaftarTamu belum ada.'); return; }
   const maxRow = sh.getMaxRows();
-  // Ambil semua data kolom A-D, buang baris tanpa nama (urutan dipertahankan).
-  const data = sh.getRange(2, 1, maxRow - 1, 4).getValues()
+  // Ambil kolom A-D + G, buang baris tanpa nama (urutan dipertahankan).
+  // Kolom G (ID Check-in) WAJIB ikut dibawa agar ID tetap menempel pada
+  // tamunya — kalau tidak, link yang sudah terkirim menunjuk tamu yang salah.
+  const rows = sh.getRange(2, 1, maxRow - 1, 7).getValues()
     .filter(function (r) { return String(r[0]).trim() !== ''; });
+  const abcd = rows.map(function (r) { return r.slice(0, 4); });
+  const gid  = rows.map(function (r) { return [r[6]]; });
   // Tulis rapat dari baris 2 dulu (aman: data sudah tersalin ke memori).
-  if (data.length) sh.getRange(2, 1, data.length, 4).setValues(data);
+  if (rows.length) {
+    sh.getRange(2, 1, rows.length, 4).setValues(abcd);
+    sh.getRange(2, 7, rows.length, 1).setValues(gid);
+  }
   // Kosongkan sisa baris di bawahnya (bekas gap / salinan lama).
-  const firstEmpty = 2 + data.length;
-  if (firstEmpty <= maxRow) sh.getRange(firstEmpty, 1, maxRow - firstEmpty + 1, 4).clearContent();
+  const firstEmpty = 2 + rows.length;
+  if (firstEmpty <= maxRow) {
+    sh.getRange(firstEmpty, 1, maxRow - firstEmpty + 1, 4).clearContent();
+    sh.getRange(firstEmpty, 7, maxRow - firstEmpty + 1, 1).clearContent();
+  }
   setDaftarFormulas(sh);
-  SpreadsheetApp.getUi().alert('Rapikan selesai: ' + data.length + ' tamu kini berurutan dari baris 2.');
+  SpreadsheetApp.getUi().alert('Rapikan selesai: ' + rows.length + ' tamu kini berurutan dari baris 2 (ID ikut terbawa).');
+}
+
+/* ============================================================
+   TRIGGER OTOMATIS: tamu yang diketik manual langsung di Sheet
+   otomatis diberi ID Check-in (kolom G) begitu namanya ditulis —
+   tanpa perlu menjalankan isiIdTamu berulang. Aktif otomatis
+   setelah file ini disimpan (tidak perlu deploy, tidak perlu Run).
+   ============================================================ */
+function onEdit(e) {
+  try {
+    if (!e || !e.range) return;
+    const sh = e.range.getSheet();
+    if (sh.getName() !== 'DaftarTamu') return;
+    if (e.range.getColumn() > 4) return;            // hanya edit data tamu (A-D)
+    const top = Math.max(e.range.getRow(), 2);
+    const bottom = e.range.getLastRow();
+    if (bottom < top) return;
+    const n = bottom - top + 1;
+    const names = sh.getRange(top, 1, n, 1).getValues();
+    const gcol  = sh.getRange(top, 7, n, 1).getValues();
+    // kumpulan ID terpakai (untuk menjaga keunikan)
+    const lastRow = sh.getLastRow();
+    const seen = {};
+    if (lastRow >= 2) {
+      sh.getRange(2, 7, lastRow - 1, 1).getValues()
+        .forEach(function (r) { const v = String(r[0]).trim(); if (v) seen[v] = true; });
+    }
+    let changed = false;
+    for (let i = 0; i < n; i++) {
+      if (String(names[i][0]).trim() !== '' && String(gcol[i][0]).trim() === '') {
+        const id = buatIdTamu(seen);
+        gcol[i][0] = id; seen[id] = true; changed = true;
+      }
+    }
+    if (changed) sh.getRange(top, 7, n, 1).setValues(gcol);
+  } catch (_) {}   // trigger tidak boleh melempar error ke pengguna Sheet
 }
 
 // ---------- POST ----------
